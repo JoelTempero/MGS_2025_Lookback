@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MGS 2025 Lookback</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            background: #000;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #8B0000 0%, #DC143C 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: moveBackground 20s linear infinite;
+        }
+
+        @keyframes moveBackground {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            animation: fadeInUp 1.5s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .school-name {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            color: rgba(255, 255, 255, 0.95);
+            font-weight: 300;
+            letter-spacing: 8px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            animation: fadeIn 2s ease-out 0.3s both;
+        }
+
+        .main-title {
+            font-size: clamp(3rem, 10vw, 8rem);
+            color: #fff;
+            font-weight: 900;
+            letter-spacing: 15px;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            animation: scaleIn 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.5s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Horizontal Scroller */
+        .scroller-section {
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scroller-container {
+            position: relative;
+            width: 100%;
+            padding: 0 60px;
+        }
+
+        .scroller-track {
+            display: flex;
+            gap: 30px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 40px 20px;
+            cursor: grab;
+            user-select: none;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .scroller-track::-webkit-scrollbar {
+            display: none;
+        }
+
+        .scroller-track:active {
+            cursor: grabbing;
+        }
+
+        .scroller-track.opening-images {
+            height: 400px;
+        }
+
+        .scroller-track.staff-images {
+            height: 300px;
+        }
+
+        .scroll-item {
+            flex: 0 0 auto;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInItem 0.8s ease-out forwards;
+        }
+
+        .scroll-item:nth-child(1) { animation-delay: 0.1s; }
+        .scroll-item:nth-child(2) { animation-delay: 0.2s; }
+        .scroll-item:nth-child(3) { animation-delay: 0.3s; }
+        .scroll-item:nth-child(4) { animation-delay: 0.4s; }
+        .scroll-item:nth-child(5) { animation-delay: 0.5s; }
+        .scroll-item:nth-child(n+6) { animation-delay: 0.6s; }
+
+        @keyframes fadeInItem {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .scroll-item img {
+            height: 100%;
+            width: auto;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s;
+        }
+
+        .scroll-item img:hover {
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+        }
+
+        .scroll-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+            z-index: 10;
+        }
+
+        .scroll-arrow:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .scroll-arrow.left { left: 10px; }
+        .scroll-arrow.right { right: 10px; }
+
+        /* Staff Card */
+        .staff-card {
+            flex: 0 0 auto;
+            text-align: center;
+            opacity: 0;
+            animation: fadeInItem 0.8s ease-out forwards;
+        }
+
+        .staff-card img {
+            height: 200px;
+            width: 200px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .staff-card:hover img {
+            transform: scale(1.1);
+            border-color: rgba(255, 255, 255, 0.6);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.5);
+        }
+
+        .staff-card .name {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+        }
+
+        .staff-card .title {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 100px 40px;
+            position: relative;
+        }
+
+        .section.red {
+            background: linear-gradient(135deg, #8B0000 0%, #DC143C 100%);
+        }
+
+        .section.green {
+            background: linear-gradient(135deg, #0B6623 0%, #228B22 100%);
+        }
+
+        .section.gold {
+            background: linear-gradient(135deg, #B8860B 0%, #FFD700 100%);
+        }
+
+        .section.blue {
+            background: linear-gradient(135deg, #000080 0%, #1E3A8A 100%);
+        }
+
+        .section.black {
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 4rem);
+            color: rgba(255, 255, 255, 0.95);
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 800;
+            letter-spacing: 5px;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        .section-subtitle {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            color: rgba(255, 255, 255, 0.85);
+            text-align: center;
+            margin-bottom: 50px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.2s forwards;
+        }
+
+        .detail-text {
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            color: rgba(255, 255, 255, 0.75);
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 400;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.3s forwards;
+        }
+
+        /* Video Container */
+        .video-container {
+            max-width: 900px;
+            margin: 40px auto;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.4s forwards;
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            transition: transform 0.4s, box-shadow 0.4s;
+        }
+
+        .video-wrapper:hover {
+            transform: scale(1.02);
+            box-shadow: 0 25px 80px rgba(0,0,0,0.7);
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Large Image */
+        .large-image-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.4s forwards;
+        }
+
+        .large-image {
+            width: 100%;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            transition: transform 0.4s, box-shadow 0.4s;
+        }
+
+        .large-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 25px 80px rgba(0,0,0,0.7);
+        }
+
+        /* Placeholder */
+        .placeholder-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            text-align: center;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.4s forwards;
+        }
+
+        .placeholder-text {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.2rem;
+            font-style: italic;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .scroller-container {
+                padding: 0 20px;
+            }
+
+            .scroll-arrow {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+
+            .staff-card img {
+                height: 150px;
+                width: 150px;
+            }
+
+            .section {
+                padding: 60px 20px;
+            }
+        }
+
+        /* Intersection Observer Animation */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s, transform 1s;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="hero-content">
+            <div class="school-name">Middleton Grange School</div>
+            <h1 class="main-title">2025 LOOKBACK</h1>
+        </div>
+    </div>
+
+    <!-- Opening Images Gallery -->
+    <div class="section red">
+        <div class="scroller-section">
+            <div class="scroller-container">
+                <button class="scroll-arrow left" onclick="scrollLeft('opening-images')">‹</button>
+                <div class="scroller-track opening-images" id="opening-images">
+                    <!-- Images will be added by JavaScript -->
+                </div>
+                <button class="scroll-arrow right" onclick="scrollRight('opening-images')">›</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2025 Highlights Video -->
+    <div class="section green animate-on-scroll">
+        <h2 class="section-title">2025 Highlights Video</h2>
+        <div class="video-container">
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/oNtjr8KhHj8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Student Leaders 2025 -->
+    <div class="section gold animate-on-scroll">
+        <h2 class="section-title">Student Leaders 2025</h2>
+        <div class="video-container">
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/uUrJgVcg_88" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2025 Staff -->
+    <div class="section blue animate-on-scroll">
+        <h3 class="section-subtitle">2025 Staff</h3>
+        <div class="large-image-container">
+            <img src="https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356274/Staff_1_bmt0k8.jpg" alt="2025 Staff" class="large-image">
+        </div>
+    </div>
+
+    <!-- Warm Welcomes -->
+    <div class="section black animate-on-scroll">
+        <h3 class="section-subtitle">Warm Welcomes</h3>
+        <div class="scroller-section">
+            <div class="scroller-container">
+                <button class="scroll-arrow left" onclick="scrollLeft('warm-welcomes')">‹</button>
+                <div class="scroller-track staff-images" id="warm-welcomes">
+                    <!-- Staff cards will be added by JavaScript -->
+                </div>
+                <button class="scroll-arrow right" onclick="scrollRight('warm-welcomes')">›</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fond Farewells -->
+    <div class="section red animate-on-scroll">
+        <h3 class="section-subtitle">Fond Farewells</h3>
+        <div class="scroller-section">
+            <div class="scroller-container">
+                <button class="scroll-arrow left" onclick="scrollLeft('fond-farewells')">‹</button>
+                <div class="scroller-track staff-images" id="fond-farewells">
+                    <!-- Staff cards will be added by JavaScript -->
+                </div>
+                <button class="scroll-arrow right" onclick="scrollRight('fond-farewells')">›</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Farewell to Mike Vannoort -->
+    <div class="section green animate-on-scroll">
+        <h3 class="section-subtitle">Farewell to Mike Vannoort</h3>
+        <div class="video-container">
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/EwuGg1IswxU?start=30" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Primary School -->
+    <div class="section gold animate-on-scroll">
+        <h2 class="section-title">Primary School</h2>
+        <div class="placeholder-container">
+            <p class="placeholder-text">Content Coming Soon</p>
+        </div>
+    </div>
+
+    <!-- Middle School -->
+    <div class="section blue animate-on-scroll">
+        <h2 class="section-title">Middle School</h2>
+        <div class="placeholder-container">
+            <p class="placeholder-text">Content Coming Soon</p>
+        </div>
+    </div>
+
+    <!-- Senior College -->
+    <div class="section black animate-on-scroll">
+        <h2 class="section-title">Senior College</h2>
+        <div class="placeholder-container">
+            <p class="placeholder-text">Content Coming Soon</p>
+        </div>
+    </div>
+
+    <!-- School Formal -->
+    <div class="section red animate-on-scroll">
+        <h2 class="section-title">School Formal</h2>
+        <div class="placeholder-container">
+            <p class="placeholder-text">Content Coming Soon</p>
+        </div>
+        <div class="video-container">
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/y8U5uT1ktO8?start=2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Performing Arts -->
+    <div class="section green animate-on-scroll">
+        <h2 class="section-title">Performing Arts</h2>
+        
+        <h3 class="section-subtitle">"In The Grange"</h3>
+        <p class="detail-text">Performing Arts Opening Item</p>
+        <div class="video-container">
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/K8iWSDupx0k" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mary Poppins 2025 -->
+    <div class="section gold animate-on-scroll">
+        <h3 class="section-subtitle">Mary Poppins 2025</h3>
+        <div class="video-container">
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/sNf9LIyXw4s?start=443" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="placeholder-container">
+            <p class="placeholder-text">Content Coming Soon</p>
+        </div>
+    </div>
+
+    <!-- Senior Jazz Band -->
+    <div class="section blue animate-on-scroll">
+        <h3 class="section-subtitle">Senior Jazz Band - JazzBand-it 2025 Entry</h3>
+        <div class="video-container">
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/NttqjfP8kvk?start=7" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Opening Images Data
+        const openingImages = [
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359848/MGS2025-934_uy31pq.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359808/IMG_2815_ibcwap.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359782/IMG_9671_k7aw4i.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359766/Mary_Poppins_839_w2akkt.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359749/IMG_4503_tiso2q.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359725/IMG_0899_1_ofeahg.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359672/IMG_20250502_144224_uncjt3.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359654/IMG_7136_gjhwiv.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359605/20250616_222403454_iOS_kdxyrt.heic',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359547/2000-constrained-e37425b9-cfdb-438a-b9a6-131e499c8615_rdplnn.png',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359529/20250625_093649_lcbubw.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359508/Year_8_team_with_trophy_es3sox.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359499/Yes_3_v5qj31.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359483/MW3_w7mbu9.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359473/2000-constrained-6147072b-0538-4ace-a233-d74a38daddd5_uwcamb.png',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359447/2000-constrained-bdcbcf62-074f-4a00-bc1e-03993cba64e4_jopemc.png',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359422/Photo_1_xankty.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359388/20250813_094939_lh4yms.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359367/IMG_1325_benlso.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359338/thumbnail_20250313_123609_knuxpr.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359331/IMG_0882_p3asbm.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764355388/Head_Students_1_nizfuj.jpg'
+        ];
+
+        // Warm Welcomes Data
+        const warmWelcomes = [
+            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359014/Gregg_Le_Roux_u4my7y.jpg', name: 'Gregg Le Roux', title: 'Our New Principal' },
+            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356710/Melinda_Kerkhoven_sd83yn.png', name: 'Melinda Kerkhoven' },
+            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356709/Matt_Lawrence_urekbp.jpg', name: 'Matt Lawrence' },
+            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356708/Jesse_Wilson_knkqsv.png', name: 'Jesse Wilson' },
+            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356706/Sophie_Bates_asapep.jpg', name: 'Sophie Bates' },
+            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356705/Rebekah_Au_pvs9ww.jpg', name: 'Rebekah Au' },
+            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356703/Nathan_Horner_jijxvl.jpg', name: 'Nathan Horner' },
+            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356702/Kristy_Neill_hfsrux.jpg', name: 'Kristy Neill' },
+            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356700/Jo_Dodge_delykl.jpg', name: 'Jo Dodge' },
+            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356699/Jane_Halliday_upebsy.jpg', name: 'Jane Halliday' },
+            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356698/Frances_Malcolm_g3quei.jpg', name: 'Frances Malcolm' },
+            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356696/Bailey_Stocks_ndic0u.jpg', name: 'Bailey Stocks' },
+            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356696/Aidan_Baker_vw3tik.jpg', name: 'Aidan Baker' },
+            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356672/Jessica_Lepou_ziejhx.jpg', name: 'Jessica Lepou' },
+            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356670/Marissa_Bastin_tjq3tt.png', name: 'Marissa Bastin' },
+            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356669/Marisa_Le_Roux_jq65hq.jpg', name: 'Marisa Le Roux' },
+            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356668/Kirsten_Russell_ecuyf9.png', name: 'Kirsten Russell' },
+            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356667/Eugene_Zeelie_gvp2ck.jpg', name: 'Eugene Zeelie' },
+            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356666/Abigail_Uttley_nhzuru.jpg', name: 'Abigail Uttley' },
+            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356664/Leisha_Ferguson_b6p8u6.jpg', name: 'Leisha Ferguson' },
+            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356664/Katrina_Hubbard_qjpiwj.jpg', name: 'Katrina Hubbard' },
+            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356663/Jacqui_McConnell_mip3ux.jpg', name: 'Jacqui McConnell' }
+        ];
+
+        // Fond Farewells Data
+        const fondFarewells = [
+            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359218/Mrs_Yolandy_Stander_xehnbv.png', name: 'Yolandy Stander' },
+            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359216/Mrs_Rebecca_Thompson_hylegm.png', name: 'Rebecca Thompson' },
+            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359214/Mrs_Paula_Harvey_y3yuvd.png', name: 'Paula Harvey' },
+            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359213/Mrs_Nicole_Bailey_zze0kp.png', name: 'Nicole Bailey' },
+            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359211/Mrs_Lindie_Warburg_rmxbkw.jpg', name: 'Lindie Warburg' },
+            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359210/Mrs_Kerryn_Malcolm_rib6yk.png', name: 'Kerryn Malcolm' },
+            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359209/Mrs_Kathryn_McAuley_x7txzu.png', name: 'Kathryn McAuley' },
+            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359207/Mrs_Hannelie_Viljoen_iccstw.png', name: 'Hannelie Viljoen' },
+            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359206/Mrs_Debbie_Dubber_qcbtb8.png', name: 'Debbie Dubber' },
+            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359204/Mrs_Catherine_McKie_sr6rkj.png', name: 'Catherine McKie' },
+            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359202/Mrs_Cassandra_Down_ihpqsv.png', name: 'Cassandra Down' },
+            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359202/Mr_Nick_Pomare_mjonqx.png', name: 'Nick Pomare' },
+            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359200/Mr_Grant_Bowater_szwd4f.png', name: 'Grant Bowater' },
+            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359199/Mr_David_Farmer_b5t8ad.png', name: 'David Farmer' }
+        ];
+
+        // Shuffle array function
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+
+        // Populate Opening Images (shuffled)
+        const openingImagesContainer = document.getElementById('opening-images');
+        const shuffledImages = shuffleArray(openingImages);
+        shuffledImages.forEach(url => {
+            const div = document.createElement('div');
+            div.className = 'scroll-item';
+            div.innerHTML = `<img src="${url}" alt="School Memory">`;
+            openingImagesContainer.appendChild(div);
+        });
+
+        // Populate Warm Welcomes
+        const warmWelcomesContainer = document.getElementById('warm-welcomes');
+        warmWelcomes.forEach(staff => {
+            const div = document.createElement('div');
+            div.className = 'staff-card';
+            div.innerHTML = `
+                <img src="${staff.url}" alt="${staff.name}">
+                <div class="name">${staff.name}</div>
+                ${staff.title ? `<div class="title">${staff.title}</div>` : ''}
+            `;
+            warmWelcomesContainer.appendChild(div);
+        });
+
+        // Populate Fond Farewells
+        const fondFarewellsContainer = document.getElementById('fond-farewells');
+        fondFarewells.forEach(staff => {
+            const div = document.createElement('div');
+            div.className = 'staff-card';
+            div.innerHTML = `
+                <img src="${staff.url}" alt="${staff.name}">
+                <div class="name">${staff.name}</div>
+            `;
+            fondFarewellsContainer.appendChild(div);
+        });
+
+        // Scroll functions
+        function scrollLeft(id) {
+            const container = document.getElementById(id);
+            container.scrollBy({ left: -400, behavior: 'smooth' });
+        }
+
+        function scrollRight(id) {
+            const container = document.getElementById(id);
+            container.scrollBy({ left: 400, behavior: 'smooth' });
+        }
+
+        // Drag to scroll functionality
+        document.querySelectorAll('.scroller-track').forEach(track => {
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+
+            track.addEventListener('mousedown', (e) => {
+                isDown = true;
+                startX = e.pageX - track.offsetLeft;
+                scrollLeft = track.scrollLeft;
+            });
+
+            track.addEventListener('mouseleave', () => {
+                isDown = false;
+            });
+
+            track.addEventListener('mouseup', () => {
+                isDown = false;
+            });
+
+            track.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - track.offsetLeft;
+                const walk = (x - startX) * 2;
+                track.scrollLeft = scrollLeft - walk;
+            });
+        });
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
