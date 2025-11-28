@@ -97,184 +97,6 @@
             }
         }
 
-        /* Horizontal Scroller */
-        .scroller-section {
-            padding: 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .scroller-container {
-            position: relative;
-            width: 100%;
-            padding: 0 60px;
-        }
-
-        .scroller-track {
-            display: flex;
-            gap: 30px;
-            overflow-x: auto;
-            scroll-behavior: smooth;
-            padding: 40px 20px;
-            cursor: grab;
-            user-select: none;
-            animation: autoScroll 60s linear infinite;
-            scrollbar-width: thin;
-            scrollbar-color: rgba(255, 255, 255, 0.3) rgba(255, 255, 255, 0.1);
-        }
-
-        .scroller-track::-webkit-scrollbar {
-            height: 2px;
-        }
-
-        .scroller-track::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-        }
-
-        .scroller-track::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.4);
-            border-radius: 50%;
-            min-width: 30px;
-        }
-
-        .scroller-track::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 255, 255, 0.6);
-        }
-
-        .scroller-track:active {
-            cursor: grabbing;
-            animation-play-state: paused;
-        }
-
-        .scroller-track:hover {
-            animation-play-state: paused;
-        }
-
-        @keyframes autoScroll {
-            0% {
-                scroll-behavior: auto;
-            }
-            100% {
-                scroll-behavior: auto;
-            }
-        }
-
-        .scroller-track.opening-images {
-            height: 400px;
-        }
-
-        .scroller-track.staff-images {
-            height: 300px;
-        }
-
-        .scroll-item {
-            flex: 0 0 auto;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInItem 0.8s ease-out forwards;
-        }
-
-        .scroll-item:nth-child(1) { animation-delay: 0.1s; }
-        .scroll-item:nth-child(2) { animation-delay: 0.2s; }
-        .scroll-item:nth-child(3) { animation-delay: 0.3s; }
-        .scroll-item:nth-child(4) { animation-delay: 0.4s; }
-        .scroll-item:nth-child(5) { animation-delay: 0.5s; }
-        .scroll-item:nth-child(n+6) { animation-delay: 0.6s; }
-
-        @keyframes fadeInItem {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .scroll-item img {
-            height: 100%;
-            width: auto;
-            object-fit: cover;
-            border-radius: 15px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s;
-            pointer-events: none;
-            user-select: none;
-            -webkit-user-drag: none;
-        }
-
-        .scroll-item img:hover {
-            transform: scale(1.05) rotate(2deg);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-        }
-
-        .scroll-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            color: white;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s;
-            z-index: 10;
-        }
-
-        .scroll-arrow:hover {
-            background: rgba(255, 255, 255, 0.4);
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        .scroll-arrow.left { left: 10px; }
-        .scroll-arrow.right { right: 10px; }
-
-        /* Staff Card */
-        .staff-card {
-            flex: 0 0 auto;
-            text-align: center;
-            opacity: 0;
-            animation: fadeInItem 0.8s ease-out forwards;
-        }
-
-        .staff-card img {
-            height: 200px;
-            width: 200px;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            pointer-events: none;
-            user-select: none;
-            -webkit-user-drag: none;
-        }
-
-        .staff-card:hover img {
-            transform: scale(1.1);
-            border-color: rgba(255, 255, 255, 0.6);
-            box-shadow: 0 15px 50px rgba(0,0,0,0.5);
-        }
-
-        .staff-card .name {
-            margin-top: 15px;
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.9);
-            font-weight: 500;
-        }
-
-        .staff-card .title {
-            font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.6);
-            font-style: italic;
-            margin-top: 5px;
-        }
-
         /* Section Styles */
         .section {
             padding: 50px 40px;
@@ -378,6 +200,431 @@
             animation: fadeInUp 1s ease-out 0.3s forwards;
         }
 
+        /* 1. SCROLL GALLERY (slower, no scrollbar) */
+        .scroll-gallery-container {
+            position: relative;
+            width: 100%;
+            padding: 0 60px;
+            margin-top: 80px;
+        }
+
+        .scroll-gallery {
+            display: flex;
+            gap: 30px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 40px 20px;
+            cursor: grab;
+            user-select: none;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .scroll-gallery::-webkit-scrollbar {
+            display: none;
+        }
+
+        .scroll-gallery:active {
+            cursor: grabbing;
+        }
+
+        .scroll-gallery.opening-images {
+            height: 400px;
+        }
+
+        .scroll-item {
+            flex: 0 0 auto;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInItem 0.8s ease-out forwards;
+        }
+
+        .scroll-item:nth-child(n+6) { animation-delay: 0.6s; }
+
+        @keyframes fadeInItem {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .scroll-item img {
+            height: 100%;
+            width: auto;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s;
+            pointer-events: none;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        .scroll-item img:hover {
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+        }
+
+        .scroll-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+            z-index: 10;
+        }
+
+        .scroll-arrow:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .scroll-arrow.left { left: 10px; }
+        .scroll-arrow.right { right: 10px; }
+
+        /* 2. STAFF GALLERY */
+        .staff-gallery {
+            display: flex;
+            gap: 30px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 40px 20px;
+            cursor: grab;
+            user-select: none;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            height: 300px;
+        }
+
+        .staff-gallery::-webkit-scrollbar {
+            display: none;
+        }
+
+        .staff-gallery:active {
+            cursor: grabbing;
+        }
+
+        .staff-card {
+            flex: 0 0 auto;
+            text-align: center;
+            opacity: 0;
+            animation: fadeInItem 0.8s ease-out forwards;
+        }
+
+        .staff-card img {
+            height: 200px;
+            width: 200px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            pointer-events: none;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        .staff-card:hover img {
+            transform: scale(1.1);
+            border-color: rgba(255, 255, 255, 0.6);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.5);
+        }
+
+        .staff-card .name {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+        }
+
+        .staff-card .title {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        /* 3. CAROUSEL GALLERY */
+        .carousel-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .carousel-slide img {
+            height: 400px;
+            width: auto;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .carousel-dot.active {
+            background: rgba(255, 255, 255, 0.9);
+            transform: scale(1.3);
+        }
+
+        /* 4. DIAGONAL SHOWCASE */
+        .diagonal-container {
+            max-width: 1400px;
+            margin: 40px auto;
+            position: relative;
+            height: 600px;
+            overflow: hidden;
+        }
+
+        .diagonal-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            transform: rotate(-5deg) scale(1.1);
+            animation: diagonalFloat 20s ease-in-out infinite;
+        }
+
+        @keyframes diagonalFloat {
+            0%, 100% { transform: rotate(-5deg) scale(1.1) translateX(0); }
+            50% { transform: rotate(-5deg) scale(1.1) translateX(-100px); }
+        }
+
+        .diagonal-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            animation: fadeIn 1s ease-out forwards;
+            opacity: 0;
+        }
+
+        .diagonal-item:nth-child(1) { animation-delay: 0.1s; }
+        .diagonal-item:nth-child(2) { animation-delay: 0.2s; }
+        .diagonal-item:nth-child(3) { animation-delay: 0.3s; }
+        .diagonal-item:nth-child(4) { animation-delay: 0.4s; }
+
+        .diagonal-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .diagonal-item:hover img {
+            transform: scale(1.1);
+        }
+
+        /* 5. PARALLAX SCROLL */
+        .parallax-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            height: 600px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .parallax-layer {
+            position: absolute;
+            width: 100%;
+            display: flex;
+            gap: 30px;
+            padding: 20px;
+        }
+
+        .parallax-layer.back {
+            top: 0;
+            transform: translateY(0);
+        }
+
+        .parallax-layer.middle {
+            top: 150px;
+            transform: translateY(0);
+        }
+
+        .parallax-layer.front {
+            top: 300px;
+            transform: translateY(0);
+        }
+
+        .parallax-item {
+            flex-shrink: 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            animation: fadeIn 1s ease-out forwards;
+            opacity: 0;
+        }
+
+        .parallax-item img {
+            width: 350px;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        /* 6. POLAROID GALLERY */
+        .polaroid-container {
+            max-width: 1400px;
+            margin: 60px auto;
+            min-height: 500px;
+            position: relative;
+        }
+
+        .polaroid {
+            position: absolute;
+            background: white;
+            padding: 15px 15px 50px 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            transform-origin: center;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+            animation: fadeIn 0.8s ease-out forwards;
+            opacity: 0;
+        }
+
+        .polaroid:hover {
+            transform: scale(1.2) !important;
+            z-index: 100 !important;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+        }
+
+        .polaroid img {
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* 7. FLIP BOOK GALLERY */
+        .flipbook-container {
+            max-width: 900px;
+            margin: 40px auto;
+            perspective: 1500px;
+            height: 600px;
+            position: relative;
+        }
+
+        .flipbook-page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.8s;
+            cursor: pointer;
+        }
+
+        .flipbook-page.flipped {
+            transform: rotateY(-180deg);
+        }
+
+        .page-front, .page-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        .page-back {
+            transform: rotateY(180deg);
+        }
+
+        .flipbook-page img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .flipbook-nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .flipbook-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 10px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+
+        .flipbook-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(1.05);
+        }
+
+        /* 8. MASONRY GALLERY */
+        .masonry-container {
+            max-width: 1400px;
+            margin: 40px auto;
+            column-count: 4;
+            column-gap: 20px;
+        }
+
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            animation: fadeInItem 0.8s ease-out forwards;
+            opacity: 0;
+            transition: transform 0.3s;
+        }
+
+        .masonry-item:hover {
+            transform: scale(1.02);
+        }
+
+        .masonry-item img {
+            width: 100%;
+            display: block;
+        }
+
         /* Video Container */
         .video-container {
             max-width: 1125px;
@@ -450,58 +697,64 @@
             font-style: italic;
         }
 
+        /* Intersection Observer Animation - only for content, not sections */
+        .animate-on-scroll {
+            /* Sections are always visible, no animation needed */
+        }
+
         /* Responsive */
+        @media (max-width: 1024px) {
+            .diagonal-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .masonry-container {
+                column-count: 3;
+            }
+        }
+
         @media (max-width: 768px) {
-            .scroller-container {
+            .scroll-gallery-container {
                 padding: 0 20px;
             }
-
             .scroll-arrow {
                 width: 40px;
                 height: 40px;
                 font-size: 18px;
             }
-
             .staff-card img {
                 height: 150px;
                 width: 150px;
             }
-
             .section {
                 padding: 60px 20px;
             }
-        }
-
-        /* Intersection Observer Animation */
-        .animate-on-scroll {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: opacity 1s, transform 1s;
-        }
-
-        .animate-on-scroll.visible {
-            opacity: 1;
-            transform: translateY(0);
+            .diagonal-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .masonry-container {
+                column-count: 2;
+            }
+            .carousel-slide img {
+                height: 300px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Hero Section with Opening Images -->
+    <!-- Hero Section with Opening Gallery -->
     <div class="hero">
         <div class="hero-content">
             <div class="school-name">Middleton Grange School</div>
             <h1 class="main-title">2025 LOOKBACK</h1>
         </div>
         
-        <!-- Opening Images Gallery -->
-        <div class="scroller-section" style="margin-top: 80px;">
-            <div class="scroller-container">
-                <button class="scroll-arrow left" onclick="scrollLeft('opening-images')">‹</button>
-                <div class="scroller-track opening-images" id="opening-images">
-                    <!-- Images will be added by JavaScript -->
-                </div>
-                <button class="scroll-arrow right" onclick="scrollRight('opening-images')">›</button>
+        <!-- Opening Images Scroll Gallery -->
+        <div class="scroll-gallery-container">
+            <button class="scroll-arrow left" onclick="scrollGallery('opening-images', 'left')">‹</button>
+            <div class="scroll-gallery opening-images" id="opening-images">
+                <!-- Images populated by JavaScript -->
             </div>
+            <button class="scroll-arrow right" onclick="scrollGallery('opening-images', 'right')">›</button>
         </div>
     </div>
 
@@ -527,7 +780,7 @@
 
     <!-- 2025 Staff -->
     <div class="section black animate-on-scroll">
-        <h3 class="section-subtitle">2025 Staff</h3>
+        <h2 class="section-title">2025 Staff</h2>
         <div class="large-image-container">
             <img src="https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356274/Staff_1_bmt0k8.jpg" alt="2025 Staff" class="large-image">
         </div>
@@ -535,35 +788,31 @@
 
     <!-- Warm Welcomes -->
     <div class="section red animate-on-scroll">
-        <h3 class="section-subtitle">Warm Welcomes</h3>
-        <div class="scroller-section">
-            <div class="scroller-container">
-                <button class="scroll-arrow left" onclick="scrollLeft('warm-welcomes')">‹</button>
-                <div class="scroller-track staff-images" id="warm-welcomes">
-                    <!-- Staff cards will be added by JavaScript -->
-                </div>
-                <button class="scroll-arrow right" onclick="scrollRight('warm-welcomes')">›</button>
+        <h2 class="section-title">Warm Welcomes</h2>
+        <div class="scroll-gallery-container">
+            <button class="scroll-arrow left" onclick="scrollGallery('warm-welcomes', 'left')">‹</button>
+            <div class="staff-gallery" id="warm-welcomes">
+                <!-- Staff cards populated by JavaScript -->
             </div>
+            <button class="scroll-arrow right" onclick="scrollGallery('warm-welcomes', 'right')">›</button>
         </div>
     </div>
 
     <!-- Fond Farewells -->
     <div class="section red animate-on-scroll">
-        <h3 class="section-subtitle">Fond Farewells</h3>
-        <div class="scroller-section">
-            <div class="scroller-container">
-                <button class="scroll-arrow left" onclick="scrollLeft('fond-farewells')">‹</button>
-                <div class="scroller-track staff-images" id="fond-farewells">
-                    <!-- Staff cards will be added by JavaScript -->
-                </div>
-                <button class="scroll-arrow right" onclick="scrollRight('fond-farewells')">›</button>
+        <h2 class="section-title">Fond Farewells</h2>
+        <div class="scroll-gallery-container">
+            <button class="scroll-arrow left" onclick="scrollGallery('fond-farewells', 'left')">‹</button>
+            <div class="staff-gallery" id="fond-farewells">
+                <!-- Staff cards populated by JavaScript -->
             </div>
+            <button class="scroll-arrow right" onclick="scrollGallery('fond-farewells', 'right')">›</button>
         </div>
     </div>
 
     <!-- Farewell to Mike Vannoort -->
     <div class="section gold animate-on-scroll">
-        <h3 class="section-subtitle">Farewell to Mike Vannoort</h3>
+        <h2 class="section-title">Farewell to Mike Vannoort</h2>
         <div class="video-container">
             <div class="video-wrapper">
                 <iframe src="https://www.youtube.com/embed/EwuGg1IswxU?start=30" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -574,98 +823,69 @@
     <!-- Primary School -->
     <div class="section blue animate-on-scroll">
         <h2 class="section-title">Primary School</h2>
-        <div class="scroller-section">
-            <div class="scroller-container">
-                <button class="scroll-arrow left" onclick="scrollLeft('primary-opening')">‹</button>
-                <div class="scroller-track opening-images" id="primary-opening">
-                    <!-- Images will be added by JavaScript -->
-                </div>
-                <button class="scroll-arrow right" onclick="scrollRight('primary-opening')">›</button>
+        <div class="scroll-gallery-container">
+            <button class="scroll-arrow left" onclick="scrollGallery('primary-opening', 'left')">‹</button>
+            <div class="scroll-gallery opening-images" id="primary-opening">
+                <!-- Images populated by JavaScript -->
+            </div>
+            <button class="scroll-arrow right" onclick="scrollGallery('primary-opening', 'right')">›</button>
+        </div>
+    </div>
+
+    <!-- Teddy Bears Picnic - CAROUSEL -->
+    <div class="section blue animate-on-scroll">
+        <h3 class="section-subtitle">Teddy Bears Picnic</h3>
+        <div class="carousel-container">
+            <div class="carousel-track" id="teddy-bears-carousel">
+                <!-- Slides populated by JavaScript -->
+            </div>
+            <div class="carousel-dots" id="teddy-bears-dots"></div>
+        </div>
+    </div>
+
+    <!-- Trekabout Tuesday - DIAGONAL SHOWCASE -->
+    <div class="section blue animate-on-scroll">
+        <h3 class="section-subtitle">Trekabout Tuesday</h3>
+        <div class="diagonal-container">
+            <div class="diagonal-grid" id="trekabout-diagonal">
+                <!-- Images populated by JavaScript -->
             </div>
         </div>
     </div>
 
-    <!-- Teddy Bears Picnic -->
+    <!-- Book Character Day - PARALLAX SCROLL -->
     <div class="section blue animate-on-scroll">
-        <h2 class="section-title">Teddy Bears Picnic</h2>
-        <div class="scroller-section">
-            <div class="scroller-container">
-                <button class="scroll-arrow left" onclick="scrollLeft('teddy-bears')">‹</button>
-                <div class="scroller-track opening-images" id="teddy-bears">
-                    <!-- Images will be added by JavaScript -->
-                </div>
-                <button class="scroll-arrow right" onclick="scrollRight('teddy-bears')">›</button>
-            </div>
+        <h3 class="section-subtitle">Book Character Day</h3>
+        <div class="parallax-container" id="book-character-parallax">
+            <!-- Layers populated by JavaScript -->
         </div>
     </div>
 
-    <!-- Trekabout Tuesday -->
+    <!-- Cultural Day - POLAROID GALLERY -->
     <div class="section blue animate-on-scroll">
-        <h2 class="section-title">Trekabout Tuesday</h2>
-        <div class="scroller-section">
-            <div class="scroller-container">
-                <button class="scroll-arrow left" onclick="scrollLeft('trekabout')">‹</button>
-                <div class="scroller-track opening-images" id="trekabout">
-                    <!-- Images will be added by JavaScript -->
-                </div>
-                <button class="scroll-arrow right" onclick="scrollRight('trekabout')">›</button>
-            </div>
+        <h3 class="section-subtitle">Cultural Day</h3>
+        <div class="polaroid-container" id="cultural-day-polaroid">
+            <!-- Polaroids populated by JavaScript -->
         </div>
     </div>
 
-    <!-- Book Character Day -->
+    <!-- Athletics Day - FLIP BOOK -->
     <div class="section blue animate-on-scroll">
-        <h2 class="section-title">Book Character Day</h2>
-        <div class="scroller-section">
-            <div class="scroller-container">
-                <button class="scroll-arrow left" onclick="scrollLeft('book-character')">‹</button>
-                <div class="scroller-track opening-images" id="book-character">
-                    <!-- Images will be added by JavaScript -->
-                </div>
-                <button class="scroll-arrow right" onclick="scrollRight('book-character')">›</button>
-            </div>
+        <h3 class="section-subtitle">Athletics Day</h3>
+        <div class="flipbook-container" id="athletics-flipbook">
+            <!-- Pages populated by JavaScript -->
+        </div>
+        <div class="flipbook-nav">
+            <button class="flipbook-btn" onclick="flipPage('prev')">← Previous</button>
+            <button class="flipbook-btn" onclick="flipPage('next')">Next →</button>
         </div>
     </div>
 
-    <!-- Cultural Day -->
+    <!-- Kaikoura Jack - MASONRY -->
     <div class="section blue animate-on-scroll">
-        <h2 class="section-title">Cultural Day</h2>
-        <div class="scroller-section">
-            <div class="scroller-container">
-                <button class="scroll-arrow left" onclick="scrollLeft('cultural-day')">‹</button>
-                <div class="scroller-track opening-images" id="cultural-day">
-                    <!-- Images will be added by JavaScript -->
-                </div>
-                <button class="scroll-arrow right" onclick="scrollRight('cultural-day')">›</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Athletics Day -->
-    <div class="section blue animate-on-scroll">
-        <h2 class="section-title">Athletics Day</h2>
-        <div class="scroller-section">
-            <div class="scroller-container">
-                <button class="scroll-arrow left" onclick="scrollLeft('athletics-day')">‹</button>
-                <div class="scroller-track opening-images" id="athletics-day">
-                    <!-- Images will be added by JavaScript -->
-                </div>
-                <button class="scroll-arrow right" onclick="scrollRight('athletics-day')">›</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Kaikoura Jack -->
-    <div class="section blue animate-on-scroll">
-        <h2 class="section-title">Kaikoura Jack</h2>
-        <div class="scroller-section">
-            <div class="scroller-container">
-                <button class="scroll-arrow left" onclick="scrollLeft('kaikoura-jack')">‹</button>
-                <div class="scroller-track opening-images" id="kaikoura-jack">
-                    <!-- Images will be added by JavaScript -->
-                </div>
-                <button class="scroll-arrow right" onclick="scrollRight('kaikoura-jack')">›</button>
-            </div>
+        <h3 class="section-subtitle">Kaikoura Jack</h3>
+        <div class="masonry-container" id="kaikoura-masonry">
+            <!-- Items populated by JavaScript -->
         </div>
     </div>
 
@@ -745,7 +965,7 @@
     </div>
 
     <script>
-        // Opening Images Data
+        // ===== DATA =====
         const openingImages = [
             'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359848/MGS2025-934_uy31pq.jpg',
             'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359808/IMG_2815_ibcwap.jpg',
@@ -771,7 +991,6 @@
             'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764355388/Head_Students_1_nizfuj.jpg'
         ];
 
-        // Primary Opening Content
         const primaryOpening = [
             'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365876/Possums_msuync.jpg',
             'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365845/20250909_100957_jsjjka.jpg',
@@ -789,7 +1008,6 @@
             'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366074/500-constrained-f8265475-d589-47dd-9ea0-6ff79eaba196_myqry2.png'
         ];
 
-        // Teddy Bears Picnic
         const teddyBears = [
             'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366877/IMG_0882_ozj8yq.jpg',
             'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366876/IMG_0880_amh1ey.jpg',
@@ -808,7 +1026,6 @@
             'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366872/Girls_at_TD_dtotnv.jpg'
         ];
 
-        // Trekabout Tuesday
         const trekabout = [
             'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367029/20250506_134032_pfmfyo.jpg',
             'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367028/20250506_132757_pnb3c9.jpg',
@@ -824,7 +1041,6 @@
             'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366998/20250225_100458_u0efn2.jpg'
         ];
 
-        // Book Character Day
         const bookCharacter = [
             'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367134/20250813_094449_alvpte.jpg',
             'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367133/20250813_094939_thd7p4.jpg',
@@ -835,7 +1051,6 @@
             'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367128/20250813_100044_cw9kzq.jpg'
         ];
 
-        // Cultural Day
         const culturalDay = [
             'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367200/20251017_104038_mdykga.jpg',
             'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367197/20251017_103822_phlq6v.jpg',
@@ -847,7 +1062,6 @@
             'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367174/20251017_100826_0_abilqe.jpg'
         ];
 
-        // Athletics Day
         const athleticsDay = [
             'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367340/thumbnail_IMG_4198_fjw5xp.jpg',
             'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367338/20251016_122430_gcn2ne.jpg',
@@ -862,7 +1076,6 @@
             'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367302/20251016_095046_sfpfxj.jpg'
         ];
 
-        // Kaikoura Jack
         const kaikouraJack = [
             'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367462/20250915_124822_gv45sp.jpg',
             'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367461/20250915_124639_bdpgir.jpg',
@@ -884,7 +1097,6 @@
             'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367426/IMG_0154_cfhlx9.jpg'
         ];
 
-        // Warm Welcomes Data
         const warmWelcomes = [
             { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359014/Gregg_Le_Roux_u4my7y.jpg', name: 'Gregg Le Roux', title: 'Our New Principal' },
             { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356710/Melinda_Kerkhoven_sd83yn.png', name: 'Melinda Kerkhoven' },
@@ -910,7 +1122,6 @@
             { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356663/Jacqui_McConnell_mip3ux.jpg', name: 'Jacqui McConnell' }
         ];
 
-        // Fond Farewells Data
         const fondFarewells = [
             { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359218/Mrs_Yolandy_Stander_xehnbv.png', name: 'Yolandy Stander' },
             { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359216/Mrs_Rebecca_Thompson_hylegm.png', name: 'Rebecca Thompson' },
@@ -928,7 +1139,7 @@
             { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359199/Mr_David_Farmer_b5t8ad.png', name: 'David Farmer' }
         ];
 
-        // Shuffle array function
+        // ===== HELPER FUNCTIONS =====
         function shuffleArray(array) {
             const newArray = [...array];
             for (let i = newArray.length - 1; i > 0; i--) {
@@ -938,93 +1149,67 @@
             return newArray;
         }
 
-        // Populate Opening Images (shuffled)
-        const openingImagesContainer = document.getElementById('opening-images');
-        const shuffledImages = shuffleArray(openingImages);
-        shuffledImages.forEach(url => {
-            const div = document.createElement('div');
-            div.className = 'scroll-item';
-            div.innerHTML = `<img src="${url}" alt="School Memory">`;
-            openingImagesContainer.appendChild(div);
-        });
+        function scrollGallery(id, direction) {
+            const container = document.getElementById(id);
+            const scrollAmount = direction === 'left' ? -400 : 400;
+            container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        }
 
-        // Helper function to populate gallery
-        function populateGallery(containerId, imagesArray, shuffle = false) {
+        // ===== 1. SCROLL GALLERIES =====
+        function populateScrollGallery(containerId, images, shuffle = false) {
             const container = document.getElementById(containerId);
-            const images = shuffle ? shuffleArray(imagesArray) : imagesArray;
-            images.forEach(url => {
+            const imagesToUse = shuffle ? shuffleArray(images) : images;
+            imagesToUse.forEach(url => {
                 const div = document.createElement('div');
                 div.className = 'scroll-item';
                 div.innerHTML = `<img src="${url}" alt="School Memory">`;
                 container.appendChild(div);
             });
+
+            // Slower auto-scroll for scroll galleries
+            let scrollAmount = 0;
+            let isPaused = false;
+            let isUserInteracting = false;
+
+            container.addEventListener('mouseenter', () => { isPaused = true; });
+            container.addEventListener('mouseleave', () => { isPaused = false; });
+            container.addEventListener('mousedown', () => {
+                isUserInteracting = true;
+                isPaused = true;
+            });
+            container.addEventListener('mouseup', () => {
+                setTimeout(() => {
+                    isUserInteracting = false;
+                    isPaused = false;
+                }, 2000);
+            });
+
+            setInterval(() => {
+                if (!isPaused && !isUserInteracting) {
+                    scrollAmount += 0.5;
+                    container.scrollLeft = scrollAmount;
+                    if (container.scrollLeft >= (container.scrollWidth - container.clientWidth)) {
+                        scrollAmount = 0;
+                        container.scrollLeft = 0;
+                    }
+                } else if (!isUserInteracting) {
+                    scrollAmount = container.scrollLeft;
+                }
+            }, 50);
         }
 
-        // Populate all galleries
-        populateGallery('primary-opening', primaryOpening);
-        populateGallery('teddy-bears', teddyBears);
-        populateGallery('trekabout', trekabout);
-        populateGallery('book-character', bookCharacter);
-        populateGallery('cultural-day', culturalDay);
-        populateGallery('athletics-day', athleticsDay);
-        populateGallery('kaikoura-jack', kaikouraJack);
-
-        // Populate Warm Welcomes
-        const warmWelcomesContainer = document.getElementById('warm-welcomes');
-        warmWelcomes.forEach(staff => {
-            const div = document.createElement('div');
-            div.className = 'staff-card';
-            div.innerHTML = `
-                <img src="${staff.url}" alt="${staff.name}">
-                <div class="name">${staff.name}</div>
-                ${staff.title ? `<div class="title">${staff.title}</div>` : ''}
-            `;
-            warmWelcomesContainer.appendChild(div);
-        });
-
-        // Populate Fond Farewells
-        const fondFarewellsContainer = document.getElementById('fond-farewells');
-        fondFarewells.forEach(staff => {
-            const div = document.createElement('div');
-            div.className = 'staff-card';
-            div.innerHTML = `
-                <img src="${staff.url}" alt="${staff.name}">
-                <div class="name">${staff.name}</div>
-            `;
-            fondFarewellsContainer.appendChild(div);
-        });
-
-        // Scroll functions
-        function scrollLeft(id) {
-            const container = document.getElementById(id);
-            container.scrollBy({ left: -400, behavior: 'smooth' });
-        }
-
-        function scrollRight(id) {
-            const container = document.getElementById(id);
-            container.scrollBy({ left: 400, behavior: 'smooth' });
-        }
-
-        // Drag to scroll functionality
-        document.querySelectorAll('.scroller-track').forEach(track => {
+        // Drag to scroll for scroll galleries
+        document.querySelectorAll('.scroll-gallery, .staff-gallery').forEach(track => {
             let isDown = false;
-            let startX;
-            let scrollLeft;
+            let startX, scrollLeft;
 
             track.addEventListener('mousedown', (e) => {
                 isDown = true;
                 startX = e.pageX - track.offsetLeft;
                 scrollLeft = track.scrollLeft;
             });
-
-            track.addEventListener('mouseleave', () => {
-                isDown = false;
-            });
-
-            track.addEventListener('mouseup', () => {
-                isDown = false;
-            });
-
+            track.addEventListener('mouseleave', () => { isDown = false; });
+            track.addEventListener('mouseup', () => { isDown = false; });
             track.addEventListener('mousemove', (e) => {
                 if (!isDown) return;
                 e.preventDefault();
@@ -1034,74 +1219,230 @@
             });
         });
 
-        // Auto-scroll functionality for galleries
-        function autoScrollGalleries() {
-            document.querySelectorAll('.scroller-track').forEach(track => {
-                let scrollAmount = 0;
-                let isPaused = false;
-                let isUserInteracting = false;
+        // Populate scroll galleries
+        populateScrollGallery('opening-images', openingImages, true);
+        populateScrollGallery('primary-opening', primaryOpening);
 
-                // Pause on hover
-                track.addEventListener('mouseenter', () => {
-                    isPaused = true;
-                });
+        // ===== 2. STAFF GALLERIES =====
+        function populateStaffGallery(containerId, staff) {
+            const container = document.getElementById(containerId);
+            staff.forEach(person => {
+                const div = document.createElement('div');
+                div.className = 'staff-card';
+                div.innerHTML = `
+                    <img src="${person.url}" alt="${person.name}">
+                    <div class="name">${person.name}</div>
+                    ${person.title ? `<div class="title">${person.title}</div>` : ''}
+                `;
+                container.appendChild(div);
+            });
 
-                track.addEventListener('mouseleave', () => {
+            // Same slow auto-scroll
+            let scrollAmount = 0;
+            let isPaused = false;
+            let isUserInteracting = false;
+
+            container.addEventListener('mouseenter', () => { isPaused = true; });
+            container.addEventListener('mouseleave', () => { isPaused = false; });
+            container.addEventListener('mousedown', () => {
+                isUserInteracting = true;
+                isPaused = true;
+            });
+            container.addEventListener('mouseup', () => {
+                setTimeout(() => {
+                    isUserInteracting = false;
                     isPaused = false;
-                });
+                }, 2000);
+            });
 
-                // Pause on drag
-                track.addEventListener('mousedown', () => {
-                    isUserInteracting = true;
-                    isPaused = true;
-                });
-
-                track.addEventListener('mouseup', () => {
-                    setTimeout(() => {
-                        isUserInteracting = false;
-                        isPaused = false;
-                    }, 2000); // Resume after 2 seconds of no interaction
-                });
-
-                // Auto-scroll animation
-                setInterval(() => {
-                    if (!isPaused && !isUserInteracting) {
-                        scrollAmount += 2;
-                        track.scrollLeft = scrollAmount;
-
-                        // Reset when reaching the end
-                        if (track.scrollLeft >= (track.scrollWidth - track.clientWidth)) {
-                            scrollAmount = 0;
-                            track.scrollLeft = 0;
-                        }
-                    } else if (!isUserInteracting) {
-                        // Sync scrollAmount with current position when paused
-                        scrollAmount = track.scrollLeft;
+            setInterval(() => {
+                if (!isPaused && !isUserInteracting) {
+                    scrollAmount += 0.5;
+                    container.scrollLeft = scrollAmount;
+                    if (container.scrollLeft >= (container.scrollWidth - container.clientWidth)) {
+                        scrollAmount = 0;
+                        container.scrollLeft = 0;
                     }
-                }, 30); // Faster 30ms intervals
+                } else if (!isUserInteracting) {
+                    scrollAmount = container.scrollLeft;
+                }
+            }, 50);
+        }
+
+        populateStaffGallery('warm-welcomes', warmWelcomes);
+        populateStaffGallery('fond-farewells', fondFarewells);
+
+        // ===== 3. CAROUSEL GALLERY =====
+        function createCarousel(containerId, images, imagesPerSlide = 3) {
+            const container = document.getElementById(containerId);
+            const dotsContainer = document.getElementById(containerId.replace('-carousel', '-dots'));
+            
+            const slides = [];
+            for (let i = 0; i < images.length; i += imagesPerSlide) {
+                slides.push(images.slice(i, i + imagesPerSlide));
+            }
+
+            slides.forEach((slideImages, index) => {
+                const slide = document.createElement('div');
+                slide.className = 'carousel-slide';
+                slideImages.forEach(url => {
+                    slide.innerHTML += `<img src="${url}" alt="Gallery">`;
+                });
+                container.appendChild(slide);
+
+                const dot = document.createElement('div');
+                dot.className = 'carousel-dot' + (index === 0 ? ' active' : '');
+                dot.onclick = () => goToSlide(index);
+                dotsContainer.appendChild(dot);
+            });
+
+            let currentSlide = 0;
+
+            function goToSlide(n) {
+                currentSlide = n;
+                container.style.transform = `translateX(-${currentSlide * 100}%)`;
+                document.querySelectorAll(`#${containerId.replace('-carousel', '-dots')} .carousel-dot`).forEach((dot, i) => {
+                    dot.classList.toggle('active', i === currentSlide);
+                });
+            }
+
+            // Auto-rotate
+            setInterval(() => {
+                currentSlide = (currentSlide + 1) % slides.length;
+                goToSlide(currentSlide);
+            }, 4000);
+        }
+
+        createCarousel('teddy-bears-carousel', teddyBears, 3);
+
+        // ===== 4. DIAGONAL SHOWCASE =====
+        function createDiagonal(containerId, images) {
+            const container = document.getElementById(containerId);
+            images.slice(0, 8).forEach((url, i) => {
+                const div = document.createElement('div');
+                div.className = 'diagonal-item';
+                div.style.animationDelay = `${i * 0.1}s`;
+                div.innerHTML = `<img src="${url}" alt="Gallery">`;
+                container.appendChild(div);
             });
         }
 
-        // Start auto-scroll
-        autoScrollGalleries();
+        createDiagonal('trekabout-diagonal', trekabout);
 
-        // Intersection Observer for scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
+        // ===== 5. PARALLAX SCROLL =====
+        function createParallax(containerId, images) {
+            const container = document.getElementById(containerId);
+            
+            const layers = [
+                { class: 'back', images: images.slice(0, 2) },
+                { class: 'middle', images: images.slice(2, 4) },
+                { class: 'front', images: images.slice(4, 7) }
+            ];
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
+            layers.forEach(layer => {
+                const layerDiv = document.createElement('div');
+                layerDiv.className = `parallax-layer ${layer.class}`;
+                layer.images.forEach(url => {
+                    const item = document.createElement('div');
+                    item.className = 'parallax-item';
+                    item.innerHTML = `<img src="${url}" alt="Gallery">`;
+                    layerDiv.appendChild(item);
+                });
+                container.appendChild(layerDiv);
             });
-        }, observerOptions);
 
-        document.querySelectorAll('.animate-on-scroll').forEach(el => {
-            observer.observe(el);
-        });
+            // Simple parallax effect on scroll
+            window.addEventListener('scroll', () => {
+                const rect = container.getBoundingClientRect();
+                const scrolled = window.pageYOffset;
+                
+                document.querySelector('.parallax-layer.back').style.transform = `translateY(${(rect.top - scrolled) * 0.1}px)`;
+                document.querySelector('.parallax-layer.middle').style.transform = `translateY(${(rect.top - scrolled) * 0.2}px)`;
+                document.querySelector('.parallax-layer.front').style.transform = `translateY(${(rect.top - scrolled) * 0.3}px)`;
+            });
+        }
+
+        createParallax('book-character-parallax', bookCharacter);
+
+        // ===== 6. POLAROID GALLERY =====
+        function createPolaroid(containerId, images) {
+            const container = document.getElementById(containerId);
+            
+            images.forEach((url, i) => {
+                const polaroid = document.createElement('div');
+                polaroid.className = 'polaroid';
+                polaroid.style.animationDelay = `${i * 0.1}s`;
+                
+                // Random positioning
+                const left = 50 + (i % 4) * 22 + (Math.random() * 10 - 5);
+                const top = 50 + Math.floor(i / 4) * 30 + (Math.random() * 10 - 5);
+                const rotation = Math.random() * 20 - 10;
+                
+                polaroid.style.left = `${left}%`;
+                polaroid.style.top = `${top}%`;
+                polaroid.style.transform = `translate(-50%, -50%) rotate(${rotation}deg)`;
+                polaroid.style.zIndex = i;
+                
+                polaroid.innerHTML = `<img src="${url}" alt="Gallery">`;
+                container.appendChild(polaroid);
+            });
+        }
+
+        createPolaroid('cultural-day-polaroid', culturalDay);
+
+        // ===== 7. FLIP BOOK =====
+        let currentPage = 0;
+        function createFlipBook(containerId, images) {
+            const container = document.getElementById(containerId);
+            
+            images.forEach((url, i) => {
+                const page = document.createElement('div');
+                page.className = 'flipbook-page';
+                page.style.zIndex = images.length - i;
+                
+                const front = document.createElement('div');
+                front.className = 'page-front';
+                front.innerHTML = `<img src="${url}" alt="Page ${i + 1}">`;
+                
+                const back = document.createElement('div');
+                back.className = 'page-back';
+                if (images[i + 1]) {
+                    back.innerHTML = `<img src="${images[i + 1]}" alt="Page ${i + 2}">`;
+                }
+                
+                page.appendChild(front);
+                page.appendChild(back);
+                container.appendChild(page);
+            });
+        }
+
+        function flipPage(direction) {
+            const pages = document.querySelectorAll('#athletics-flipbook .flipbook-page');
+            
+            if (direction === 'next' && currentPage < pages.length - 1) {
+                pages[currentPage].classList.add('flipped');
+                currentPage++;
+            } else if (direction === 'prev' && currentPage > 0) {
+                currentPage--;
+                pages[currentPage].classList.remove('flipped');
+            }
+        }
+
+        createFlipBook('athletics-flipbook', athleticsDay);
+
+        // ===== 8. MASONRY GALLERY =====
+        function createMasonry(containerId, images) {
+            const container = document.getElementById(containerId);
+            images.forEach((url, i) => {
+                const item = document.createElement('div');
+                item.className = 'masonry-item';
+                item.style.animationDelay = `${i * 0.05}s`;
+                item.innerHTML = `<img src="${url}" alt="Gallery">`;
+                container.appendChild(item);
+            });
+        }
+
+        createMasonry('kaikoura-masonry', kaikouraJack);
     </script>
 </body>
 </html>
