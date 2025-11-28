@@ -120,6 +120,7 @@
             user-select: none;
             scrollbar-width: none;
             -ms-overflow-style: none;
+            animation: autoScroll 60s linear infinite;
         }
 
         .scroller-track::-webkit-scrollbar {
@@ -128,6 +129,20 @@
 
         .scroller-track:active {
             cursor: grabbing;
+            animation-play-state: paused;
+        }
+
+        .scroller-track:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes autoScroll {
+            0% {
+                scroll-behavior: auto;
+            }
+            100% {
+                scroll-behavior: auto;
+            }
         }
 
         .scroller-track.opening-images {
@@ -241,24 +256,55 @@
 
         /* Section Styles */
         .section {
-            padding: 100px 40px;
+            padding: 50px 40px;
             position: relative;
+            overflow: hidden;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.3) 1px, transparent 1px),
+                radial-gradient(circle at 60% 80%, rgba(255, 255, 255, 0.2) 1px, transparent 1px),
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.25) 1px, transparent 1px),
+                radial-gradient(circle at 40% 30%, rgba(255, 255, 255, 0.15) 1px, transparent 1px);
+            background-size: 200px 200px, 300px 300px, 250px 250px, 180px 180px;
+            background-position: 0 0, 50px 50px, 100px 100px, 25px 75px;
+            animation: glitter 8s linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes glitter {
+            0% { 
+                background-position: 0 0, 50px 50px, 100px 100px, 25px 75px;
+                opacity: 0.6;
+            }
+            50% { 
+                opacity: 1;
+            }
+            100% { 
+                background-position: 200px 200px, 250px 250px, 300px 300px, 225px 275px;
+                opacity: 0.6;
+            }
+        }
+
+        .section > * {
+            position: relative;
+            z-index: 2;
         }
 
         .section.red {
             background: linear-gradient(135deg, #8B0000 0%, #DC143C 100%);
         }
 
-        .section.green {
-            background: linear-gradient(135deg, #0B6623 0%, #228B22 100%);
-        }
-
         .section.gold {
-            background: linear-gradient(135deg, #B8860B 0%, #FFD700 100%);
-        }
-
-        .section.blue {
-            background: linear-gradient(135deg, #000080 0%, #1E3A8A 100%);
+            background: linear-gradient(135deg, #DAA520 0%, #FFD700 100%);
         }
 
         .section.black {
@@ -280,7 +326,7 @@
             font-size: clamp(1.5rem, 3vw, 2.5rem);
             color: rgba(255, 255, 255, 0.85);
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 20px;
             font-weight: 600;
             letter-spacing: 3px;
             opacity: 0;
@@ -299,7 +345,7 @@
 
         /* Video Container */
         .video-container {
-            max-width: 900px;
+            max-width: 1125px;
             margin: 40px auto;
             opacity: 0;
             animation: fadeInUp 1s ease-out 0.4s forwards;
@@ -330,7 +376,7 @@
 
         /* Large Image */
         .large-image-container {
-            max-width: 1200px;
+            max-width: 1560px;
             margin: 40px auto;
             opacity: 0;
             animation: fadeInUp 1s ease-out 0.4s forwards;
@@ -405,17 +451,15 @@
     </style>
 </head>
 <body>
-    <!-- Hero Section -->
+    <!-- Hero Section with Opening Images -->
     <div class="hero">
         <div class="hero-content">
             <div class="school-name">Middleton Grange School</div>
             <h1 class="main-title">2025 LOOKBACK</h1>
         </div>
-    </div>
-
-    <!-- Opening Images Gallery -->
-    <div class="section red">
-        <div class="scroller-section">
+        
+        <!-- Opening Images Gallery -->
+        <div class="scroller-section" style="margin-top: 80px;">
             <div class="scroller-container">
                 <button class="scroll-arrow left" onclick="scrollLeft('opening-images')">‹</button>
                 <div class="scroller-track opening-images" id="opening-images">
@@ -427,7 +471,7 @@
     </div>
 
     <!-- 2025 Highlights Video -->
-    <div class="section green animate-on-scroll">
+    <div class="section red animate-on-scroll">
         <h2 class="section-title">2025 Highlights Video</h2>
         <div class="video-container">
             <div class="video-wrapper">
@@ -447,7 +491,7 @@
     </div>
 
     <!-- 2025 Staff -->
-    <div class="section blue animate-on-scroll">
+    <div class="section black animate-on-scroll">
         <h3 class="section-subtitle">2025 Staff</h3>
         <div class="large-image-container">
             <img src="https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356274/Staff_1_bmt0k8.jpg" alt="2025 Staff" class="large-image">
@@ -455,7 +499,7 @@
     </div>
 
     <!-- Warm Welcomes -->
-    <div class="section black animate-on-scroll">
+    <div class="section red animate-on-scroll">
         <h3 class="section-subtitle">Warm Welcomes</h3>
         <div class="scroller-section">
             <div class="scroller-container">
@@ -469,7 +513,7 @@
     </div>
 
     <!-- Fond Farewells -->
-    <div class="section red animate-on-scroll">
+    <div class="section gold animate-on-scroll">
         <h3 class="section-subtitle">Fond Farewells</h3>
         <div class="scroller-section">
             <div class="scroller-container">
@@ -483,7 +527,7 @@
     </div>
 
     <!-- Farewell to Mike Vannoort -->
-    <div class="section green animate-on-scroll">
+    <div class="section black animate-on-scroll">
         <h3 class="section-subtitle">Farewell to Mike Vannoort</h3>
         <div class="video-container">
             <div class="video-wrapper">
@@ -493,7 +537,7 @@
     </div>
 
     <!-- Primary School -->
-    <div class="section gold animate-on-scroll">
+    <div class="section red animate-on-scroll">
         <h2 class="section-title">Primary School</h2>
         <div class="placeholder-container">
             <p class="placeholder-text">Content Coming Soon</p>
@@ -501,7 +545,7 @@
     </div>
 
     <!-- Middle School -->
-    <div class="section blue animate-on-scroll">
+    <div class="section gold animate-on-scroll">
         <h2 class="section-title">Middle School</h2>
         <div class="placeholder-container">
             <p class="placeholder-text">Content Coming Soon</p>
@@ -530,7 +574,7 @@
     </div>
 
     <!-- Performing Arts -->
-    <div class="section green animate-on-scroll">
+    <div class="section gold animate-on-scroll">
         <h2 class="section-title">Performing Arts</h2>
         
         <h3 class="section-subtitle">"In The Grange"</h3>
@@ -543,7 +587,7 @@
     </div>
 
     <!-- Mary Poppins 2025 -->
-    <div class="section gold animate-on-scroll">
+    <div class="section black animate-on-scroll">
         <h3 class="section-subtitle">Mary Poppins 2025</h3>
         <div class="video-container">
             <div class="video-wrapper">
@@ -556,7 +600,7 @@
     </div>
 
     <!-- Senior Jazz Band -->
-    <div class="section blue animate-on-scroll">
+    <div class="section red animate-on-scroll">
         <h3 class="section-subtitle">Senior Jazz Band - JazzBand-it 2025 Entry</h3>
         <div class="video-container">
             <div class="video-wrapper">
@@ -720,6 +764,57 @@
                 track.scrollLeft = scrollLeft - walk;
             });
         });
+
+        // Auto-scroll functionality for galleries
+        function autoScrollGalleries() {
+            document.querySelectorAll('.scroller-track').forEach(track => {
+                let scrollAmount = 0;
+                let isPaused = false;
+                let isUserInteracting = false;
+
+                // Pause on hover
+                track.addEventListener('mouseenter', () => {
+                    isPaused = true;
+                });
+
+                track.addEventListener('mouseleave', () => {
+                    isPaused = false;
+                });
+
+                // Pause on drag
+                track.addEventListener('mousedown', () => {
+                    isUserInteracting = true;
+                    isPaused = true;
+                });
+
+                track.addEventListener('mouseup', () => {
+                    setTimeout(() => {
+                        isUserInteracting = false;
+                        isPaused = false;
+                    }, 2000); // Resume after 2 seconds of no interaction
+                });
+
+                // Auto-scroll animation
+                setInterval(() => {
+                    if (!isPaused && !isUserInteracting) {
+                        scrollAmount += 1;
+                        track.scrollLeft = scrollAmount;
+
+                        // Reset when reaching the end
+                        if (track.scrollLeft >= (track.scrollWidth - track.clientWidth)) {
+                            scrollAmount = 0;
+                            track.scrollLeft = 0;
+                        }
+                    } else if (!isUserInteracting) {
+                        // Sync scrollAmount with current position when paused
+                        scrollAmount = track.scrollLeft;
+                    }
+                }, 50); // Smooth 50ms intervals
+            });
+        }
+
+        // Start auto-scroll
+        autoScrollGalleries();
 
         // Intersection Observer for scroll animations
         const observerOptions = {
