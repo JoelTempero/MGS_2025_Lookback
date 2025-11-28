@@ -124,21 +124,22 @@
         }
 
         .scroller-track::-webkit-scrollbar {
-            height: 6px;
+            height: 2px;
         }
 
         .scroller-track::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 10px;
         }
 
         .scroller-track::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            min-width: 30px;
         }
 
         .scroller-track::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.6);
         }
 
         .scroller-track:active {
@@ -289,31 +290,38 @@
             width: 100%;
             height: 100%;
             background-image: 
-                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.6) 2px, transparent 2px),
-                radial-gradient(circle at 60% 80%, rgba(255, 255, 255, 0.5) 2px, transparent 2px),
-                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.55) 2px, transparent 2px),
-                radial-gradient(circle at 40% 30%, rgba(255, 255, 255, 0.4) 1.5px, transparent 1.5px),
-                radial-gradient(circle at 90% 70%, rgba(255, 255, 255, 0.45) 1.5px, transparent 1.5px),
-                radial-gradient(circle at 10% 90%, rgba(255, 255, 255, 0.5) 2px, transparent 2px);
-            background-size: 200px 200px, 300px 300px, 250px 250px, 180px 180px, 220px 220px, 280px 280px;
-            background-position: 0 0, 50px 50px, 100px 100px, 25px 75px, 150px 25px, 75px 150px;
-            animation: glitter 8s linear infinite;
+                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.25) 1px, transparent 1px),
+                radial-gradient(circle at 60% 80%, rgba(255, 255, 255, 0.2) 1px, transparent 1px),
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.22) 1px, transparent 1px),
+                radial-gradient(circle at 40% 30%, rgba(255, 255, 255, 0.15) 1px, transparent 1px),
+                radial-gradient(circle at 90% 70%, rgba(255, 255, 255, 0.18) 1px, transparent 1px),
+                radial-gradient(circle at 10% 90%, rgba(255, 255, 255, 0.2) 1px, transparent 1px),
+                radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.3) 0.5px, transparent 0.5px),
+                radial-gradient(circle at 70% 40%, rgba(255, 255, 255, 0.25) 0.5px, transparent 0.5px);
+            background-size: 200px 200px, 300px 300px, 250px 250px, 180px 180px, 220px 220px, 280px 280px, 150px 150px, 190px 190px;
+            background-position: 0 0, 50px 50px, 100px 100px, 25px 75px, 150px 25px, 75px 150px, 120px 80px, 180px 120px;
+            animation: glitter 10s linear infinite;
             pointer-events: none;
             z-index: 1;
-            filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.8));
         }
 
         @keyframes glitter {
             0% { 
-                background-position: 0 0, 50px 50px, 100px 100px, 25px 75px, 150px 25px, 75px 150px;
-                opacity: 0.8;
+                background-position: 0 0, 50px 50px, 100px 100px, 25px 75px, 150px 25px, 75px 150px, 120px 80px, 180px 120px;
+                opacity: 0.4;
+            }
+            25% {
+                opacity: 0.6;
             }
             50% { 
-                opacity: 1;
+                opacity: 0.3;
+            }
+            75% {
+                opacity: 0.7;
             }
             100% { 
-                background-position: 200px 200px, 250px 250px, 300px 300px, 225px 275px, 350px 225px, 275px 350px;
-                opacity: 0.8;
+                background-position: 200px 200px, 250px 250px, 300px 300px, 225px 275px, 350px 225px, 275px 350px, 320px 280px, 380px 320px;
+                opacity: 0.4;
             }
         }
 
@@ -328,6 +336,10 @@
 
         .section.gold {
             background: linear-gradient(135deg, #c18a1a 0%, #eaa221 100%);
+        }
+
+        .section.blue {
+            background: linear-gradient(135deg, #1d3e5c 0%, #2E5278 100%);
         }
 
         .section.black {
@@ -494,7 +506,7 @@
     </div>
 
     <!-- 2025 Highlights Video -->
-    <div class="section red animate-on-scroll">
+    <div class="section gold animate-on-scroll">
         <h2 class="section-title">2025 Highlights Video</h2>
         <div class="video-container">
             <div class="video-wrapper">
@@ -504,7 +516,7 @@
     </div>
 
     <!-- Student Leaders 2025 -->
-    <div class="section gold animate-on-scroll">
+    <div class="section blue animate-on-scroll">
         <h2 class="section-title">Student Leaders 2025</h2>
         <div class="video-container">
             <div class="video-wrapper">
@@ -536,7 +548,7 @@
     </div>
 
     <!-- Fond Farewells -->
-    <div class="section gold animate-on-scroll">
+    <div class="section red animate-on-scroll">
         <h3 class="section-subtitle">Fond Farewells</h3>
         <div class="scroller-section">
             <div class="scroller-container">
@@ -550,7 +562,7 @@
     </div>
 
     <!-- Farewell to Mike Vannoort -->
-    <div class="section black animate-on-scroll">
+    <div class="section gold animate-on-scroll">
         <h3 class="section-subtitle">Farewell to Mike Vannoort</h3>
         <div class="video-container">
             <div class="video-wrapper">
@@ -560,15 +572,105 @@
     </div>
 
     <!-- Primary School -->
-    <div class="section red animate-on-scroll">
+    <div class="section blue animate-on-scroll">
         <h2 class="section-title">Primary School</h2>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
+        <div class="scroller-section">
+            <div class="scroller-container">
+                <button class="scroll-arrow left" onclick="scrollLeft('primary-opening')">‹</button>
+                <div class="scroller-track opening-images" id="primary-opening">
+                    <!-- Images will be added by JavaScript -->
+                </div>
+                <button class="scroll-arrow right" onclick="scrollRight('primary-opening')">›</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Teddy Bears Picnic -->
+    <div class="section blue animate-on-scroll">
+        <h2 class="section-title">Teddy Bears Picnic</h2>
+        <div class="scroller-section">
+            <div class="scroller-container">
+                <button class="scroll-arrow left" onclick="scrollLeft('teddy-bears')">‹</button>
+                <div class="scroller-track opening-images" id="teddy-bears">
+                    <!-- Images will be added by JavaScript -->
+                </div>
+                <button class="scroll-arrow right" onclick="scrollRight('teddy-bears')">›</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Trekabout Tuesday -->
+    <div class="section blue animate-on-scroll">
+        <h2 class="section-title">Trekabout Tuesday</h2>
+        <div class="scroller-section">
+            <div class="scroller-container">
+                <button class="scroll-arrow left" onclick="scrollLeft('trekabout')">‹</button>
+                <div class="scroller-track opening-images" id="trekabout">
+                    <!-- Images will be added by JavaScript -->
+                </div>
+                <button class="scroll-arrow right" onclick="scrollRight('trekabout')">›</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Book Character Day -->
+    <div class="section blue animate-on-scroll">
+        <h2 class="section-title">Book Character Day</h2>
+        <div class="scroller-section">
+            <div class="scroller-container">
+                <button class="scroll-arrow left" onclick="scrollLeft('book-character')">‹</button>
+                <div class="scroller-track opening-images" id="book-character">
+                    <!-- Images will be added by JavaScript -->
+                </div>
+                <button class="scroll-arrow right" onclick="scrollRight('book-character')">›</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cultural Day -->
+    <div class="section blue animate-on-scroll">
+        <h2 class="section-title">Cultural Day</h2>
+        <div class="scroller-section">
+            <div class="scroller-container">
+                <button class="scroll-arrow left" onclick="scrollLeft('cultural-day')">‹</button>
+                <div class="scroller-track opening-images" id="cultural-day">
+                    <!-- Images will be added by JavaScript -->
+                </div>
+                <button class="scroll-arrow right" onclick="scrollRight('cultural-day')">›</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Athletics Day -->
+    <div class="section blue animate-on-scroll">
+        <h2 class="section-title">Athletics Day</h2>
+        <div class="scroller-section">
+            <div class="scroller-container">
+                <button class="scroll-arrow left" onclick="scrollLeft('athletics-day')">‹</button>
+                <div class="scroller-track opening-images" id="athletics-day">
+                    <!-- Images will be added by JavaScript -->
+                </div>
+                <button class="scroll-arrow right" onclick="scrollRight('athletics-day')">›</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kaikoura Jack -->
+    <div class="section blue animate-on-scroll">
+        <h2 class="section-title">Kaikoura Jack</h2>
+        <div class="scroller-section">
+            <div class="scroller-container">
+                <button class="scroll-arrow left" onclick="scrollLeft('kaikoura-jack')">‹</button>
+                <div class="scroller-track opening-images" id="kaikoura-jack">
+                    <!-- Images will be added by JavaScript -->
+                </div>
+                <button class="scroll-arrow right" onclick="scrollRight('kaikoura-jack')">›</button>
+            </div>
         </div>
     </div>
 
     <!-- Middle School -->
-    <div class="section gold animate-on-scroll">
+    <div class="section red animate-on-scroll">
         <h2 class="section-title">Middle School</h2>
         <div class="placeholder-container">
             <p class="placeholder-text">Content Coming Soon</p>
@@ -576,7 +678,7 @@
     </div>
 
     <!-- Senior College -->
-    <div class="section black animate-on-scroll">
+    <div class="section gold animate-on-scroll">
         <h2 class="section-title">Senior College</h2>
         <div class="placeholder-container">
             <p class="placeholder-text">Content Coming Soon</p>
@@ -584,7 +686,7 @@
     </div>
 
     <!-- School Formal -->
-    <div class="section red animate-on-scroll">
+    <div class="section gold animate-on-scroll">
         <h2 class="section-title">School Formal</h2>
         <div class="placeholder-container">
             <p class="placeholder-text">Content Coming Soon</p>
@@ -597,7 +699,7 @@
     </div>
 
     <!-- Performing Arts -->
-    <div class="section gold animate-on-scroll">
+    <div class="section black animate-on-scroll">
         <h2 class="section-title">Performing Arts</h2>
         
         <h3 class="section-subtitle">"In The Grange"</h3>
@@ -607,11 +709,8 @@
                 <iframe src="https://www.youtube.com/embed/K8iWSDupx0k" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
         </div>
-    </div>
 
-    <!-- Mary Poppins 2025 -->
-    <div class="section black animate-on-scroll">
-        <h3 class="section-subtitle">Mary Poppins 2025</h3>
+        <h3 class="section-subtitle" style="margin-top: 80px;">Mary Poppins 2025</h3>
         <div class="video-container">
             <div class="video-wrapper">
                 <iframe src="https://www.youtube.com/embed/sNf9LIyXw4s?start=443" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -620,15 +719,28 @@
         <div class="placeholder-container">
             <p class="placeholder-text">Content Coming Soon</p>
         </div>
-    </div>
 
-    <!-- Senior Jazz Band -->
-    <div class="section red animate-on-scroll">
-        <h3 class="section-subtitle">Senior Jazz Band - JazzBand-it 2025 Entry</h3>
+        <h3 class="section-subtitle" style="margin-top: 80px;">Senior Jazz Band - JazzBand-it 2025 Entry</h3>
         <div class="video-container">
             <div class="video-wrapper">
                 <iframe src="https://www.youtube.com/embed/NttqjfP8kvk?start=7" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
+        </div>
+    </div>
+
+    <!-- Sports -->
+    <div class="section red animate-on-scroll">
+        <h2 class="section-title">Sports</h2>
+        <div class="placeholder-container">
+            <p class="placeholder-text">Content Coming Soon</p>
+        </div>
+    </div>
+
+    <!-- School Life -->
+    <div class="section blue animate-on-scroll">
+        <h2 class="section-title">School Life</h2>
+        <div class="placeholder-container">
+            <p class="placeholder-text">Content Coming Soon</p>
         </div>
     </div>
 
@@ -657,6 +769,119 @@
             'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359338/thumbnail_20250313_123609_knuxpr.jpg',
             'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359331/IMG_0882_p3asbm.jpg',
             'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764355388/Head_Students_1_nizfuj.jpg'
+        ];
+
+        // Primary Opening Content
+        const primaryOpening = [
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365876/Possums_msuync.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365845/20250909_100957_jsjjka.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365814/Whole_Class_1_sbsviw.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365792/20250212_085710_ezapya.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365777/Rm14_ou5cui.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365759/Swimming_Pyjama_Day_udnwbp.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365732/IMG_4411_mgyxdu.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365715/Room_3_pic_4_bgdnyt.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365687/Class_photo_outside-_3.9.25_vifhni.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365672/Fairy_Penguins_ndggyl.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365565/R5_Raindrops_wcntvo.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365551/Photo_3_tjpt7u.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365539/20250909_094742_zgwbt3.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366074/500-constrained-f8265475-d589-47dd-9ea0-6ff79eaba196_myqry2.png'
+        ];
+
+        // Teddy Bears Picnic
+        const teddyBears = [
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366877/IMG_0882_ozj8yq.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366876/IMG_0880_amh1ey.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366876/IMG_0876_mcr7dj.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366875/IMG_0872_bzczs9.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366874/IMG_0871_zbfr4f.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366874/IMG_0866_yacfpt.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366874/IMG_0862_vnn9zj.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366873/thumbnail_20250313_123609_b63cgv.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366873/thumbnail_20250313_123845A_bxff0b.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366873/thumbnail_20250313_123709A_deshsc.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366873/thumbnail_20250313_123641_g4ygn9.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366873/thumbnail_20250313_124023_gc5rta.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366873/thumbnail_20250313_123917A_uerjtc.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366872/thumbnail_20250313_121901_emq8f9.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366872/Girls_at_TD_dtotnv.jpg'
+        ];
+
+        // Trekabout Tuesday
+        const trekabout = [
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367029/20250506_134032_pfmfyo.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367028/20250506_132757_pnb3c9.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367027/20250506_131341_nytygg.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367026/20250506_123249_llwkgu.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367014/20250902_111545_r7v7xm.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367013/20250902_111400_0_co0fcz.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367013/20250902_104525_onfoti.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367002/thumbnail_IMG_5274_rsgfei.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367001/Messenger_creation_86B64152-60DE-4AA0-9602-7892EBF017FA_e0jkpg.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367000/Godley_Heads_otpyk5.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366999/20250225_133904_zov1oq.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366998/20250225_100458_u0efn2.jpg'
+        ];
+
+        // Book Character Day
+        const bookCharacter = [
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367134/20250813_094449_alvpte.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367133/20250813_094939_thd7p4.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367132/20250813_101432_da63ce.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367131/20250813_100822_jlr9xh.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367128/20250813_094732_sqv1pi.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367129/20250813_100730_rhu61y.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367128/20250813_100044_cw9kzq.jpg'
+        ];
+
+        // Cultural Day
+        const culturalDay = [
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367200/20251017_104038_mdykga.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367197/20251017_103822_phlq6v.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367193/20251017_103822_ilpa8t.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367187/20251017_103520_qtv2ab.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367182/20251017_102811_bdvvuh.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367177/20251017_101416_odh1ro.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367176/20251017_101706_nhmi0t.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367174/20251017_100826_0_abilqe.jpg'
+        ];
+
+        // Athletics Day
+        const athleticsDay = [
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367340/thumbnail_IMG_4198_fjw5xp.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367338/20251016_122430_gcn2ne.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367337/20251016_114911_a1nn4c.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367335/20251016_115016_2_d3sevg.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367334/thumbnail_IMG_4202_glkor0.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367310/20251016_094946_jfxm3b.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367308/20251016_100041_wd7yin.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367306/20251016_095548_efs0of.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367305/20251016_095424_gpgbdu.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367303/20251016_095408_lwltpx.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367302/20251016_095046_sfpfxj.jpg'
+        ];
+
+        // Kaikoura Jack
+        const kaikouraJack = [
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367462/20250915_124822_gv45sp.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367461/20250915_124639_bdpgir.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367459/20250915_124658_avkxkr.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367457/20250915_131002_nlpvxb.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367455/20250915_130305_rphgwm.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367446/IMG_0062_se53ov.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367444/IMG_0015_uwfhmf.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367443/IMG_9926_ethwnq.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367440/IMG_9814_m8iiir.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367439/IMG_9772_yrr9hn.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367437/IMG_9727_kkhqpl.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367435/IMG_0480_mjzntl.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367434/IMG_0417_zfvvzm.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367429/IMG_0221_zd1atg.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367432/IMG_0413_xvb4av.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367430/IMG_0293_xvmjcx.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367429/IMG_0176_etulz3.jpg',
+            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367426/IMG_0154_cfhlx9.jpg'
         ];
 
         // Warm Welcomes Data
@@ -722,6 +947,27 @@
             div.innerHTML = `<img src="${url}" alt="School Memory">`;
             openingImagesContainer.appendChild(div);
         });
+
+        // Helper function to populate gallery
+        function populateGallery(containerId, imagesArray, shuffle = false) {
+            const container = document.getElementById(containerId);
+            const images = shuffle ? shuffleArray(imagesArray) : imagesArray;
+            images.forEach(url => {
+                const div = document.createElement('div');
+                div.className = 'scroll-item';
+                div.innerHTML = `<img src="${url}" alt="School Memory">`;
+                container.appendChild(div);
+            });
+        }
+
+        // Populate all galleries
+        populateGallery('primary-opening', primaryOpening);
+        populateGallery('teddy-bears', teddyBears);
+        populateGallery('trekabout', trekabout);
+        populateGallery('book-character', bookCharacter);
+        populateGallery('cultural-day', culturalDay);
+        populateGallery('athletics-day', athleticsDay);
+        populateGallery('kaikoura-jack', kaikouraJack);
 
         // Populate Warm Welcomes
         const warmWelcomesContainer = document.getElementById('warm-welcomes');
@@ -820,7 +1066,7 @@
                 // Auto-scroll animation
                 setInterval(() => {
                     if (!isPaused && !isUserInteracting) {
-                        scrollAmount += 1;
+                        scrollAmount += 2;
                         track.scrollLeft = scrollAmount;
 
                         // Reset when reaching the end
@@ -832,7 +1078,7 @@
                         // Sync scrollAmount with current position when paused
                         scrollAmount = track.scrollLeft;
                     }
-                }, 50); // Smooth 50ms intervals
+                }, 30); // Faster 30ms intervals
             });
         }
 
