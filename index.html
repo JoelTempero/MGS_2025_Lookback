@@ -25,7 +25,8 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            position: relative;
+            position: sticky;
+            top: 0;
             overflow: hidden;
         }
 
@@ -104,49 +105,6 @@
             top: 0;
             overflow: hidden;
             min-height: 100vh;
-        }
-
-        .section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.25) 1px, transparent 1px),
-                radial-gradient(circle at 60% 80%, rgba(255, 255, 255, 0.2) 1px, transparent 1px),
-                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.22) 1px, transparent 1px),
-                radial-gradient(circle at 40% 30%, rgba(255, 255, 255, 0.15) 1px, transparent 1px),
-                radial-gradient(circle at 90% 70%, rgba(255, 255, 255, 0.18) 1px, transparent 1px),
-                radial-gradient(circle at 10% 90%, rgba(255, 255, 255, 0.2) 1px, transparent 1px),
-                radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.3) 0.5px, transparent 0.5px),
-                radial-gradient(circle at 70% 40%, rgba(255, 255, 255, 0.25) 0.5px, transparent 0.5px);
-            background-size: 200px 200px, 300px 300px, 250px 250px, 180px 180px, 220px 220px, 280px 280px, 150px 150px, 190px 190px;
-            background-position: 0 0, 50px 50px, 100px 100px, 25px 75px, 150px 25px, 75px 150px, 120px 80px, 180px 120px;
-            animation: glitter 10s linear infinite;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        @keyframes glitter {
-            0% { 
-                background-position: 0 0, 50px 50px, 100px 100px, 25px 75px, 150px 25px, 75px 150px, 120px 80px, 180px 120px;
-                opacity: 0.4;
-            }
-            25% {
-                opacity: 0.6;
-            }
-            50% { 
-                opacity: 0.3;
-            }
-            75% {
-                opacity: 0.7;
-            }
-            100% { 
-                background-position: 200px 200px, 250px 250px, 300px 300px, 225px 275px, 350px 225px, 275px 350px, 320px 280px, 380px 320px;
-                opacity: 0.4;
-            }
         }
 
         .section > * {
@@ -240,6 +198,13 @@
 
         .auto-scroll-item:nth-child(n+6) { animation-delay: 0.6s; }
 
+        @keyframes fadeInItem {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         .auto-scroll-item img {
             height: 100%;
             width: auto;
@@ -332,286 +297,27 @@
             margin-top: 5px;
         }
 
-        /* 3. CAROUSEL GALLERY */
-        .carousel-container {
-            max-width: 1400px;
-            margin: 40px auto;
-            position: relative;
-            overflow: hidden;
-            padding: 0 20px;
-        }
-
-        .carousel-track {
-            display: flex;
-            transition: transform 0.5s ease-in-out;
-        }
-
-        .carousel-slide {
-            min-width: 100%;
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            padding: 20px;
-        }
-
-        .carousel-slide img {
-            height: 400px;
-            width: auto;
-            max-width: calc((100% - 60px) / 3);
-            object-fit: contain;
-            border-radius: 15px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-        }
-
-        .carousel-dots {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 30px;
-        }
-
-        .carousel-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .carousel-dot.active {
-            background: rgba(255, 255, 255, 0.9);
-            transform: scale(1.3);
-        }
-
-        /* 4. DIAGONAL SHOWCASE */
-        .diagonal-container {
-            max-width: 1400px;
-            margin: 40px auto;
-            position: relative;
-            height: 600px;
-            overflow: hidden;
-        }
-
-        .diagonal-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            transform: rotate(-5deg) scale(1.1);
-            animation: diagonalFloat 20s ease-in-out infinite;
-        }
-
-        .diagonal-grid.reverse {
-            transform: rotate(5deg) scale(1.1);
-            animation: diagonalFloatReverse 20s ease-in-out infinite;
-        }
-
-        @keyframes diagonalFloat {
-            0%, 100% { transform: rotate(-5deg) scale(1.1) translateX(0); }
-            50% { transform: rotate(-5deg) scale(1.1) translateX(-100px); }
-        }
-
-        @keyframes diagonalFloatReverse {
-            0%, 100% { transform: rotate(5deg) scale(1.1) translateX(0); }
-            50% { transform: rotate(5deg) scale(1.1) translateX(100px); }
-        }
-
-        .diagonal-item {
-            position: relative;
-            overflow: hidden;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            animation: fadeIn 1s ease-out forwards;
-            opacity: 0;
-        }
-
-        .diagonal-item:nth-child(1) { animation-delay: 0.1s; }
-        .diagonal-item:nth-child(2) { animation-delay: 0.2s; }
-        .diagonal-item:nth-child(3) { animation-delay: 0.3s; }
-        .diagonal-item:nth-child(4) { animation-delay: 0.4s; }
-
-        .diagonal-item img {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-            transition: transform 0.5s;
-        }
-
-        .diagonal-item:hover img {
-            transform: scale(1.1);
-        }
-
-        /* 5. PARALLAX SCROLL */
-        .parallax-container {
-            max-width: 1200px;
-            margin: 40px auto;
-            min-height: 600px;
-            position: relative;
-            overflow: visible;
-        }
-
-        .parallax-layer {
-            position: relative;
-            width: 100%;
-            display: flex;
-            gap: 30px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        .parallax-item {
-            flex-shrink: 0;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-            animation: fadeIn 1s ease-out forwards;
-            opacity: 0;
-        }
-
-        .parallax-item img {
-            width: 350px;
-            height: 250px;
-            object-fit: cover;
-        }
-
-        /* 6. POLAROID GALLERY */
-        .polaroid-container {
-            max-width: 1000px;
-            margin: 60px auto;
-            min-height: 500px;
-            position: relative;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            gap: 30px;
-        }
-
-        .polaroid {
-            position: relative;
-            background: white;
-            padding: 15px 15px 50px 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-            transform-origin: center;
-            animation: fadeIn 0.8s ease-out forwards;
-            opacity: 0;
-        }
-
-        .polaroid img {
-            width: 250px;
-            height: 250px;
-            object-fit: cover;
-            display: block;
-        }
-
-        /* 7. FLIP BOOK GALLERY */
-        .flipbook-container {
-            max-width: 1200px;
-            margin: 40px auto;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(2, 1fr);
-            gap: 30px;
-            min-height: 600px;
-        }
-
-        .flipbook-item {
-            perspective: 1500px;
-            height: 280px;
-            position: relative;
-        }
-
-        .flipbook-page {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            transform-style: preserve-3d;
-            transition: transform 0.8s;
-        }
-
-        .flipbook-page.flipped {
-            transform: rotateY(-180deg);
-        }
-
-        .page-front, .page-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-        }
-
-        .page-back {
-            transform: rotateY(180deg);
-        }
-
-        .flipbook-page img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* 8. MASONRY GALLERY - Random Sizes */
+        /* 3. MASONRY GALLERY - Simplified */
         .masonry-container {
             max-width: 1400px;
             margin: 40px auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            grid-auto-rows: 50px;
-            gap: 15px;
+            column-count: 4;
+            column-gap: 15px;
         }
 
         .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 15px;
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             animation: fadeInItem 0.8s ease-out forwards;
             opacity: 0;
-            transition: transform 0.3s;
-        }
-
-        .masonry-item:hover {
-            transform: scale(1.02);
         }
 
         .masonry-item img {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
             display: block;
-        }
-
-        /* Random grid spanning */
-        .masonry-item.size-1 {
-            grid-column: span 1;
-            grid-row: span 4;
-        }
-
-        .masonry-item.size-2 {
-            grid-column: span 1;
-            grid-row: span 6;
-        }
-
-        .masonry-item.size-3 {
-            grid-column: span 2;
-            grid-row: span 5;
-        }
-
-        .masonry-item.size-4 {
-            grid-column: span 2;
-            grid-row: span 7;
-        }
-
-        .masonry-item.size-5 {
-            grid-column: span 1;
-            grid-row: span 5;
-        }
-
-        .masonry-item.size-6 {
-            grid-column: span 2;
-            grid-row: span 6;
         }
 
         /* Video Container */
@@ -813,59 +519,40 @@
         </div>
     </div>
 
-    <!-- Teddy Bears Picnic - CAROUSEL -->
+    <!-- Teddy Bears Picnic -->
     <div class="section blue animate-on-scroll">
         <h3 class="section-subtitle">Teddy Bears Picnic</h3>
-        <div class="carousel-container">
-            <div class="carousel-track" id="teddy-bears-carousel">
-                <!-- Slides populated by JavaScript -->
-            </div>
-            <div class="carousel-dots" id="teddy-bears-dots"></div>
-        </div>
+        <div class="masonry-container" id="teddy-bears-masonry"></div>
     </div>
 
-    <!-- Trekabout Tuesday - DIAGONAL SHOWCASE -->
+    <!-- Trekabout Tuesday -->
     <div class="section blue animate-on-scroll">
         <h3 class="section-subtitle">Trekabout Tuesday</h3>
-        <div class="diagonal-container">
-            <div class="diagonal-grid" id="trekabout-diagonal">
-                <!-- Images populated by JavaScript -->
-            </div>
-        </div>
+        <div class="masonry-container" id="trekabout-masonry"></div>
     </div>
 
-    <!-- Book Character Day - DIAGONAL SHOWCASE REVERSE -->
+    <!-- Book Character Day -->
     <div class="section blue animate-on-scroll">
         <h3 class="section-subtitle">Book Character Day</h3>
-        <div class="diagonal-container">
-            <div class="diagonal-grid reverse" id="book-character-diagonal">
-                <!-- Images populated by JavaScript -->
-            </div>
-        </div>
+        <div class="masonry-container" id="book-character-masonry"></div>
     </div>
 
-    <!-- Cultural Day - POLAROID GALLERY -->
+    <!-- Cultural Day -->
     <div class="section blue animate-on-scroll">
         <h3 class="section-subtitle">Cultural Day</h3>
-        <div class="polaroid-container" id="cultural-day-polaroid">
-            <!-- Polaroids populated by JavaScript -->
-        </div>
+        <div class="masonry-container" id="cultural-day-masonry"></div>
     </div>
 
-    <!-- Athletics Day - FLIP BOOK -->
+    <!-- Athletics Day -->
     <div class="section blue animate-on-scroll">
         <h3 class="section-subtitle">Athletics Day</h3>
-        <div class="flipbook-container" id="athletics-flipbook">
-            <!-- Mini flip books populated by JavaScript -->
-        </div>
+        <div class="masonry-container" id="athletics-masonry"></div>
     </div>
 
-    <!-- Kaikoura Jack - MASONRY -->
+    <!-- Kaikoura Jack -->
     <div class="section blue animate-on-scroll">
         <h3 class="section-subtitle">Kaikoura Jack</h3>
-        <div class="masonry-container" id="kaikoura-masonry">
-            <!-- Items populated by JavaScript -->
-        </div>
+        <div class="masonry-container" id="kaikoura-masonry"></div>
     </div>
 
     <!-- Middle School -->
@@ -1519,146 +1206,25 @@
         populateStaffGallery('warm-welcomes', warmWelcomes, true);
         populateStaffGallery('fond-farewells', fondFarewells, false);
 
-        // ===== 3. CAROUSEL GALLERY =====
-        function createCarousel(containerId, images, imagesPerSlide = 3) {
-            const container = document.getElementById(containerId);
-            const dotsContainer = document.getElementById(containerId.replace('-carousel', '-dots'));
-            
-            const slides = [];
-            for (let i = 0; i < images.length; i += imagesPerSlide) {
-                slides.push(images.slice(i, i + imagesPerSlide));
-            }
-
-            slides.forEach((slideImages, index) => {
-                const slide = document.createElement('div');
-                slide.className = 'carousel-slide';
-                slideImages.forEach(url => {
-                    slide.innerHTML += `<img src="${url}" alt="Gallery">`;
-                });
-                container.appendChild(slide);
-
-                const dot = document.createElement('div');
-                dot.className = 'carousel-dot' + (index === 0 ? ' active' : '');
-                dot.onclick = () => goToSlide(index);
-                dotsContainer.appendChild(dot);
-            });
-
-            let currentSlide = 0;
-
-            function goToSlide(n) {
-                currentSlide = n;
-                container.style.transform = `translateX(-${currentSlide * 100}%)`;
-                document.querySelectorAll(`#${containerId.replace('-carousel', '-dots')} .carousel-dot`).forEach((dot, i) => {
-                    dot.classList.toggle('active', i === currentSlide);
-                });
-            }
-
-            // Auto-rotate
-            setInterval(() => {
-                currentSlide = (currentSlide + 1) % slides.length;
-                goToSlide(currentSlide);
-            }, 4000);
-        }
-
-        createCarousel('teddy-bears-carousel', teddyBears, 3);
-
-        // ===== 4. DIAGONAL SHOWCASE =====
-        function createDiagonal(containerId, images, limit = 8) {
-            const container = document.getElementById(containerId);
-            images.slice(0, limit).forEach((url, i) => {
-                const div = document.createElement('div');
-                div.className = 'diagonal-item';
-                div.style.animationDelay = `${i * 0.1}s`;
-                div.innerHTML = `<img src="${url}" alt="Gallery">`;
-                container.appendChild(div);
-            });
-        }
-
-        createDiagonal('trekabout-diagonal', trekabout, 8);
-        createDiagonal('book-character-diagonal', bookCharacter, 7);
-
-        // ===== 6. POLAROID GALLERY =====
-        function createPolaroid(containerId, images) {
-            const container = document.getElementById(containerId);
-            
-            images.forEach((url, i) => {
-                const polaroid = document.createElement('div');
-                polaroid.className = 'polaroid';
-                polaroid.style.animationDelay = `${i * 0.1}s`;
-                
-                // Random slight rotation for polaroid effect
-                const rotation = Math.random() * 12 - 6;
-                polaroid.style.transform = `rotate(${rotation}deg)`;
-                
-                polaroid.innerHTML = `<img src="${url}" alt="Gallery">`;
-                container.appendChild(polaroid);
-            });
-        }
-
-        createPolaroid('cultural-day-polaroid', culturalDay);
-
-        // ===== 7. FLIP BOOK (6 books, no blank slots) =====
-        function createFlipBook(containerId, images) {
-            const container = document.getElementById(containerId);
-            const booksCount = 6;
-            
-            // Ensure we have at least 12 images by duplicating if needed
-            while (images.length < booksCount * 2) {
-                images = [...images, ...images];
-            }
-            
-            for (let i = 0; i < booksCount; i++) {
-                const bookItem = document.createElement('div');
-                bookItem.className = 'flipbook-item';
-                
-                const page = document.createElement('div');
-                page.className = 'flipbook-page';
-                
-                const frontIndex = i * 2;
-                const backIndex = (i * 2) + 1;
-                
-                const front = document.createElement('div');
-                front.className = 'page-front';
-                front.innerHTML = `<img src="${images[frontIndex]}" alt="Page">`;
-                
-                const back = document.createElement('div');
-                back.className = 'page-back';
-                back.innerHTML = `<img src="${images[backIndex]}" alt="Page">`;
-                
-                page.appendChild(front);
-                page.appendChild(back);
-                bookItem.appendChild(page);
-                container.appendChild(bookItem);
-                
-                // Random auto-flip for each book
-                setInterval(() => {
-                    if (Math.random() > 0.5) {
-                        page.classList.toggle('flipped');
-                    }
-                }, 2000 + (i * 500));
-            }
-        }
-
-        createFlipBook('athletics-flipbook', [...athleticsDay]);
-
-        // ===== 8. MASONRY GALLERY (truly random sizes) =====
+        // ===== 3. MASONRY GALLERY (simple) =====
         function createMasonry(containerId, images) {
             const container = document.getElementById(containerId);
-            const sizes = ['size-1', 'size-2', 'size-3', 'size-4', 'size-5', 'size-6'];
             
             images.forEach((url, i) => {
                 const item = document.createElement('div');
-                
-                // Randomly assign sizes for variety
-                const randomSize = sizes[Math.floor(Math.random() * sizes.length)];
-                
-                item.className = `masonry-item ${randomSize}`;
+                item.className = 'masonry-item';
                 item.style.animationDelay = `${i * 0.05}s`;
                 item.innerHTML = `<img src="${url}" alt="Gallery">`;
                 container.appendChild(item);
             });
         }
 
+        // Create all masonry galleries
+        createMasonry('teddy-bears-masonry', teddyBears);
+        createMasonry('trekabout-masonry', trekabout);
+        createMasonry('book-character-masonry', bookCharacter);
+        createMasonry('cultural-day-masonry', culturalDay);
+        createMasonry('athletics-masonry', athleticsDay);
         createMasonry('kaikoura-masonry', kaikouraJack);
     </script>
 </body>
