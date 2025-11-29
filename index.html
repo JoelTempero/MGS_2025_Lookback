@@ -104,7 +104,6 @@
             position: sticky;
             top: 0;
             overflow: hidden;
-            min-height: 100vh;
         }
 
         .section > * {
@@ -1226,6 +1225,43 @@
         createMasonry('cultural-day-masonry', culturalDay);
         createMasonry('athletics-masonry', athleticsDay);
         createMasonry('kaikoura-masonry', kaikouraJack);
+
+        // ===== PERFORMANCE: UNSTICK DISTANT SECTIONS =====
+        // Remove sticky positioning from sections that are far up the page
+        // This prevents browser from rendering too many stacked sections at once
+        let ticking = false;
+        
+        function optimizeStickyScroll() {
+            const sections = document.querySelectorAll('.section, .hero');
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const viewportHeight = window.innerHeight;
+            
+            sections.forEach((section, index) => {
+                const rect = section.getBoundingClientRect();
+                const sectionTop = rect.top + scrollTop;
+                
+                // If section is more than 2 viewport heights above current scroll position
+                if (scrollTop - sectionTop > viewportHeight * 2) {
+                    section.style.position = 'relative';
+                } else {
+                    section.style.position = 'sticky';
+                }
+            });
+            
+            ticking = false;
+        }
+        
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    optimizeStickyScroll();
+                });
+                ticking = true;
+            }
+        });
+        
+        // Run once on load
+        optimizeStickyScroll();
     </script>
 </body>
 </html>
