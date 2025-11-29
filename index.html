@@ -294,27 +294,27 @@
             margin-top: 5px;
         }
 
-        /* 3. JUMBLE GALLERY - Overlapping images in 16:9 container */
+        /* 3. JUMBLE GALLERY - Overlapping images, no borders */
         .jumble-container {
-            width: 100%;
-            aspect-ratio: 16 / 9;
             max-width: 1920px;
+            width: 100%;
+            height: 1080px;
             margin: 40px auto;
             position: relative;
             overflow: hidden;
-            background: rgba(0,0,0,0.1);
-            border-radius: 10px;
+        }
+
+        .jumble-container.large {
+            height: 1440px;
         }
 
         .jumble-item {
             position: absolute;
             opacity: 0;
             transition: opacity 0.8s ease-out;
-            box-shadow: 0 12px 35px rgba(0,0,0,0.6);
-            border-radius: 6px;
+            box-shadow: 0 15px 45px rgba(0,0,0,0.7);
+            border-radius: 4px;
             overflow: hidden;
-            background: white;
-            padding: 8px;
         }
 
         .jumble-item.visible {
@@ -326,32 +326,43 @@
             height: 100%;
             object-fit: cover;
             display: block;
-            border-radius: 4px;
         }
 
         /* Responsive jumble */
+        @media (max-width: 1920px) {
+            .jumble-container {
+                height: 56.25vw;
+            }
+            .jumble-container.large {
+                height: 75vw;
+            }
+        }
+
         @media (max-width: 768px) {
-            .jumble-item {
-                padding: 4px;
+            .jumble-container {
+                height: 70vw;
+            }
+            .jumble-container.large {
+                height: 90vw;
             }
         }
 
         /* 4. SPORTS GRID - 3x5 grid of slideshows */
         .sports-grid {
-            max-width: 1400px;
-            margin: 40px auto;
+            max-width: 1600px;
+            margin: 60px auto;
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            grid-template-rows: repeat(3, 1fr);
-            gap: 20px;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(5, 1fr);
+            gap: 30px;
         }
 
         .sport-slideshow {
             position: relative;
             aspect-ratio: 1 / 1;
             overflow: hidden;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border-radius: 12px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
         }
 
         .sport-slide {
@@ -376,17 +387,17 @@
 
         .sport-label {
             text-align: center;
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 600;
             color: white;
-            margin-top: 10px;
+            margin-top: 12px;
             text-transform: capitalize;
         }
 
         @media (max-width: 1024px) {
             .sports-grid {
-                grid-template-columns: repeat(3, 1fr);
-                grid-template-rows: repeat(5, 1fr);
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
             }
         }
 
@@ -599,19 +610,23 @@
     <!-- Teddy Bears Picnic - POLAROID -->
     <div class="section blue animate-on-scroll">
         <h3 class="section-subtitle">Teddy Bears Picnic</h3>
-        <div class="jumble-container" id="teddy-bears-jumble"></div>
+        <div class="jumble-container" id="teddy-bears-polaroid"></div>
     </div>
 
     <!-- Trekabout Tuesday - DIAGONAL LEFT -->
     <div class="section blue animate-on-scroll">
         <h3 class="section-subtitle">Trekabout Tuesday</h3>
-        <div class="jumble-container" id="trekabout-jumble"></div>
+        <div class="diagonal-container">
+            <div class="diagonal-grid" id="trekabout-jumble"></div>
+        </div>
     </div>
 
     <!-- Book Character Day - DIAGONAL RIGHT -->
     <div class="section blue animate-on-scroll">
         <h3 class="section-subtitle">Book Character Day</h3>
-        <div class="jumble-container" id="book-character-jumble"></div>
+        <div class="diagonal-container">
+            <div class="diagonal-grid reverse" id="book-character-jumble"></div>
+        </div>
     </div>
 
     <!-- Cultural Day - POLAROID -->
@@ -635,7 +650,9 @@
     <!-- Kaikoura Jack - DIAGONAL LEFT -->
     <div class="section blue animate-on-scroll">
         <h3 class="section-subtitle">Kaikoura Jack</h3>
-        <div class="jumble-container" id="kaikoura-jumble"></div>
+        <div class="diagonal-container">
+            <div class="diagonal-grid" id="kaikoura-jumble"></div>
+        </div>
     </div>
 
     <!-- Middle School -->
@@ -659,14 +676,18 @@
     <div class="section red animate-on-scroll">
         <h3 class="section-subtitle">Taking On Challenges</h3>
         <p class="detail-text">Te Haerenga, Activity Days, Adrenaline Forest,</p>
-        <div class="jumble-container" id="taking-challenges-jumble"></div>
+        <div class="diagonal-container">
+            <div class="diagonal-grid" id="taking-challenges-jumble"></div>
+        </div>
     </div>
 
     <!-- Becoming Champions - DIAGONAL RIGHT -->
     <div class="section red animate-on-scroll">
         <h3 class="section-subtitle">Becoming Champions</h3>
         <p class="detail-text">EPRO8, Y9 Readers Cup, Cantamaths,</p>
-        <div class="jumble-container" id="becoming-champions-jumble"></div>
+        <div class="diagonal-container">
+            <div class="diagonal-grid reverse" id="becoming-champions-jumble"></div>
+        </div>
     </div>
 
     <!-- Market Week - POLAROID -->
@@ -712,13 +733,17 @@
     <!-- Christian Focus Days - DIAGONAL LEFT -->
     <div class="section gold animate-on-scroll">
         <h3 class="section-subtitle">Christian Focus Days</h3>
-        <div class="jumble-container" id="christian-focus-jumble"></div>
+        <div class="diagonal-container">
+            <div class="diagonal-grid" id="christian-focus-jumble"></div>
+        </div>
     </div>
 
     <!-- Y11 Growth Days - DIAGONAL RIGHT -->
     <div class="section gold animate-on-scroll">
         <h3 class="section-subtitle">Y11 Growth Days</h3>
-        <div class="jumble-container" id="y11-growth-jumble"></div>
+        <div class="diagonal-container">
+            <div class="diagonal-grid reverse" id="y11-growth-jumble"></div>
+        </div>
     </div>
 
     <!-- Senior College Art - MASONRY -->
@@ -748,7 +773,7 @@
     <!-- Performing Arts -->
     <div class="section black animate-on-scroll">
         <h2 class="section-title">Performing Arts</h2>
-        <div class="auto-scroll-container"><div class="auto-scroll-gallery opening-images" id="performing-arts-gallery"></div></div>
+        <div class="jumble-container" id="kapa-haka-senior-jumble"></div>
     </div>
 
     <!-- Mary Poppins 2025 -->
@@ -759,7 +784,7 @@
                 <iframe src="https://www.youtube.com/embed/sNf9LIyXw4s?start=443" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
         </div>
-        <div class="jumble-container" id="mary-poppins-jumble"></div>
+        <div class="jumble-container" id="athletics-day-jumble"></div>
     </div>
 
     <!-- In The Grange -->
@@ -783,9 +808,11 @@
             </div>
         </div>
         <p class="detail-text">Southern Jam Success!</p>
-        <div class="jumble-container" id="southern-jam-jumble"></div>
+        <div class="auto-scroll-container"><div class="auto-scroll-gallery opening-images" id="performing-arts-gallery"></div></div>
         <p class="detail-text" style="margin-top: 40px;">Jazz Show</p>
-        <div class="jumble-container" id="jazz-show-jumble"></div>
+        <div class="placeholder-container">
+            <p class="placeholder-text">Content Coming Soon</p>
+        </div>
     </div>
 
     <!-- Dance Show -->
@@ -833,7 +860,9 @@
     <!-- Fia Fia Night -->
     <div class="section black animate-on-scroll">
         <h3 class="section-subtitle">Fia Fia Night</h3>
-        <div class="jumble-container" id="fia-fia-jumble"></div>
+        <div class="placeholder-container">
+            <p class="placeholder-text">Content Coming Soon</p>
+        </div>
     </div>
 
     <!-- Polyfest -->
@@ -863,7 +892,9 @@
     <!-- Sports -->
     <div class="section red animate-on-scroll">
         <h2 class="section-title">Sports</h2>
-        <div class="sports-grid" id="sports-grid"></div>
+        <div class="placeholder-container">
+            <p class="placeholder-text">Content Coming Soon</p>
+        </div>
     </div>
 
     <!-- Staff Vs Students -->
@@ -884,34 +915,10 @@
         <div class="jumble-container" id="can-drive-jumble"></div>
     </div>
 
-    <!-- Kairos Food Rescue -->
-    <div class="section black animate-on-scroll">
-        <h2 class="section-title">Kairos Food Rescue</h2>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
-    </div>
-
-    <!-- Book Week -->
+<!-- Book Week -->
     <div class="section red animate-on-scroll">
         <h2 class="section-title">Book Week</h2>
         <div class="jumble-container" id="book-week-jumble"></div>
-    </div>
-
-    <!-- Peer Support -->
-    <div class="section gold animate-on-scroll">
-        <h2 class="section-title">Peer Support</h2>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
-    </div>
-
-    <!-- Senior Learning Centre -->
-    <div class="section blue animate-on-scroll">
-        <h2 class="section-title">Senior Learning Centre</h2>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
     </div>
 
     <!-- Cambodia Trip -->
@@ -920,15 +927,7 @@
         <div class="jumble-container" id="cambodia-jumble"></div>
     </div>
 
-    <!-- Tongan Language Week -->
-    <div class="section red animate-on-scroll">
-        <h2 class="section-title">Tongan Language Week</h2>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
-    </div>
-
-    <!-- Learning House -->
+<!-- Learning House -->
     <div class="section gold animate-on-scroll">
         <h2 class="section-title">Learning House</h2>
         <div class="jumble-container" id="learning-house-jumble"></div>
@@ -944,38 +943,6 @@
     <div class="section black animate-on-scroll">
         <h2 class="section-title">House Competition</h2>
         <div class="jumble-container" id="house-comp-jumble"></div>
-    </div>
-
-    <!-- Lipsync -->
-    <div class="section black animate-on-scroll">
-        <h3 class="section-subtitle">Lipsync</h3>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
-    </div>
-
-    <!-- House Singing -->
-    <div class="section black animate-on-scroll">
-        <h3 class="section-subtitle">House Singing</h3>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
-    </div>
-
-    <!-- House Haka -->
-    <div class="section black animate-on-scroll">
-        <h3 class="section-subtitle">House Haka</h3>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
-    </div>
-
-    <!-- Tug of War -->
-    <div class="section black animate-on-scroll">
-        <h3 class="section-subtitle">Tug of War</h3>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
     </div>
 
     <script>
@@ -1827,60 +1794,71 @@
             });
         }
 
-        // ===== 3. JUMBLE GALLERY (Cleaner, polaroid-style with overlap) =====
+        // ===== 3. JUMBLE GALLERY (Optimized for performance) =====
         function createJumbleGallery(containerId, images) {
             const container = document.getElementById(containerId);
             if (!container || images.length === 0) return;
             
-            // Calculate grid-based positioning with overlap
             const totalImages = images.length;
             
-            // Determine grid size based on image count
-            let cols, rows;
+            // Add size class for large galleries
+            if (totalImages >= 9) {
+                container.classList.add('large');
+            }
+            
+            // Determine grid and size based on image count
+            let cols, rows, baseSize;
+            
             if (totalImages <= 6) {
+                // Small galleries: MUCH larger images
                 cols = 3;
                 rows = 2;
+                baseSize = 600; // Very large for small galleries
             } else if (totalImages <= 12) {
                 cols = 4;
                 rows = 3;
+                baseSize = 480; // 50% larger (was 320)
             } else if (totalImages <= 20) {
                 cols = 5;
                 rows = 4;
+                baseSize = 450;
             } else {
                 cols = 6;
                 rows = Math.ceil(totalImages / 6);
+                baseSize = 420;
             }
             
-            // Size calculations - larger, clearer images
-            const baseSize = 280; // Base size for images
-            const sizeVariation = 60; // Random variation
+            const sizeVariation = 90;
             
             images.forEach((url, i) => {
                 const item = document.createElement('div');
                 item.className = 'jumble-item';
                 
-                // Calculate base grid position
+                // Calculate grid position
                 const col = i % cols;
                 const row = Math.floor(i / cols);
                 
-                // Size with slight variation
+                // Size with variation
                 const size = baseSize + (Math.random() * sizeVariation - sizeVariation / 2);
-                const width = size;
-                const height = size * (0.85 + Math.random() * 0.3); // Vary aspect ratio slightly
                 
-                // Position with grid + random offset for "jumble" effect
+                // Random aspect ratio for variety (original image proportions)
+                const aspectRatio = 0.7 + Math.random() * 0.6; // 0.7 to 1.3
+                const width = size;
+                const height = size * aspectRatio;
+                
+                // Grid-based position with offset
                 const gridX = (100 / (cols + 1)) * (col + 1);
                 const gridY = (100 / (rows + 1)) * (row + 1);
-                const offsetX = Math.random() * 8 - 4; // Small offset in %
-                const offsetY = Math.random() * 8 - 4;
+                const offsetX = Math.random() * 10 - 5;
+                const offsetY = Math.random() * 10 - 5;
                 
                 const x = gridX + offsetX;
                 const y = gridY + offsetY;
                 
-                // Subtle rotation for natural look
-                const rotation = Math.random() * 12 - 6;
+                // Rotation
+                const rotation = Math.random() * 14 - 7;
                 
-                // Z-index based on row (back to front) with slight randomization
+                // Z-index
                 const zIndex = row * 10 + Math.floor(Math.random() * 5);
                 
                 item.style.width = `${width}px`;
