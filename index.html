@@ -319,6 +319,69 @@
             display: block;
         }
 
+        /* 4. POLAROID GALLERY */
+        .polaroid-container {
+            max-width: 1200px;
+            margin: 60px auto;
+            min-height: 400px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            padding: 20px;
+        }
+
+        .polaroid {
+            background: white;
+            padding: 12px 12px 40px 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            animation: fadeIn 0.8s ease-out forwards;
+            opacity: 0;
+        }
+
+        .polaroid img {
+            width: 220px;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* 5. DIAGONAL SHOWCASE */
+        .diagonal-container {
+            max-width: 1400px;
+            margin: 40px auto;
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+        }
+
+        .diagonal-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            transform: rotate(-5deg) scale(1.1);
+        }
+
+        .diagonal-grid.reverse {
+            transform: rotate(5deg) scale(1.1);
+        }
+
+        .diagonal-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            animation: fadeIn 0.8s ease-out forwards;
+            opacity: 0;
+        }
+
+        .diagonal-item img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+        }
+
         /* Video Container */
         .video-container {
             max-width: 1125px;
@@ -518,145 +581,149 @@
         </div>
     </div>
 
-    <!-- Teddy Bears Picnic -->
+    <!-- Teddy Bears Picnic - POLAROID -->
     <div class="section blue animate-on-scroll">
         <h3 class="section-subtitle">Teddy Bears Picnic</h3>
-        <div class="masonry-container" id="teddy-bears-masonry"></div>
+        <div class="polaroid-container" id="teddy-bears-polaroid"></div>
     </div>
 
-    <!-- Trekabout Tuesday -->
+    <!-- Trekabout Tuesday - DIAGONAL LEFT -->
     <div class="section blue animate-on-scroll">
         <h3 class="section-subtitle">Trekabout Tuesday</h3>
-        <div class="masonry-container" id="trekabout-masonry"></div>
+        <div class="diagonal-container">
+            <div class="diagonal-grid" id="trekabout-diagonal"></div>
+        </div>
     </div>
 
-    <!-- Book Character Day -->
+    <!-- Book Character Day - DIAGONAL RIGHT -->
     <div class="section blue animate-on-scroll">
         <h3 class="section-subtitle">Book Character Day</h3>
-        <div class="masonry-container" id="book-character-masonry"></div>
+        <div class="diagonal-container">
+            <div class="diagonal-grid reverse" id="book-character-diagonal"></div>
+        </div>
     </div>
 
-    <!-- Cultural Day -->
+    <!-- Cultural Day - POLAROID -->
     <div class="section blue animate-on-scroll">
         <h3 class="section-subtitle">Cultural Day</h3>
-        <div class="masonry-container" id="cultural-day-masonry"></div>
+        <div class="polaroid-container" id="cultural-day-polaroid"></div>
     </div>
 
-    <!-- Athletics Day -->
+    <!-- Kapa Haka - POLAROID -->
+    <div class="section blue animate-on-scroll">
+        <h3 class="section-subtitle">Kapa Haka</h3>
+        <div class="polaroid-container" id="kapa-haka-polaroid"></div>
+    </div>
+
+    <!-- Athletics Day - MASONRY -->
     <div class="section blue animate-on-scroll">
         <h3 class="section-subtitle">Athletics Day</h3>
         <div class="masonry-container" id="athletics-masonry"></div>
     </div>
 
-    <!-- Kaikoura Jack -->
+    <!-- Kaikoura Jack - DIAGONAL LEFT -->
     <div class="section blue animate-on-scroll">
         <h3 class="section-subtitle">Kaikoura Jack</h3>
-        <div class="masonry-container" id="kaikoura-masonry"></div>
+        <div class="diagonal-container">
+            <div class="diagonal-grid" id="kaikoura-diagonal"></div>
+        </div>
     </div>
 
     <!-- Middle School -->
     <div class="section red animate-on-scroll">
         <h2 class="section-title">Middle School</h2>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
+        <div class="auto-scroll-container">
+            <div class="auto-scroll-gallery opening-images" id="middle-school-gallery">
+                <!-- Images populated by JavaScript -->
+            </div>
         </div>
     </div>
 
-    <!-- Outdoor Adventures -->
+    <!-- Outdoor Adventures - POLAROID -->
     <div class="section red animate-on-scroll">
         <h3 class="section-subtitle">Outdoor Adventures</h3>
         <p class="detail-text">Y9 Camp, Ski Trip, Willowbank,</p>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
+        <div class="polaroid-container" id="outdoor-adventures-polaroid"></div>
     </div>
 
-    <!-- Taking On Challenges -->
+    <!-- Taking On Challenges - DIAGONAL LEFT -->
     <div class="section red animate-on-scroll">
         <h3 class="section-subtitle">Taking On Challenges</h3>
         <p class="detail-text">Te Haerenga, Activity Days, Adrenaline Forest,</p>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
+        <div class="diagonal-container">
+            <div class="diagonal-grid" id="taking-challenges-diagonal"></div>
         </div>
     </div>
 
-    <!-- Becoming Champions -->
+    <!-- Becoming Champions - DIAGONAL RIGHT -->
     <div class="section red animate-on-scroll">
         <h3 class="section-subtitle">Becoming Champions</h3>
         <p class="detail-text">EPRO8, Y9 Readers Cup, Cantamaths,</p>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
+        <div class="diagonal-container">
+            <div class="diagonal-grid reverse" id="becoming-champions-diagonal"></div>
         </div>
     </div>
 
-    <!-- Market Week -->
+    <!-- Market Week - POLAROID -->
     <div class="section red animate-on-scroll">
         <h3 class="section-subtitle">Market Week</h3>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
+        <div class="polaroid-container" id="market-week-polaroid"></div>
     </div>
 
-    <!-- Middle School Art -->
+    <!-- Middle School Art - MASONRY -->
     <div class="section red animate-on-scroll">
         <h3 class="section-subtitle">Middle School Art</h3>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
+        <div class="masonry-container" id="ms-art-masonry"></div>
     </div>
 
     <!-- Senior College -->
     <div class="section gold animate-on-scroll">
         <h2 class="section-title">Senior College</h2>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
+        <div class="auto-scroll-container">
+            <div class="auto-scroll-gallery opening-images" id="sc-opening-gallery">
+                <!-- Images populated by JavaScript -->
+            </div>
         </div>
     </div>
 
     <!-- School Formal -->
     <div class="section gold animate-on-scroll">
         <h3 class="section-subtitle">School Formal</h3>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
         <div class="video-container">
             <div class="video-wrapper">
                 <iframe src="https://www.youtube.com/embed/y8U5uT1ktO8?start=2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
         </div>
+        <div class="masonry-container" id="formal-masonry"></div>
     </div>
 
-    <!-- Out & About -->
+    <!-- Out & About - POLAROID -->
     <div class="section gold animate-on-scroll">
         <h3 class="section-subtitle">Out & About</h3>
         <p class="detail-text">Y13 Camp, Y12 Big Day Out, Y11 Living Springs</p>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
+        <div class="polaroid-container" id="out-about-polaroid"></div>
     </div>
 
-    <!-- Christian Focus Days -->
+    <!-- Christian Focus Days - DIAGONAL LEFT -->
     <div class="section gold animate-on-scroll">
         <h3 class="section-subtitle">Christian Focus Days</h3>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
+        <div class="diagonal-container">
+            <div class="diagonal-grid" id="christian-focus-diagonal"></div>
         </div>
     </div>
 
-    <!-- Y11 Growth Days -->
+    <!-- Y11 Growth Days - DIAGONAL RIGHT -->
     <div class="section gold animate-on-scroll">
         <h3 class="section-subtitle">Y11 Growth Days</h3>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
+        <div class="diagonal-container">
+            <div class="diagonal-grid reverse" id="y11-growth-diagonal"></div>
         </div>
     </div>
 
-    <!-- Senior College Art -->
+    <!-- Senior College Art - MASONRY -->
     <div class="section gold animate-on-scroll">
         <h3 class="section-subtitle">Senior College Art</h3>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
+        <div class="masonry-container" id="sc-art-masonry"></div>
     </div>
 
     <!-- International College -->
@@ -969,179 +1036,350 @@
     </div>
 
     <script>
-        // ===== DATA =====
+        // ===== IMAGE DATA ARRAYS =====
         const openingImages = [
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359848/MGS2025-934_uy31pq.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359808/IMG_2815_ibcwap.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359782/IMG_9671_k7aw4i.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359766/Mary_Poppins_839_w2akkt.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359749/IMG_4503_tiso2q.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359725/IMG_0899_1_ofeahg.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359672/IMG_20250502_144224_uncjt3.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359654/IMG_7136_gjhwiv.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359605/20250616_222403454_iOS_kdxyrt.heic',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359547/2000-constrained-e37425b9-cfdb-438a-b9a6-131e499c8615_rdplnn.png',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359529/20250625_093649_lcbubw.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359508/Year_8_team_with_trophy_es3sox.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359499/Yes_3_v5qj31.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359483/MW3_w7mbu9.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359473/2000-constrained-6147072b-0538-4ace-a233-d74a38daddd5_uwcamb.png',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359447/2000-constrained-bdcbcf62-074f-4a00-bc1e-03993cba64e4_jopemc.png',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359422/Photo_1_xankty.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359388/20250813_094939_lh4yms.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359367/IMG_1325_benlso.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359338/thumbnail_20250313_123609_knuxpr.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359331/IMG_0882_p3asbm.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764355388/Head_Students_1_nizfuj.jpg'
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359848/MGS2025-934_uy31pq.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359808/IMG_2815_ibcwap.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359782/IMG_9671_k7aw4i.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359766/Mary_Poppins_839_w2akkt.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359749/IMG_4503_tiso2q.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359725/IMG_0899_1_ofeahg.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359672/IMG_20250502_144224_uncjt3.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359654/IMG_7136_gjhwiv.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359605/20250616_222403454_iOS_kdxyrt.heic",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359547/2000-constrained-e37425b9-cfdb-438a-b9a6-131e499c8615_rdplnn.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359529/20250625_093649_lcbubw.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359508/Year_8_team_with_trophy_es3sox.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359499/Yes_3_v5qj31.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359483/MW3_w7mbu9.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359473/2000-constrained-6147072b-0538-4ace-a233-d74a38daddd5_uwcamb.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359447/2000-constrained-bdcbcf62-074f-4a00-bc1e-03993cba64e4_jopemc.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359422/Photo_1_xankty.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359388/20250813_094939_lh4yms.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359367/IMG_1325_benlso.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359338/thumbnail_20250313_123609_knuxpr.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359331/IMG_0882_p3asbm.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764355388/Head_Students_1_nizfuj.jpg",
         ];
 
         const primaryOpening = [
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365876/Possums_msuync.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365845/20250909_100957_jsjjka.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365814/Whole_Class_1_sbsviw.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365792/20250212_085710_ezapya.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365777/Rm14_ou5cui.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365759/Swimming_Pyjama_Day_udnwbp.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365732/IMG_4411_mgyxdu.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365715/Room_3_pic_4_bgdnyt.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365687/Class_photo_outside-_3.9.25_vifhni.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365672/Fairy_Penguins_ndggyl.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365565/R5_Raindrops_wcntvo.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365551/Photo_3_tjpt7u.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365539/20250909_094742_zgwbt3.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366074/500-constrained-f8265475-d589-47dd-9ea0-6ff79eaba196_myqry2.png'
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365876/Possums_msuync.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365845/20250909_100957_jsjjka.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365814/Whole_Class_1_sbsviw.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365792/20250212_085710_ezapya.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365777/Rm14_ou5cui.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365759/Swimming_Pyjama_Day_udnwbp.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365732/IMG_4411_mgyxdu.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365715/Room_3_pic_4_bgdnyt.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365687/Class_photo_outside-_3.9.25_vifhni.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365672/Fairy_Penguins_ndggyl.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365565/R5_Raindrops_wcntvo.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365551/Photo_3_tjpt7u.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764365539/20250909_094742_zgwbt3.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366074/500-constrained-f8265475-d589-47dd-9ea0-6ff79eaba196_myqry2.png",
         ];
 
         const teddyBears = [
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366877/IMG_0882_ozj8yq.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366876/IMG_0880_amh1ey.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366876/IMG_0876_mcr7dj.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366875/IMG_0872_bzczs9.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366874/IMG_0871_zbfr4f.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366874/IMG_0866_yacfpt.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366874/IMG_0862_vnn9zj.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366873/thumbnail_20250313_123609_b63cgv.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366873/thumbnail_20250313_123845A_bxff0b.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366873/thumbnail_20250313_123709A_deshsc.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366873/thumbnail_20250313_123641_g4ygn9.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366873/thumbnail_20250313_124023_gc5rta.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366873/thumbnail_20250313_123917A_uerjtc.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366872/thumbnail_20250313_121901_emq8f9.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366872/Girls_at_TD_dtotnv.jpg'
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366877/IMG_0882_ozj8yq.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366876/IMG_0880_amh1ey.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366876/IMG_0876_mcr7dj.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366875/IMG_0872_bzczs9.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366874/IMG_0871_zbfr4f.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366874/IMG_0866_yacfpt.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366874/IMG_0862_vnn9zj.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366873/thumbnail_20250313_123609_b63cgv.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366873/thumbnail_20250313_123845A_bxff0b.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366873/thumbnail_20250313_123709A_deshsc.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366873/thumbnail_20250313_123641_g4ygn9.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366873/thumbnail_20250313_124023_gc5rta.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366873/thumbnail_20250313_123917A_uerjtc.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366872/thumbnail_20250313_121901_emq8f9.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366872/Girls_at_TD_dtotnv.jpg",
         ];
 
         const trekabout = [
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367029/20250506_134032_pfmfyo.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367028/20250506_132757_pnb3c9.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367027/20250506_131341_nytygg.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367026/20250506_123249_llwkgu.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367014/20250902_111545_r7v7xm.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367013/20250902_111400_0_co0fcz.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367013/20250902_104525_onfoti.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367002/thumbnail_IMG_5274_rsgfei.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367001/Messenger_creation_86B64152-60DE-4AA0-9602-7892EBF017FA_e0jkpg.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367000/Godley_Heads_otpyk5.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366999/20250225_133904_zov1oq.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366998/20250225_100458_u0efn2.jpg'
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367029/20250506_134032_pfmfyo.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367028/20250506_132757_pnb3c9.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367027/20250506_131341_nytygg.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367026/20250506_123249_llwkgu.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367014/20250902_111545_r7v7xm.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367013/20250902_111400_0_co0fcz.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367013/20250902_104525_onfoti.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367002/thumbnail_IMG_5274_rsgfei.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367001/Messenger_creation_86B64152-60DE-4AA0-9602-7892EBF017FA_e0jkpg.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367000/Godley_Heads_otpyk5.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366999/20250225_133904_zov1oq.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764366998/20250225_100458_u0efn2.jpg",
         ];
 
         const bookCharacter = [
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367134/20250813_094449_alvpte.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367133/20250813_094939_thd7p4.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367132/20250813_101432_da63ce.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367131/20250813_100822_jlr9xh.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367128/20250813_094732_sqv1pi.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367129/20250813_100730_rhu61y.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367128/20250813_100044_cw9kzq.jpg'
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367134/20250813_094449_alvpte.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367133/20250813_094939_thd7p4.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367132/20250813_101432_da63ce.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367131/20250813_100822_jlr9xh.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367128/20250813_094732_sqv1pi.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367129/20250813_100730_rhu61y.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367128/20250813_100044_cw9kzq.jpg",
         ];
 
         const culturalDay = [
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367200/20251017_104038_mdykga.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367197/20251017_103822_phlq6v.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367193/20251017_103822_ilpa8t.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367187/20251017_103520_qtv2ab.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367182/20251017_102811_bdvvuh.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367177/20251017_101416_odh1ro.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367176/20251017_101706_nhmi0t.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367174/20251017_100826_0_abilqe.jpg'
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367200/20251017_104038_mdykga.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367197/20251017_103822_phlq6v.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367187/20251017_103520_qtv2ab.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367182/20251017_102811_bdvvuh.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367177/20251017_101416_odh1ro.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367176/20251017_101706_nhmi0t.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367174/20251017_100826_0_abilqe.jpg",
+        ];
+
+        const kapaHaka = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764381205/590607362_1743079029889613_4620437377417585372_n_hfsc9i.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764381204/591737037_1743079046556278_8218999687238409663_n_hmlu0w.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764381204/591865508_1743079026556280_6443733095076772858_n_hdphc9.jpg",
         ];
 
         const athleticsDay = [
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367340/thumbnail_IMG_4198_fjw5xp.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367338/20251016_122430_gcn2ne.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367337/20251016_114911_a1nn4c.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367335/20251016_115016_2_d3sevg.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367334/thumbnail_IMG_4202_glkor0.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367310/20251016_094946_jfxm3b.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367308/20251016_100041_wd7yin.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367306/20251016_095548_efs0of.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367305/20251016_095424_gpgbdu.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367303/20251016_095408_lwltpx.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367302/20251016_095046_sfpfxj.jpg'
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367340/thumbnail_IMG_4198_fjw5xp.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367338/20251016_122430_gcn2ne.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367337/20251016_114911_a1nn4c.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367335/20251016_115016_2_d3sevg.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367334/thumbnail_IMG_4202_glkor0.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367310/20251016_094946_jfxm3b.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367308/20251016_100041_wd7yin.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367306/20251016_095548_efs0of.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367305/20251016_095424_gpgbdu.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367303/20251016_095408_lwltpx.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367302/20251016_095046_sfpfxj.jpg",
         ];
 
         const kaikouraJack = [
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367462/20250915_124822_gv45sp.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367461/20250915_124639_bdpgir.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367459/20250915_124658_avkxkr.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367457/20250915_131002_nlpvxb.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367455/20250915_130305_rphgwm.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367446/IMG_0062_se53ov.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367444/IMG_0015_uwfhmf.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367443/IMG_9926_ethwnq.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367440/IMG_9814_m8iiir.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367439/IMG_9772_yrr9hn.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367437/IMG_9727_kkhqpl.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367435/IMG_0480_mjzntl.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367434/IMG_0417_zfvvzm.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367429/IMG_0221_zd1atg.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367432/IMG_0413_xvb4av.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367430/IMG_0293_xvmjcx.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367429/IMG_0176_etulz3.jpg',
-            'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367426/IMG_0154_cfhlx9.jpg'
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367462/20250915_124822_gv45sp.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367461/20250915_124639_bdpgir.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367459/20250915_124658_avkxkr.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367457/20250915_131002_nlpvxb.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367455/20250915_130305_rphgwm.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367446/IMG_0062_se53ov.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367444/IMG_0015_uwfhmf.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367443/IMG_9926_ethwnq.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367440/IMG_9814_m8iiir.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367439/IMG_9772_yrr9hn.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367437/IMG_9727_kkhqpl.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367435/IMG_0480_mjzntl.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367434/IMG_0417_zfvvzm.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367429/IMG_0221_zd1atg.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367432/IMG_0413_xvb4av.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367430/IMG_0293_xvmjcx.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367429/IMG_0176_etulz3.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367426/IMG_0154_cfhlx9.jpg",
+        ];
+
+        const middleSchool = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764383111/2000-constrained-bdcbcf62-074f-4a00-bc1e-03993cba64e4_oxokfk.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764383106/MW_w7ecs8.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764383097/20250625_093649_iztabb.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764383094/20250625_091529_f8ubkp.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764383060/Structural_Technology1_hkqgcb.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764383022/20250811_133944_ievle3.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764383016/20250811_133436_u2hotw.jpg",
+        ];
+
+        const outdoorAdventures = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382129/2000-constrained-4e143cf1-9209-4dcc-8a7e-16da426e664b_uwzu95.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382127/2000-constrained-6147072b-0538-4ace-a233-d74a38daddd5_y9vt71.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382124/2000-constrained-625711a2-a1e0-491b-ba63-67f956804ea9_tmvosc.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382123/2000-constrained-647c122d-8f9f-4a26-81b4-495a00779958_vy5aup.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382099/Yes_4_d2wnxw.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382097/Yes_2_e1bq2t.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382090/2000-constrained-94416762-f5cd-4889-b536-d438095f0b05_ofllhg.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382088/2000-constrained-014f62a4-11be-4636-bfdb-e1e9bffdf7dd_gfhgh2.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382085/2000-constrained-8eb5baaf-ce3e-4be4-902d-a0de26fb0d03_gr6nav.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382083/2000-constrained-2e56513b-90dd-4caa-8ffa-df6f1f62be98_fah33p.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382021/Yes_3_hnrlcp.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382019/Yes_o96t4f.jpg",
+        ];
+
+        const takingChallenges = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382278/2000-constrained-754ea21e-fd92-40d9-a08a-16dc020da8e7_uiovez.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382279/2000-constrained-783b0450-347f-4844-a9d3-0bf8fcbfcefd_pcx6ti.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382274/2000-constrained-8a2242c0-0268-4863-b183-be3e40bbf056_t7wmh1.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382273/2000-constrained-2db55592-5f56-4ead-bed4-c2ca049d730a_f7r5je.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382270/2000-constrained-2c02452f-674b-46c7-93dd-d859d5c4e7c1_an1tc4.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382253/20250221_113230_bmvkoa.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382250/20250221_113018_qz3534.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382246/2000-constrained-3bcf098e-bfa2-4b36-a93d-28af9571ec9c_qclrii.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382244/2000-constrained-d0d5bcc9-5139-44f7-a824-df2ae503b9bb_yjpg4p.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382241/2000-constrained-ac0eec6a-0ac3-4059-8f71-f12e992f6799_g222jv.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382239/2000-constrained-85897601-3872-4075-b756-abcaaea2a834_j7yu0v.png",
+        ];
+
+        const becomingChampions = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382722/Epro8a_m5pqd8.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382719/Epro8_vmmkva.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382493/Year_9_Readers_Cup2_xwhovg.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382490/Year_9_Readers_Cup1_txcavf.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382488/Year_9_Readers_Cup_k8qmi7.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382441/Year_8_team_with_trophy_iud30l.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382439/Year_7_team_sourxm.jpg",
+        ];
+
+        const marketWeek = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764381952/MW5_a4znfl.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764381955/MW_g9drre.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764381953/MW16_ky2opi.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764381950/MW3_ih3vte.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764381952/mW7_oogynn.jpg",
+        ];
+
+        const msArt = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382916/1000011241_zugbal.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382913/1000011236_fpptvz.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382910/1000011228_1_z25o8m.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382907/1000011222_relctg.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382897/Sienna_Ellena_ijvqqb.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382894/Rochelle_Jiang_xxq8zx.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382891/Ran_Ishii_o5cuyi.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382888/Logan_Poulsen_hd8qtm.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382885/IMG_7671_bvofee.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382882/IMG_0129_vazzac.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382879/Gabbie_Romero_mddijw.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382876/Talitha_Clarke_ikcfxj.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382873/Sylvie_rtbsw8.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764382870/Stephanie_Pijpker_axpqjg.jpg",
+        ];
+
+        const scOpening = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764385584/1000017561_whd5yl.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764385585/IMG_7241_1_hylzyo.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764385584/IMG_7252_1_fjja1v.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764385559/IMG_4685_nfsu0e.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764385525/IMG_7715_y22v8o.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764385525/IMG_7729_pnafpr.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764385524/IMG_7656_m1yybl.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764385524/IMG_7616_stwy46.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764385486/Kate_Sheppard_Trip_tptwgr.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764385475/UC_Accounting_Lecture_a2klkt.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764385473/Tait_Communications_Trip_stionq.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764385473/Hilingo_at_UCIC_jccndm.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764385436/IMG_20250730_083318_eik5uf.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764383822/MGS2025-493_ps0yab.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764383819/MGS2025-703_ui2wmf.jpg",
+        ];
+
+        const formal = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764383859/MGS2025-99_nzvlij.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764383853/MGS2025-267_pvnyyf.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764383849/MGS2025-358_pceur1.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764383845/MGS2025-389_nrpum9.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764383838/MGS2025-934_xvjzxa.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764383835/MGS2025-1047_sdhz21.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764383830/MGS2025-741_cn1jly.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764383826/MGS2025-546_zyycvh.jpg",
+        ];
+
+        const outAbout = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764384067/IMG_7107_hshjeb.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764384066/IMG_7136_ogtxyk.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764384064/IMG_7200_uj8oxa.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764384041/2000-constrained-edff1a79-415e-47bc-882f-b638f078f891_eg6oeq.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764384040/2000-constrained-8b72bc9d-ea70-43e1-b9b5-67136f6a7409_tnc0ht.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764384039/2000-constrained-5ed44f2a-a33b-4dbd-85e5-16d10b167700_jygryp.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764384025/20250203_100214_wsixba.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764384025/20250203_104121_qn647o.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764384025/IMG_6129_qgunhp.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764384025/20250203_111843_cqsnuj.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764384024/20250203_120018_abomk4.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764384023/20250203_103627_bf45fq.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764384023/20250203_103152_msp5pm.jpg",
+        ];
+
+        const y11Growth = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764384200/20250616_222707073_iOS_mzg5u6.heic",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764384199/20250616_222336663_iOS_boawoh.heic",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764384198/20250616_221848889_iOS_ikkeyv.heic",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764384197/20250616_221120262_iOS_tfxuja.heic",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764384196/20250616_220303535_iOS_oidgvu.heic",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764384195/20250616_215649824_iOS_j0zjrf.heic",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764384194/20250616_213644105_iOS_ljmd9x.heic",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764384193/20250616_222030841_iOS_euxzrx.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764384192/20250616_215947052_iOS_yy3nu1.jpg",
+        ];
+
+        const christianFocus = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764384345/IMG_7605_kbc6xm.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764384344/IMG_7601_yctquq.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764384342/IMG_7619_exejdh.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764384343/IMG_7596_x6kogr.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764384342/IMG_7614_fyukqg.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764384341/IMG_7612_islgjp.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764384340/IMG_7610_dz8s4y.jpg",
+        ];
+
+        const scArt = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764385172/Jordyn_Matthews_iiw5j1.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764385171/Erhi_Owhojeta_soca2y.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764385169/Lily_Au_icm0lh.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764385168/Raksa_On_c6ihu6.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764385166/Reuben_Cummins_vfihj9.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764385165/Noah_Caldwell_seqdv1.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764385164/Esther_Kim_tr3cis.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764385162/Bianca_Tine_Dourado_fq5ko0.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764385161/Theo_Read_tzkwji.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764385159/Esther_Hoyt_3_n3ctkz.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764385158/Gwyneth_Walsh_dbbqft.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764385157/Mayu_Kitano_2_ngqegq.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764385155/Kezia_Binoy_jwepdd.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764385154/Alysia_Roberts_roua6x.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764385153/Esther_Hoyt_2_dvsvx7.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764385152/Rhys_Buckley_izny5n.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764385151/Esther_Hoyt_utrlfl.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764385095/Gwyneth_Walsh_r2hgfi.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764385094/Georgia_Binoy_dxhjsw.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764385093/Yingxin_Pan_2_sqnfgv.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764385092/Lily_Smith_zhlnzr.jpg",
         ];
 
         const warmWelcomes = [
-            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359014/Gregg_Le_Roux_u4my7y.jpg', name: 'Gregg Le Roux', title: 'Our New Principal' },
-            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356710/Melinda_Kerkhoven_sd83yn.png', name: 'Melinda Kerkhoven' },
-            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356709/Matt_Lawrence_urekbp.jpg', name: 'Matt Lawrence' },
-            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356708/Jesse_Wilson_knkqsv.png', name: 'Jesse Wilson' },
-            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356706/Sophie_Bates_asapep.jpg', name: 'Sophie Bates' },
-            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356705/Rebekah_Au_pvs9ww.jpg', name: 'Rebekah Au' },
-            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356703/Nathan_Horner_jijxvl.jpg', name: 'Nathan Horner' },
-            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356702/Kristy_Neill_hfsrux.jpg', name: 'Kristy Neill' },
-            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356700/Jo_Dodge_delykl.jpg', name: 'Jo Dodge' },
-            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356699/Jane_Halliday_upebsy.jpg', name: 'Jane Halliday' },
-            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356698/Frances_Malcolm_g3quei.jpg', name: 'Frances Malcolm' },
-            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356696/Bailey_Stocks_ndic0u.jpg', name: 'Bailey Stocks' },
-            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356696/Aidan_Baker_vw3tik.jpg', name: 'Aidan Baker' },
-            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356672/Jessica_Lepou_ziejhx.jpg', name: 'Jessica Lepou' },
-            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356670/Marissa_Bastin_tjq3tt.png', name: 'Marissa Bastin' },
-            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356669/Marisa_Le_Roux_jq65hq.jpg', name: 'Marisa Le Roux' },
-            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356668/Kirsten_Russell_ecuyf9.png', name: 'Kirsten Russell' },
-            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356667/Eugene_Zeelie_gvp2ck.jpg', name: 'Eugene Zeelie' },
-            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356666/Abigail_Uttley_nhzuru.jpg', name: 'Abigail Uttley' },
-            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356664/Leisha_Ferguson_b6p8u6.jpg', name: 'Leisha Ferguson' },
-            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356664/Katrina_Hubbard_qjpiwj.jpg', name: 'Katrina Hubbard' },
-            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356663/Jacqui_McConnell_mip3ux.jpg', name: 'Jacqui McConnell' }
+            { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359014/Gregg_Le_Roux_u4my7y.jpg", name: "Gregg Le Roux", title: "Our New Principal" },
+            { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356710/Melinda_Kerkhoven_sd83yn.png", name: "Melinda Kerkhoven Sd83yn" },
+            { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356709/Matt_Lawrence_urekbp.jpg", name: "Matt Lawrence Urekbp" },
+            { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356708/Jesse_Wilson_knkqsv.png", name: "Jesse Wilson Knkqsv" },
+            { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356706/Sophie_Bates_asapep.jpg", name: "Sophie Bates Asapep" },
+            { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356705/Rebekah_Au_pvs9ww.jpg", name: "Rebekah Au Pvs9ww" },
+            { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356703/Nathan_Horner_jijxvl.jpg", name: "Nathan Horner Jijxvl" },
+            { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356702/Kristy_Neill_hfsrux.jpg", name: "Kristy Neill Hfsrux" },
+            { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356700/Jo_Dodge_delykl.jpg", name: "Jo Dodge Delykl" },
+            { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356699/Jane_Halliday_upebsy.jpg", name: "Jane Halliday Upebsy" },
+            { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356698/Frances_Malcolm_g3quei.jpg", name: "Frances Malcolm G3quei" },
+            { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356696/Bailey_Stocks_ndic0u.jpg", name: "Bailey Stocks Ndic0u" },
+            { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356696/Aidan_Baker_vw3tik.jpg", name: "Aidan Baker Vw3tik" },
+            { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356672/Jessica_Lepou_ziejhx.jpg", name: "Jessica Lepou Ziejhx" },
+            { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356670/Marissa_Bastin_tjq3tt.png", name: "Marissa Bastin Tjq3tt" },
+            { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356669/Marisa_Le_Roux_jq65hq.jpg", name: "Gregg Le Roux", title: "Our New Principal" },
+            { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356668/Kirsten_Russell_ecuyf9.png", name: "Kirsten Russell Ecuyf9" },
+            { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356667/Eugene_Zeelie_gvp2ck.jpg", name: "Eugene Zeelie Gvp2ck" },
+            { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356666/Abigail_Uttley_nhzuru.jpg", name: "Abigail Uttley Nhzuru" },
+            { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356664/Leisha_Ferguson_b6p8u6.jpg", name: "Leisha Ferguson B6p8u6" },
+            { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356664/Katrina_Hubbard_qjpiwj.jpg", name: "Katrina Hubbard Qjpiwj" },
+            { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356663/Jacqui_McConnell_mip3ux.jpg", name: "Jacqui Mcconnell Mip3ux" },
         ];
 
         const fondFarewells = [
-            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359218/Mrs_Yolandy_Stander_xehnbv.png', name: 'Yolandy Stander' },
-            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359216/Mrs_Rebecca_Thompson_hylegm.png', name: 'Rebecca Thompson' },
-            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359214/Mrs_Paula_Harvey_y3yuvd.png', name: 'Paula Harvey' },
-            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359213/Mrs_Nicole_Bailey_zze0kp.png', name: 'Nicole Bailey' },
-            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359211/Mrs_Lindie_Warburg_rmxbkw.jpg', name: 'Lindie Warburg' },
-            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359210/Mrs_Kerryn_Malcolm_rib6yk.png', name: 'Kerryn Malcolm' },
-            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359209/Mrs_Kathryn_McAuley_x7txzu.png', name: 'Kathryn McAuley' },
-            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359207/Mrs_Hannelie_Viljoen_iccstw.png', name: 'Hannelie Viljoen' },
-            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359206/Mrs_Debbie_Dubber_qcbtb8.png', name: 'Debbie Dubber' },
-            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359204/Mrs_Catherine_McKie_sr6rkj.png', name: 'Catherine McKie' },
-            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359202/Mrs_Cassandra_Down_ihpqsv.png', name: 'Cassandra Down' },
-            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359202/Mr_Nick_Pomare_mjonqx.png', name: 'Nick Pomare' },
-            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359200/Mr_Grant_Bowater_szwd4f.png', name: 'Grant Bowater' },
-            { url: 'https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359199/Mr_David_Farmer_b5t8ad.png', name: 'David Farmer' }
+            { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359218/Mrs_Yolandy_Stander_xehnbv.png", name: "Mrs Yolandy Stander" },
+            { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359216/Mrs_Rebecca_Thompson_hylegm.png", name: "Mrs Rebecca Thompson" },
+            { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359214/Mrs_Paula_Harvey_y3yuvd.png", name: "Mrs Paula Harvey" },
+            { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359213/Mrs_Nicole_Bailey_zze0kp.png", name: "Mrs Nicole Bailey" },
+            { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359211/Mrs_Lindie_Warburg_rmxbkw.jpg", name: "Mrs Lindie Warburg" },
+            { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359210/Mrs_Kerryn_Malcolm_rib6yk.png", name: "Mrs Kerryn Malcolm" },
+            { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359209/Mrs_Kathryn_McAuley_x7txzu.png", name: "Mrs Kathryn Mcauley" },
+            { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359207/Mrs_Hannelie_Viljoen_iccstw.png", name: "Mrs Hannelie Viljoen" },
+            { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359206/Mrs_Debbie_Dubber_qcbtb8.png", name: "Mrs Debbie Dubber" },
+            { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359204/Mrs_Catherine_McKie_sr6rkj.png", name: "Mrs Catherine Mckie" },
+            { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359202/Mrs_Cassandra_Down_ihpqsv.png", name: "Mrs Cassandra Down" },
+            { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359202/Mr_Nick_Pomare_mjonqx.png", name: "Mr Nick Pomare" },
+            { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359200/Mr_Grant_Bowater_szwd4f.png", name: "Mr Grant Bowater" },
+            { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359199/Mr_David_Farmer_b5t8ad.png", name: "Mr David Farmer" },
         ];
+
 
         // ===== HELPER FUNCTIONS =====
         function shuffleArray(array) {
@@ -1153,12 +1391,12 @@
             return newArray;
         }
 
-        // ===== 1. AUTO-SCROLL GALLERIES (infinite loop) =====
+        // ===== 1. AUTO-SCROLL GALLERIES =====
         function populateAutoScrollGallery(containerId, images, shuffle = false) {
             const container = document.getElementById(containerId);
-            const imagesToUse = shuffle ? shuffleArray(images) : images;
+            if (!container) return;
             
-            // Duplicate images for seamless loop
+            const imagesToUse = shuffle ? shuffleArray(images) : images;
             const duplicatedImages = [...imagesToUse, ...imagesToUse];
             
             duplicatedImages.forEach(url => {
@@ -1169,16 +1407,13 @@
             });
         }
 
-        // Populate auto-scroll galleries
-        populateAutoScrollGallery('opening-images', openingImages, true);
-        populateAutoScrollGallery('primary-opening', primaryOpening);
-
-        // ===== 2. STAFF GALLERIES (auto-scroll, Gregg centered for warm welcomes) =====
+        // ===== 2. STAFF GALLERIES =====
         function populateStaffGallery(containerId, staff, putFirstInCenter = false) {
             const container = document.getElementById(containerId);
+            if (!container) return;
+            
             let orderedStaff = [...staff];
             
-            // For warm welcomes, reorder to have Gregg Le Roux in center
             if (putFirstInCenter && staff.length > 0) {
                 const halfPoint = Math.floor(staff.length / 2);
                 orderedStaff = [
@@ -1187,7 +1422,6 @@
                 ];
             }
             
-            // Duplicate for seamless loop
             const duplicatedStaff = [...orderedStaff, ...orderedStaff];
             
             duplicatedStaff.forEach(person => {
@@ -1202,12 +1436,10 @@
             });
         }
 
-        populateStaffGallery('warm-welcomes', warmWelcomes, true);
-        populateStaffGallery('fond-farewells', fondFarewells, false);
-
-        // ===== 3. MASONRY GALLERY (simple) =====
+        // ===== 3. MASONRY GALLERY =====
         function createMasonry(containerId, images) {
             const container = document.getElementById(containerId);
+            if (!container) return;
             
             images.forEach((url, i) => {
                 const item = document.createElement('div');
@@ -1218,17 +1450,75 @@
             });
         }
 
-        // Create all masonry galleries
-        createMasonry('teddy-bears-masonry', teddyBears);
-        createMasonry('trekabout-masonry', trekabout);
-        createMasonry('book-character-masonry', bookCharacter);
-        createMasonry('cultural-day-masonry', culturalDay);
+        // ===== 4. POLAROID GALLERY =====
+        function createPolaroid(containerId, images) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            images.forEach((url, i) => {
+                const polaroid = document.createElement('div');
+                polaroid.className = 'polaroid';
+                polaroid.style.animationDelay = `${i * 0.1}s`;
+                
+                const rotation = Math.random() * 12 - 6;
+                polaroid.style.transform = `rotate(${rotation}deg)`;
+                
+                polaroid.innerHTML = `<img src="${url}" alt="Gallery">`;
+                container.appendChild(polaroid);
+            });
+        }
+
+        // ===== 5. DIAGONAL SHOWCASE =====
+        function createDiagonal(containerId, images) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            const limit = Math.min(8, images.length);
+            images.slice(0, limit).forEach((url, i) => {
+                const div = document.createElement('div');
+                div.className = 'diagonal-item';
+                div.style.animationDelay = `${i * 0.1}s`;
+                div.innerHTML = `<img src="${url}" alt="Gallery">`;
+                container.appendChild(div);
+            });
+        }
+
+        // ===== POPULATE ALL GALLERIES =====
+        
+        // Auto-scroll galleries
+        populateAutoScrollGallery('opening-images', openingImages, true);
+        populateAutoScrollGallery('primary-opening', primaryOpening);
+        populateAutoScrollGallery('middle-school-gallery', middleSchool);
+        populateAutoScrollGallery('sc-opening-gallery', scOpening);
+
+        // Staff galleries
+        populateStaffGallery('warm-welcomes', warmWelcomes, true);
+        populateStaffGallery('fond-farewells', fondFarewells, false);
+
+        // Primary School galleries
+        createPolaroid('teddy-bears-polaroid', teddyBears);
+        createDiagonal('trekabout-diagonal', trekabout);
+        createDiagonal('book-character-diagonal', bookCharacter);
+        createPolaroid('cultural-day-polaroid', culturalDay);
+        createPolaroid('kapa-haka-polaroid', kapaHaka);
         createMasonry('athletics-masonry', athleticsDay);
-        createMasonry('kaikoura-masonry', kaikouraJack);
+        createDiagonal('kaikoura-diagonal', kaikouraJack);
+
+        // Middle School galleries
+        createPolaroid('outdoor-adventures-polaroid', outdoorAdventures);
+        createDiagonal('taking-challenges-diagonal', takingChallenges);
+        createDiagonal('becoming-champions-diagonal', becomingChampions);
+        createPolaroid('market-week-polaroid', marketWeek);
+        createMasonry('ms-art-masonry', msArt);
+
+        // Senior College galleries
+        createMasonry('formal-masonry', formal);
+        createPolaroid('out-about-polaroid', outAbout);
+        createDiagonal('christian-focus-diagonal', christianFocus);
+        createDiagonal('y11-growth-diagonal', y11Growth);
+        createMasonry('sc-art-masonry', scArt);
 
         // ===== PERFORMANCE: UNSTICK DISTANT SECTIONS =====
-        // Remove sticky positioning from sections that are far up the page
-        // This prevents browser from rendering too many stacked sections at once
         let ticking = false;
         
         function optimizeStickyScroll() {
@@ -1240,7 +1530,6 @@
                 const rect = section.getBoundingClientRect();
                 const sectionTop = rect.top + scrollTop;
                 
-                // If section is more than 2 viewport heights above current scroll position
                 if (scrollTop - sectionTop > viewportHeight * 2) {
                     section.style.position = 'relative';
                 } else {
@@ -1260,8 +1549,8 @@
             }
         });
         
-        // Run once on load
         optimizeStickyScroll();
     </script>
+
 </body>
 </html>
