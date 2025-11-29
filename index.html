@@ -25,8 +25,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            position: sticky;
-            top: 0;
+            position: relative;
             overflow: hidden;
         }
 
@@ -98,11 +97,10 @@
             }
         }
 
-        /* Section Styles with 3D Layering Effect */
+        /* Section Styles - NO STICKY (removed for performance) */
         .section {
             padding: 50px 40px;
-            position: sticky;
-            top: 0;
+            position: relative;
             overflow: hidden;
         }
 
@@ -296,90 +294,108 @@
             margin-top: 5px;
         }
 
-        /* 3. MASONRY GALLERY - Simplified */
-        .masonry-container {
-            max-width: 1400px;
-            margin: 40px auto;
-            column-count: 4;
-            column-gap: 15px;
-        }
-
-        .masonry-item {
-            break-inside: avoid;
-            margin-bottom: 15px;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            animation: fadeInItem 0.8s ease-out forwards;
-            opacity: 0;
-        }
-
-        .masonry-item img {
+        /* 3. JUMBLE GALLERY - Overlapping images in 1920x1080 container */
+        .jumble-container {
+            max-width: 1920px;
             width: 100%;
-            display: block;
+            height: 1080px;
+            margin: 40px auto;
+            position: relative;
+            overflow: hidden;
         }
 
-        /* 4. POLAROID GALLERY */
-        .polaroid-container {
-            max-width: 1200px;
-            margin: 60px auto;
-            min-height: 400px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            gap: 25px;
-            padding: 20px;
-        }
-
-        .polaroid {
-            background: white;
-            padding: 12px 12px 40px 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-            animation: fadeIn 0.8s ease-out forwards;
+        .jumble-item {
+            position: absolute;
             opacity: 0;
+            transition: opacity 0.8s ease-out;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+            border-radius: 8px;
+            overflow: hidden;
         }
 
-        .polaroid img {
-            width: 220px;
-            height: 220px;
+        .jumble-item.visible {
+            opacity: 1;
+        }
+
+        .jumble-item img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
             display: block;
         }
 
-        /* 5. DIAGONAL SHOWCASE */
-        .diagonal-container {
-            max-width: 1400px;
-            margin: 40px auto;
-            position: relative;
-            height: 500px;
-            overflow: hidden;
+        /* Responsive jumble */
+        @media (max-width: 1920px) {
+            .jumble-container {
+                height: 56.25vw; /* Maintain 16:9 ratio */
+            }
         }
 
-        .diagonal-grid {
+        @media (max-width: 768px) {
+            .jumble-container {
+                height: 70vw;
+            }
+        }
+
+        /* 4. SPORTS GRID - 3x5 grid of slideshows */
+        .sports-grid {
+            max-width: 1400px;
+            margin: 40px auto;
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(3, 1fr);
             gap: 20px;
-            transform: rotate(-5deg) scale(1.1);
         }
 
-        .diagonal-grid.reverse {
-            transform: rotate(5deg) scale(1.1);
-        }
-
-        .diagonal-item {
+        .sport-slideshow {
             position: relative;
+            aspect-ratio: 1 / 1;
             overflow: hidden;
-            border-radius: 15px;
+            border-radius: 10px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            animation: fadeIn 0.8s ease-out forwards;
-            opacity: 0;
         }
 
-        .diagonal-item img {
+        .sport-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 280px;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .sport-slide.active {
+            opacity: 1;
+        }
+
+        .sport-slide img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
+        }
+
+        .sport-label {
+            text-align: center;
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            margin-top: 10px;
+            text-transform: capitalize;
+        }
+
+        @media (max-width: 1024px) {
+            .sports-grid {
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-rows: repeat(5, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sports-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
         }
 
         /* Video Container */
@@ -584,14 +600,14 @@
     <!-- Teddy Bears Picnic - POLAROID -->
     <div class="section blue animate-on-scroll">
         <h3 class="section-subtitle">Teddy Bears Picnic</h3>
-        <div class="polaroid-container" id="teddy-bears-polaroid"></div>
+        <div class="jumble-container" id="teddy-bears-polaroid"></div>
     </div>
 
     <!-- Trekabout Tuesday - DIAGONAL LEFT -->
     <div class="section blue animate-on-scroll">
         <h3 class="section-subtitle">Trekabout Tuesday</h3>
         <div class="diagonal-container">
-            <div class="diagonal-grid" id="trekabout-diagonal"></div>
+            <div class="diagonal-grid" id="trekabout-jumble"></div>
         </div>
     </div>
 
@@ -599,33 +615,33 @@
     <div class="section blue animate-on-scroll">
         <h3 class="section-subtitle">Book Character Day</h3>
         <div class="diagonal-container">
-            <div class="diagonal-grid reverse" id="book-character-diagonal"></div>
+            <div class="diagonal-grid reverse" id="book-character-jumble"></div>
         </div>
     </div>
 
     <!-- Cultural Day - POLAROID -->
     <div class="section blue animate-on-scroll">
         <h3 class="section-subtitle">Cultural Day</h3>
-        <div class="polaroid-container" id="cultural-day-polaroid"></div>
+        <div class="jumble-container" id="cultural-day-jumble"></div>
     </div>
 
     <!-- Kapa Haka - POLAROID -->
     <div class="section blue animate-on-scroll">
         <h3 class="section-subtitle">Kapa Haka</h3>
-        <div class="polaroid-container" id="kapa-haka-polaroid"></div>
+        <div class="jumble-container" id="kapa-haka-jumble"></div>
     </div>
 
     <!-- Athletics Day - MASONRY -->
     <div class="section blue animate-on-scroll">
         <h3 class="section-subtitle">Athletics Day</h3>
-        <div class="masonry-container" id="athletics-masonry"></div>
+        <div class="jumble-container" id="primary-athletics-jumble"></div>
     </div>
 
     <!-- Kaikoura Jack - DIAGONAL LEFT -->
     <div class="section blue animate-on-scroll">
         <h3 class="section-subtitle">Kaikoura Jack</h3>
         <div class="diagonal-container">
-            <div class="diagonal-grid" id="kaikoura-diagonal"></div>
+            <div class="diagonal-grid" id="kaikoura-jumble"></div>
         </div>
     </div>
 
@@ -643,7 +659,7 @@
     <div class="section red animate-on-scroll">
         <h3 class="section-subtitle">Outdoor Adventures</h3>
         <p class="detail-text">Y9 Camp, Ski Trip, Willowbank,</p>
-        <div class="polaroid-container" id="outdoor-adventures-polaroid"></div>
+        <div class="jumble-container" id="outdoor-adventures-jumble"></div>
     </div>
 
     <!-- Taking On Challenges - DIAGONAL LEFT -->
@@ -651,7 +667,7 @@
         <h3 class="section-subtitle">Taking On Challenges</h3>
         <p class="detail-text">Te Haerenga, Activity Days, Adrenaline Forest,</p>
         <div class="diagonal-container">
-            <div class="diagonal-grid" id="taking-challenges-diagonal"></div>
+            <div class="diagonal-grid" id="taking-challenges-jumble"></div>
         </div>
     </div>
 
@@ -660,20 +676,20 @@
         <h3 class="section-subtitle">Becoming Champions</h3>
         <p class="detail-text">EPRO8, Y9 Readers Cup, Cantamaths,</p>
         <div class="diagonal-container">
-            <div class="diagonal-grid reverse" id="becoming-champions-diagonal"></div>
+            <div class="diagonal-grid reverse" id="becoming-champions-jumble"></div>
         </div>
     </div>
 
     <!-- Market Week - POLAROID -->
     <div class="section red animate-on-scroll">
         <h3 class="section-subtitle">Market Week</h3>
-        <div class="polaroid-container" id="market-week-polaroid"></div>
+        <div class="jumble-container" id="market-week-jumble"></div>
     </div>
 
     <!-- Middle School Art - MASONRY -->
     <div class="section red animate-on-scroll">
         <h3 class="section-subtitle">Middle School Art</h3>
-        <div class="masonry-container" id="ms-art-masonry"></div>
+        <div class="jumble-container" id="ms-art-jumble"></div>
     </div>
 
     <!-- Senior College -->
@@ -694,21 +710,21 @@
                 <iframe src="https://www.youtube.com/embed/y8U5uT1ktO8?start=2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
         </div>
-        <div class="masonry-container" id="formal-masonry"></div>
+        <div class="jumble-container" id="formal-jumble"></div>
     </div>
 
     <!-- Out & About - POLAROID -->
     <div class="section gold animate-on-scroll">
         <h3 class="section-subtitle">Out & About</h3>
         <p class="detail-text">Y13 Camp, Y12 Big Day Out, Y11 Living Springs</p>
-        <div class="polaroid-container" id="out-about-polaroid"></div>
+        <div class="jumble-container" id="out-about-jumble"></div>
     </div>
 
     <!-- Christian Focus Days - DIAGONAL LEFT -->
     <div class="section gold animate-on-scroll">
         <h3 class="section-subtitle">Christian Focus Days</h3>
         <div class="diagonal-container">
-            <div class="diagonal-grid" id="christian-focus-diagonal"></div>
+            <div class="diagonal-grid" id="christian-focus-jumble"></div>
         </div>
     </div>
 
@@ -716,46 +732,38 @@
     <div class="section gold animate-on-scroll">
         <h3 class="section-subtitle">Y11 Growth Days</h3>
         <div class="diagonal-container">
-            <div class="diagonal-grid reverse" id="y11-growth-diagonal"></div>
+            <div class="diagonal-grid reverse" id="y11-growth-jumble"></div>
         </div>
     </div>
 
     <!-- Senior College Art - MASONRY -->
     <div class="section gold animate-on-scroll">
         <h3 class="section-subtitle">Senior College Art</h3>
-        <div class="masonry-container" id="sc-art-masonry"></div>
+        <div class="jumble-container" id="sc-art-jumble"></div>
     </div>
 
     <!-- International College -->
     <div class="section blue animate-on-scroll">
         <h2 class="section-title">International College</h2>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
+        <div class="jumble-container" id="intl-college-jumble"></div>
     </div>
 
     <!-- Exploring Aotearoa -->
     <div class="section blue animate-on-scroll">
         <h3 class="section-subtitle">Exploring Aotearoa</h3>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
+        <div class="jumble-container" id="exploring-aotearoa-jumble"></div>
     </div>
 
     <!-- Celebrating Eachother -->
     <div class="section blue animate-on-scroll">
         <h3 class="section-subtitle">Celebrating Eachother</h3>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
+        <div class="jumble-container" id="celebrating-jumble"></div>
     </div>
 
     <!-- Performing Arts -->
     <div class="section black animate-on-scroll">
         <h2 class="section-title">Performing Arts</h2>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
+        <div class="jumble-container" id="kapa-haka-senior-jumble"></div>
     </div>
 
     <!-- Mary Poppins 2025 -->
@@ -766,9 +774,7 @@
                 <iframe src="https://www.youtube.com/embed/sNf9LIyXw4s?start=443" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
         </div>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
+        <div class="jumble-container" id="athletics-day-jumble"></div>
     </div>
 
     <!-- In The Grange -->
@@ -780,9 +786,7 @@
                 <iframe src="https://www.youtube.com/embed/K8iWSDupx0k" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
         </div>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
+        <div class="jumble-container" id="pa-awards-jumble"></div>
     </div>
 
     <!-- Senior Jazz Band -->
@@ -794,9 +798,7 @@
             </div>
         </div>
         <p class="detail-text">Southern Jam Success!</p>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
+        <div class="auto-scroll-container"><div class="auto-scroll-gallery opening-images" id="performing-arts-gallery"></div></div>
         <p class="detail-text" style="margin-top: 40px;">Jazz Show</p>
         <div class="placeholder-container">
             <p class="placeholder-text">Content Coming Soon</p>
@@ -806,57 +808,43 @@
     <!-- Dance Show -->
     <div class="section black animate-on-scroll">
         <h3 class="section-subtitle">Dance Show</h3>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
+        <div class="jumble-container" id="dance-show-jumble"></div>
     </div>
 
     <!-- Rock Night -->
     <div class="section black animate-on-scroll">
         <h3 class="section-subtitle">Rock Night</h3>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
+        <div class="jumble-container" id="rock-night-jumble"></div>
     </div>
 
     <!-- Café Acoustique -->
     <div class="section black animate-on-scroll">
         <h3 class="section-subtitle">Café Acoustique</h3>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
+        <div class="jumble-container" id="cafe-acoustique-jumble"></div>
     </div>
 
     <!-- Winter Extravaganza -->
     <div class="section black animate-on-scroll">
         <h3 class="section-subtitle">Winter Extravaganza</h3>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
+        <div class="jumble-container" id="winter-extra-jumble"></div>
     </div>
 
     <!-- Middleton Music Competition -->
     <div class="section black animate-on-scroll">
         <h3 class="section-subtitle">Middleton Music Competition</h3>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
+        <div class="jumble-container" id="music-academy-jumble"></div>
     </div>
 
     <!-- Theatre Sports -->
     <div class="section black animate-on-scroll">
         <h3 class="section-subtitle">Theatre Sports</h3>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
+        <div class="jumble-container" id="theatre-sports-jumble"></div>
     </div>
 
     <!-- Shakespeare Festival -->
     <div class="section black animate-on-scroll">
         <h3 class="section-subtitle">Shakespeare Festival</h3>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
+        <div class="jumble-container" id="shakespeare-jumble"></div>
     </div>
 
     <!-- Fia Fia Night -->
@@ -870,33 +858,25 @@
     <!-- Polyfest -->
     <div class="section black animate-on-scroll">
         <h3 class="section-subtitle">Polyfest</h3>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
+        <div class="jumble-container" id="polyfest-jumble"></div>
     </div>
 
     <!-- Kapa Haka -->
     <div class="section black animate-on-scroll">
         <h3 class="section-subtitle">Kapa Haka</h3>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
+        <div class="jumble-container" id="kapa-haka-senior-jumble"></div>
     </div>
 
     <!-- Tu Kaha -->
     <div class="section black animate-on-scroll">
         <h3 class="section-subtitle">Tu Kaha</h3>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
+        <div class="jumble-container" id="tu-kaha-jumble"></div>
     </div>
 
     <!-- The Fridge Radio -->
     <div class="section black animate-on-scroll">
         <h3 class="section-subtitle">The Fridge Radio</h3>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
+        <div class="jumble-container" id="fridge-radio-jumble"></div>
     </div>
 
     <!-- Sports -->
@@ -910,25 +890,19 @@
     <!-- Staff Vs Students -->
     <div class="section red animate-on-scroll">
         <h3 class="section-subtitle">Staff Vs Students</h3>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
+        <div class="jumble-container" id="staff-vs-students-jumble"></div>
     </div>
 
     <!-- Athletics Day -->
     <div class="section gold animate-on-scroll">
         <h2 class="section-title">Athletics Day</h2>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
+        <div class="jumble-container" id="athletics-day-jumble"></div>
     </div>
 
     <!-- Can Drive -->
     <div class="section blue animate-on-scroll">
         <h2 class="section-title">Can Drive</h2>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
+        <div class="jumble-container" id="can-drive-jumble"></div>
     </div>
 
     <!-- Kairos Food Rescue -->
@@ -942,9 +916,7 @@
     <!-- Book Week -->
     <div class="section red animate-on-scroll">
         <h2 class="section-title">Book Week</h2>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
+        <div class="jumble-container" id="book-week-jumble"></div>
     </div>
 
     <!-- Peer Support -->
@@ -966,9 +938,7 @@
     <!-- Cambodia Trip -->
     <div class="section black animate-on-scroll">
         <h2 class="section-title">Cambodia Trip</h2>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
+        <div class="jumble-container" id="cambodia-jumble"></div>
     </div>
 
     <!-- Tongan Language Week -->
@@ -982,25 +952,19 @@
     <!-- Learning House -->
     <div class="section gold animate-on-scroll">
         <h2 class="section-title">Learning House</h2>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
+        <div class="jumble-container" id="learning-house-jumble"></div>
     </div>
 
     <!-- Shave for a Cure -->
     <div class="section blue animate-on-scroll">
         <h2 class="section-title">Shave for a Cure</h2>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
+        <div class="jumble-container" id="shave-cure-jumble"></div>
     </div>
 
     <!-- House Competition -->
     <div class="section black animate-on-scroll">
         <h2 class="section-title">House Competition</h2>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
+        <div class="jumble-container" id="house-comp-jumble"></div>
     </div>
 
     <!-- Lipsync -->
@@ -1138,7 +1102,7 @@
             "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764381204/591865508_1743079026556280_6443733095076772858_n_hdphc9.jpg",
         ];
 
-        const athleticsDay = [
+        const primaryAthletics = [
             "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367340/thumbnail_IMG_4198_fjw5xp.jpg",
             "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367338/20251016_122430_gcn2ne.jpg",
             "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764367337/20251016_114911_a1nn4c.jpg",
@@ -1338,6 +1302,343 @@
             "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764385092/Lily_Smith_zhlnzr.jpg",
         ];
 
+        const intlCollege = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764387398/IMG_1268_1_x0rldx.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764387337/IMG_3941_1_j54ue3.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764387319/527607384_17909728068190834_5303613887426753238_n_nl0tvg.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764387319/529240406_17910177297190834_6086125904381145267_n_tg2hou.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764387317/528270030_17909934162190834_8657235971462517214_n_ntemfj.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764387305/527464312_17909834754190834_3187361598834378305_n_ykyvu5.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764387301/525816797_17909388624190834_8891831396577082273_n_f4z33u.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764387297/2000-constrained-d7b635b3-fc05-4f87-b6a6-4b669fd69b56_svqfdw.png",
+        ];
+
+        const exploringAotearoa = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764387533/IMG_9736_wxynln.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764387532/IMG_9701_ykvrg5.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764387532/IMG_9698_h2uqpr.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764387531/IMG_9663_qea3zv.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764387389/96debfb5-1f08-4778-bb0b-a53ed69467e8_1_k9iftw.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764387388/039acb65-d891-4a06-ab66-cc0cd90f03cc_1_ivmlzb.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764387386/821e71c6-bc0f-47b4-8711-cea2c057fd28_1_gww5yr.jpg",
+        ];
+
+        const celebratingEachother = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764387483/IMG_0912_1_qjqhf0.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764387484/IMG_0902_1_igws1d.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764387483/IMG_0899_1_lybuz8.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764387446/Chinese_Language_Day_2_zsemas.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764387446/Chinese_Language_Day_1_fmzeoc.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764387368/IMG_0750_1_npjoa6.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764387366/IMG_8843_z44vh6.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764387365/IMG_8837_b9qmeh.jpg",
+        ];
+
+        const performingArts = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388466/IMG_0181_yhyv7n.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388465/MOL_5146_daqvhx.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388454/TS4_ld6ils.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388422/IMG_9592_hzdtt6.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388420/IMG_9562_trv87t.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388419/VDC1_g3fduf.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388419/IMG_9597_yzflx8.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388132/IMG_7858_gtgbls.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388102/IMG_1233_ni98t7.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388102/IMG_1230_k7jprn.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388079/IMG_7558_dzswmw.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388049/IMG_1406-2_zbhfio.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388048/IMG_1402-2_kmugaf.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388048/IMG_1384_qcdjcj.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764387942/Image_16_mvn3xp.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764387942/Image_11_eq6zoy.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764387941/IMG_1725_ji8lco.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764387941/IMG_1721_bwu5da.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764387920/IMG_2813_rbsub5.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764387904/Mary_Poppins_850_on2pov.jpg",
+        ];
+
+        const maryPoppins = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388718/IMG_2263_bbjwyc.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388717/IMG_7210-2_iv9uoy.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388716/IMG_2826-2_yf52dr.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388714/IMG_2473-2_yxjsby.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388713/IMG_5481_xpmwpm.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388712/IMG_3472-2_cvarto.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388711/IMG_5176_o6cp8l.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388709/Mary_Poppins4_tywvk8.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388708/IMG_7074-2_qm0lb2.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388706/Mary_Poppins2_egp9lv.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388705/IMG_4181-2_z9h5vg.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388703/IMG_2250_mgyucy.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388702/Mary_Poppins6_qwqsc9.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764387832/Mary_Poppins_849_nlnjg7.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764387770/Mary_Poppins_839_daa2vf.jpg",
+        ];
+
+        const paAwards = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388618/IMG_2857_jjo6sl.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388616/IMG_2932_obddjc.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388615/IMG_2824_ozlbj5.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388614/IMG_2828_gfej2k.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388612/IMG_3089_bape6f.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388611/IMG_3193_cfphhg.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388610/IMG_3084_vhv4uu.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388608/IMG_2823_pm2ju3.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388607/IMG_2988_flk65v.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388605/IMG_3023_osm3ic.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388604/IMG_2925_ykqrx5.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388603/IMG_3028_c5thv9.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388602/IMG_3000_jzka1s.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388600/IMG_2918_kjvgvg.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388599/IMG_3194_hjihn9.jpg",
+        ];
+
+        const southernJam = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388174/IMG_7212_yasppc.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388173/IMG_7281_ztjwgi.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388173/IMG_7278_voi4qp.jpg",
+        ];
+
+        const jazzShow = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388955/IMG_7851_mdqd5q.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388953/IMG_7546_tszrvv.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388952/IMG_7508-2_opbu1c.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388950/IMG_7502_gmduds.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388948/IMG_7760_h2vbeu.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388947/IMG_7596_xm8p4h.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388945/IMG_7576_sykfrj.jpg",
+        ];
+
+        const rockNight = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388551/IMG_1451-2_lt0u2u.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388550/IMG_1653-2_gafdco.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388549/IMG_1386-2_x8e01c.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388548/IMG_1647-2_drfjwn.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388547/IMG_1577-2_wwcovk.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388545/IMG_1549-2_fweuze.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388544/IMG_1430-2_kl3frm.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388543/IMG_1458-2_navsu2.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388542/IMG_1635-2_g4hofp.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388540/IMG_1445-2_ebpnnh.jpg",
+        ];
+
+        const cafeAcoustique = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764390400/Screenshot_2025-11-29_172553_cukbfd.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764390398/Screenshot_2025-11-29_172539_enkx9d.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764390397/Screenshot_2025-11-29_172522_pt1set.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764390290/DSC06911_ikdomo.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764390289/DSC06892_vq6ala.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764390288/DSC06887_rbirar.jpg",
+        ];
+
+        const winterExtra = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388509/IMG_7883_fdpk9k.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388508/IMG_7871_fbql6w.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388506/IMG_7863_betkxi.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388505/IMG_7869_to6rjn.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388504/IMG_7855_wuffjx.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388503/IMG_7872_m8pc0c.jpg",
+        ];
+
+        const danceShow = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388998/IMG_9364-2_fayucw.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388996/IMG_9272-2_ewuism.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388995/IMG_9219-2_ztnfri.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388993/IMG_9111-2_ve0cdw.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388992/IMG_9109-2_mbaazp.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388990/IMG_8960-2_zqgzsy.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388988/IMG_8895-2_bazhqa.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388986/IMG_8753-2_phfjyq.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388984/IMG_8742-2_nsdxsk.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388983/IMG_9574-2_c5luml.jpg",
+        ];
+
+        const fiaFia = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391177/2000-constrained-9b6a99be-e41a-4d5f-9a6f-3145033d72b6_d3knst.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391175/2000-constrained-0f40081b-f36f-48aa-b5fe-de84fd379755_rneeur.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391172/2000-constrained-dad58b74-0e98-4ac0-a68a-3652a6dfa3d5_zvvnak.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391170/2000-constrained-cb01441f-e06a-414a-87b2-543bc9f35083_kvxatm.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391167/2000-constrained-b272b5d2-dedd-4ad6-b6a1-43af34808b87_feaiap.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391165/2000-constrained-11f24f29-979b-4014-8de8-481e36c709fd_ouzf9e.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391163/2000-constrained-9bec2597-ad5f-4d53-bcd2-2292416dda50_qit5cp.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391160/2000-constrained-eafbf188-5761-4378-bb23-a41f898c4ca3_t63as9.png",
+        ];
+
+        const kapaHakaSenior = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391221/547357841_1679637289567121_5369213067641353334_n_mau3vw.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391219/547215552_1679637296233787_615260449733581251_n_ac746e.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391216/546620046_1679637286233788_7738486369126024174_n_fqy7zn.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391214/534918575_1679637282900455_123637674487567902_n_aynhph.jpg",
+        ];
+
+        const polyfest = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391032/IMG_5179_mamqyz.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391029/IMG_5171_mdxonp.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391027/IMG_5161_fgleud.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391015/IMG_5339_mnxhkd.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391006/IMG_5336_caomm2.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391002/IMG_5315_ysvpp5.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764390998/IMG_5304_awzmri.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764390994/IMG_5256_h7hvei.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764390990/IMG_5230_vvhqpy.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764390987/IMG_5219_rhbrd9.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764390976/IMG_5110_yr9wfn.jpg",
+        ];
+
+        const musicAcademy = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388828/DSC08515_ofvay5.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388827/DSC08500_frxib0.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388825/DSC08480_x6qdyd.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388824/DSC08468_yhktm3.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388822/DSC08466_mqp9yu.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388821/DSC08459_vth6hs.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388820/DSC08409_ggeqte.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388818/MG108265_oyoiqv.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388817/MG108242_gcgwvy.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388816/DSC08529_av2yo4.jpg",
+        ];
+
+        const shakespeare = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388283/IMG_0181_sducdn.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388282/IMG_0168a_lj89gb.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388281/team_cqna8n.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388281/MOL_5170_wpi9pe.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388280/MOL_5161_jbvlgu.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388279/MOL_5146_j5bpox.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388278/MOL_5138a_znphli.jpg",
+        ];
+
+        const tuKaha = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391288/Tu_Kaha4_ds9vw4.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391285/Tu_Kaha13_aewrmr.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391283/Tu_Kaha15_axw6zq.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391280/Tu_Kaha2_q9n9cn.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391278/Tu_Kaha16_yghm7h.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391275/Tu_Kaha5_epva71.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391273/Tu_Kaha_imqtcj.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391270/Tu_Kaha8_pn4dj7.jpg",
+        ];
+
+        const fridgeRadio = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388202/IMG_4675_ppxptm.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388201/Some_of_The_Fridge_Crew_omdmxz.jpg",
+        ];
+
+        const theatreSports = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388245/TS3_pedb2c.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388245/TS2_b8ryxz.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764388244/TS1_bbhrai.jpg",
+        ];
+
+        const athleticsDay = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391984/IMG_5035_bk35dz.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391980/IMG_4882_ebedxe.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391976/IMG_4929_tkp7tt.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391972/IMG_4899_yrxwyu.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391968/IMG_4830_kirr8e.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391964/IMG_5227_e7mnrx.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391960/IMG_4809_rd3wiv.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391956/IMG_5258_jxcemo.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391951/IMG_5139_ktcngz.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391947/IMG_4979_ykodai.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391942/IMG_5309_cz9s7z.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391938/IMG_5203_peinzq.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391935/IMG_4986_kslruv.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391931/IMG_5244_cxt2ts.jpg",
+        ];
+
+        const staffVsStudents = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392079/StaffVStudent_1_j7jcgc.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392074/StaffVStudent_1_nrdcli.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392069/StaffVStudent_10_zuor1j.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392065/StaffVStudent_8_oijncv.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392061/StaffVStudent_7_pd5pnw.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392057/StaffVStudent_6_jyyzwx.jpg",
+        ];
+
+        const bookWeek = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392540/Book_Week_5_pawyq9.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392530/Book_Week_1_xajm8p.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392211/Book_Week11_tl9y5s.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392207/Book_Week10_nlxrze.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392190/Book_Week7_tygfvf.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392175/Book_Week3_aqrirq.jpg",
+        ];
+
+        const cambodia = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392259/PHOTO-2024-12-14-22-28-20_gu0okq.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392255/PHOTO-2024-12-14-22-28-19_gijl5u.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392251/PHOTO-2024-12-08-15-49-44_ktbfbj.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392247/PHOTO-2024-12-17-21-34-49_1_pcbcte.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392243/PHOTO-2024-12-11-23-12-03_rla3uk.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392240/PHOTO-2024-12-15-00-22-30_fxrbcv.jpg",
+        ];
+
+        const canDrive = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392367/IMG_1846_cioawy.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392363/Can_Drive_2_fbk3jn.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392358/IMG_9439_z6bp5x.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392354/IMG_9438_bzvnxs.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392350/IMG_9436_h0hxd1.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392346/IMG_9434_hth8wf.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392342/IMG_9433_ablmru.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392338/IMG_9431_kiznu0.jpg",
+        ];
+
+        const learningHouse = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764394935/20250326_110406_na62tj.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764394931/Image_25_h5hnfd.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764394926/Media_18_jj52cm.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764394921/Media_19_k64rje.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764394916/Image_7_e75kbq.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764394911/Image_3_bchyrw.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764394907/IMG_4561_cxkyyw.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764394902/Image_29_le0fqo.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764394897/Athletics_2025_l4yy2y.jpg",
+        ];
+
+        const shaveCure = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392414/IMG_0460_t6m8oz.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392411/IMG_0459_kjpulr.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392406/IMG_0457_crno3i.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392402/IMG_0454_tiroli.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392398/IMG_0453_grjtkd.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392394/IMG_0450_afc2yp.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392389/IMG_0449_hqo61n.jpg",
+        ];
+
+        const houseComp = [
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764394859/IMG_0440_g9tfz7.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764394853/dfhcfrtjh_ohpdhb.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764394846/Screenshot_20251023_134107_Instagram_zsubxh.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764394841/imssage_f4dulf.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764394836/IMG_3685_ys24wy.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764394831/IMG_3709_c8qa1x.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764394826/IMG_0266_whbhic.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764394780/IMG_4924_1_pe2nxf.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764394777/Shack_Leaders_2025_hwdcox.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392720/IMG_0056_icxwds.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392716/IMG_9880_2_eejdxy.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392710/IMG_3747_d5npkn.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392706/IMG_3940_gzhqsr.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392700/IMG_0297_elnocy.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392696/IMG_0273_w9kbfg.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392691/IMG_0222_phi6nd.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392686/IMG_0430_yw9l75.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392682/IMG_0405_ppoezh.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392677/IMG_0287_pdtzun.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392672/IMG_0249_mrejvl.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392667/IMG_7800_aemzzv.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392640/IMG_7801_zljvwo.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392640/IMG_7801_zljvwo.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392640/IMG_7799_ic2ilh.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392630/IMG_7802_hvkxjj.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392601/2000-constrained-2dcd4585-f54c-4a2b-9bb8-334ae16b3fdc_1_mv2ktq.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392599/2000-constrained-26173bb6-e827-4080-804e-c7511e1b0d94_1_fmtng3.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392590/2000-constrained-4c21693e-9ea9-4c15-b739-9e5d98acb06b_1_dgabse.png",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392586/2000-constrained-350beaf7-e2f2-4c02-917c-db481fae57ab_1_ltzd0p.png",
+        ];
+
         const warmWelcomes = [
             { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359014/Gregg_Le_Roux_u4my7y.jpg", name: "Gregg Le Roux", title: "Our New Principal" },
             { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356710/Melinda_Kerkhoven_sd83yn.png", name: "Melinda Kerkhoven Sd83yn" },
@@ -1354,7 +1655,7 @@
             { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356696/Aidan_Baker_vw3tik.jpg", name: "Aidan Baker Vw3tik" },
             { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356672/Jessica_Lepou_ziejhx.jpg", name: "Jessica Lepou Ziejhx" },
             { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356670/Marissa_Bastin_tjq3tt.png", name: "Marissa Bastin Tjq3tt" },
-            { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356669/Marisa_Le_Roux_jq65hq.jpg", name: "Gregg Le Roux", title: "Our New Principal" },
+            { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356669/Marisa_Le_Roux_jq65hq.jpg", name: "Marisa Le Roux" },
             { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356668/Kirsten_Russell_ecuyf9.png", name: "Kirsten Russell Ecuyf9" },
             { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356667/Eugene_Zeelie_gvp2ck.jpg", name: "Eugene Zeelie Gvp2ck" },
             { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764356666/Abigail_Uttley_nhzuru.jpg", name: "Abigail Uttley Nhzuru" },
@@ -1380,6 +1681,117 @@
             { url: "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359199/Mr_David_Farmer_b5t8ad.png", name: "Mr David Farmer" },
         ];
 
+        const sportsData = {
+            "Triathlon": [
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391355/Triathlon_1_lptf1i.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391351/Triathlon_2_oilmek.jpg",
+            ],
+            "Volleyball": [
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391374/volleyball2_kdexup.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391364/Volleyball_kdxyn0.jpg",
+            ],
+            "Canoe Polo": [
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391623/CanoePolo_6_rjtl81.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391619/CanoePolo_5_aaiafx.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391615/CanoePolo_4_jra2mk.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391611/CanoePolo_3_at5cte.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391607/CanoePolo_2_p6nlkh.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391604/CanoePolo_1_azsvri.jpg",
+            ],
+            "Netball": [
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391455/Netball_1_xquyze.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391452/Netball_1053_vr50xx.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391448/Netball_1051_x5ruo2.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391445/Netball_1050_xhhyjc.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391441/Netball_1049_kjo5zh.jpg",
+            ],
+            "Orienteering": [
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391470/Orienteering_5_qw1siy.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391466/Orienteering_4_jdvhtu.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391463/Orienteering_3_nm2rpq.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391459/Orienteering_1_lwarlj.jpg",
+            ],
+            "Rugby": [
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391511/Girls_Rugby2_nchwdr.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391507/Girls_Rugby1_a2bcj9.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391504/Girls_Rugby_lwvstg.jpg",
+            ],
+            "Slopestyle": [
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391499/Slopestyle_5_snd44v.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391496/Slopestyle_4_ta2vgt.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391492/Slopestyle_3_qlgkrz.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391488/Slopestyle_2_bjykrh.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391485/Slopestyle_1_u5pahn.jpg",
+            ],
+            "Adventure Racing": [
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392051/AdventureRace_4_lehcps.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392047/AdventureRace_3_htpwy5.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392034/AdventureRace_3_edgg6k.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392042/AdventureRace_2_lamwh9.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392029/AdventureRace_2_hmhtkx.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392038/AdventureRace_5_pkx2v5.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392025/AdventureRace_5_dy1dpl.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392019/Adventure_pjqbei.jpg",
+            ],
+            "Basketball": [
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391581/BasketballBoys_2_qz8dgi.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391578/BasketballBoys_3_mcnutp.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391574/BasketballBoys_1_qu2rhu.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391553/BasketballGirls_5_mnpuub.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391549/BasketballGirls_4_yj12qa.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391545/BasketballGirls_3_qq1lzw.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391541/BasketballGirls_2_y5meyk.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391538/BasketballGirls_1_xbuxnl.jpg",
+            ],
+            "Climbing": [
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391641/Climbing_4_seijgf.png",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391637/Climbing_3_rr2g95.png",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391633/Climbing_1_gxoju1.png",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391628/Climbing_2_tneplj.png",
+            ],
+            "Cross Country": [
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391686/CrossCountry_5_wxcpgm.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391681/CrossCountry_4_nxf4qt.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391677/CrossCountry_3_wrjzb4.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391672/CrossCountry_2_a5urlu.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391668/CrossCountry_1_ozx7xz.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391664/CrossCountry_7_r5l73l.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391660/CrossCountry_6_dh5asc.jpg",
+            ],
+            "Equestrian": [
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391701/Equestrian_1_hsy73r.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391697/Equestrian_6_za4ssm.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391693/Equestrian_Award_npj9xj.jpg",
+            ],
+            "Football": [
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391750/Football_1_ytnbnx.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391740/FootballBoys_4_qetiaj.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391736/FootballBoys_3_oxuggo.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391732/FootballBoys_2_iq8yxk.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391728/FootballBoys_1_qrtijj.jpg",
+            ],
+            "Athletics": [
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391881/AthleticsB_4_gyqgfq.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391877/AthleticsB_9_jtgyex.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391872/AthleticsB_7_wbghfs.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391857/Athletics_14_ympmw4.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391853/Athletics_8_x0ghmb.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391849/Athletics_5_pulucy.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391845/Athletics_3_evhjxj.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391841/Athletics_2_ju8kpe.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391836/Athletics_1_ed52xr.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391832/Athletics_18_w65xae.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391828/Athletics_16_qg3v7h.jpg",
+            ],
+            "Badminton": [
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392012/Badminton_5_v8cfua.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392008/Badminton_4_dehc5w.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764392004/Badminton_3_j1hwsa.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391999/Badminton_2_rwtbkm.jpg",
+                "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391995/Badminton_1_quokzc.jpg",
+            ],
+        };
+
 
         // ===== HELPER FUNCTIONS =====
         function shuffleArray(array) {
@@ -1402,7 +1814,7 @@
             duplicatedImages.forEach(url => {
                 const div = document.createElement('div');
                 div.className = 'auto-scroll-item';
-                div.innerHTML = `<img src="${url}" alt="School Memory">`;
+                div.innerHTML = `<img src="${url}" alt="School Memory" loading="lazy">`;
                 container.appendChild(div);
             });
         }
@@ -1428,7 +1840,7 @@
                 const div = document.createElement('div');
                 div.className = 'staff-card';
                 div.innerHTML = `
-                    <img src="${person.url}" alt="${person.name}">
+                    <img src="${person.url}" alt="${person.name}" loading="lazy">
                     <div class="name">${person.name}</div>
                     ${person.title ? `<div class="title">${person.title}</div>` : ''}
                 `;
@@ -1436,50 +1848,112 @@
             });
         }
 
-        // ===== 3. MASONRY GALLERY =====
-        function createMasonry(containerId, images) {
+        // ===== 3. JUMBLE GALLERY (Optimized for performance) =====
+        function createJumbleGallery(containerId, images) {
             const container = document.getElementById(containerId);
-            if (!container) return;
+            if (!container || images.length === 0) return;
+            
+            const containerWidth = 1920;
+            const containerHeight = 1080;
+            
+            // Calculate sizes for images based on count
+            const totalImages = images.length;
+            const minSize = 200;
+            const maxSize = Math.min(600, containerWidth / Math.sqrt(totalImages) * 1.5);
             
             images.forEach((url, i) => {
                 const item = document.createElement('div');
-                item.className = 'masonry-item';
-                item.style.animationDelay = `${i * 0.05}s`;
-                item.innerHTML = `<img src="${url}" alt="Gallery">`;
+                item.className = 'jumble-item';
+                
+                // Random size
+                const width = minSize + Math.random() * (maxSize - minSize);
+                const height = width * (0.7 + Math.random() * 0.6); // Vary aspect ratio
+                
+                // Position with overlap
+                const maxX = containerWidth - width;
+                const maxY = containerHeight - height;
+                const x = Math.random() * maxX;
+                const y = Math.random() * maxY;
+                
+                // Random rotation
+                const rotation = Math.random() * 20 - 10;
+                
+                // Random z-index for layering
+                const zIndex = Math.floor(Math.random() * totalImages);
+                
+                item.style.width = `${width}px`;
+                item.style.height = `${height}px`;
+                item.style.left = `${x}px`;
+                item.style.top = `${y}px`;
+                item.style.transform = `rotate(${rotation}deg)`;
+                item.style.zIndex = zIndex;
+                
+                item.innerHTML = `<img src="${url}" alt="Gallery" loading="lazy">`;
                 container.appendChild(item);
             });
+            
+            // Intersection Observer for fade-in (performance optimized)
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const items = entry.target.querySelectorAll('.jumble-item');
+                        items.forEach((item, i) => {
+                            setTimeout(() => {
+                                item.classList.add('visible');
+                            }, Math.random() * 1500); // Random delay up to 1.5s
+                        });
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            observer.observe(container);
         }
 
-        // ===== 4. POLAROID GALLERY =====
-        function createPolaroid(containerId, images) {
+        // ===== 4. SPORTS GRID (3x5 slideshow grid) =====
+        function createSportsGrid(containerId, sportsData) {
             const container = document.getElementById(containerId);
             if (!container) return;
             
-            images.forEach((url, i) => {
-                const polaroid = document.createElement('div');
-                polaroid.className = 'polaroid';
-                polaroid.style.animationDelay = `${i * 0.1}s`;
-                
-                const rotation = Math.random() * 12 - 6;
-                polaroid.style.transform = `rotate(${rotation}deg)`;
-                
-                polaroid.innerHTML = `<img src="${url}" alt="Gallery">`;
-                container.appendChild(polaroid);
-            });
-        }
-
-        // ===== 5. DIAGONAL SHOWCASE =====
-        function createDiagonal(containerId, images) {
-            const container = document.getElementById(containerId);
-            if (!container) return;
+            const sportNames = Object.keys(sportsData);
             
-            const limit = Math.min(8, images.length);
-            images.slice(0, limit).forEach((url, i) => {
-                const div = document.createElement('div');
-                div.className = 'diagonal-item';
-                div.style.animationDelay = `${i * 0.1}s`;
-                div.innerHTML = `<img src="${url}" alt="Gallery">`;
-                container.appendChild(div);
+            sportNames.forEach(sportName => {
+                const images = sportsData[sportName];
+                if (images.length === 0) return;
+                
+                const sportItem = document.createElement('div');
+                sportItem.className = 'sport-item';
+                
+                const slideshow = document.createElement('div');
+                slideshow.className = 'sport-slideshow';
+                
+                // Create slides
+                images.forEach((url, i) => {
+                    const slide = document.createElement('div');
+                    slide.className = 'sport-slide';
+                    if (i === 0) slide.classList.add('active');
+                    slide.innerHTML = `<img src="${url}" alt="${sportName}" loading="lazy">`;
+                    slideshow.appendChild(slide);
+                });
+                
+                const label = document.createElement('div');
+                label.className = 'sport-label';
+                label.textContent = sportName;
+                
+                sportItem.appendChild(slideshow);
+                sportItem.appendChild(label);
+                container.appendChild(sportItem);
+                
+                // Auto-rotate slides with random timing
+                if (images.length > 1) {
+                    let currentSlide = 0;
+                    setInterval(() => {
+                        const slides = slideshow.querySelectorAll('.sport-slide');
+                        slides[currentSlide].classList.remove('active');
+                        currentSlide = (currentSlide + 1) % images.length;
+                        slides[currentSlide].classList.add('active');
+                    }, 3000 + Math.random() * 1000); // 3-4 seconds
+                }
             });
         }
 
@@ -1490,66 +1964,72 @@
         populateAutoScrollGallery('primary-opening', primaryOpening);
         populateAutoScrollGallery('middle-school-gallery', middleSchool);
         populateAutoScrollGallery('sc-opening-gallery', scOpening);
+        populateAutoScrollGallery('performing-arts-gallery', performingArts);
 
         // Staff galleries
         populateStaffGallery('warm-welcomes', warmWelcomes, true);
         populateStaffGallery('fond-farewells', fondFarewells, false);
 
-        // Primary School galleries
-        createPolaroid('teddy-bears-polaroid', teddyBears);
-        createDiagonal('trekabout-diagonal', trekabout);
-        createDiagonal('book-character-diagonal', bookCharacter);
-        createPolaroid('cultural-day-polaroid', culturalDay);
-        createPolaroid('kapa-haka-polaroid', kapaHaka);
-        createMasonry('athletics-masonry', athleticsDay);
-        createDiagonal('kaikoura-diagonal', kaikouraJack);
+        // PRIMARY SCHOOL - Jumble galleries
+        createJumbleGallery('teddy-bears-jumble', teddyBears);
+        createJumbleGallery('trekabout-jumble', trekabout);
+        createJumbleGallery('book-character-jumble', bookCharacter);
+        createJumbleGallery('cultural-day-jumble', culturalDay);
+        createJumbleGallery('kapa-haka-jumble', kapaHaka);
+        createJumbleGallery('primary-athletics-jumble', primaryAthletics);
+        createJumbleGallery('kaikoura-jumble', kaikouraJack);
 
-        // Middle School galleries
-        createPolaroid('outdoor-adventures-polaroid', outdoorAdventures);
-        createDiagonal('taking-challenges-diagonal', takingChallenges);
-        createDiagonal('becoming-champions-diagonal', becomingChampions);
-        createPolaroid('market-week-polaroid', marketWeek);
-        createMasonry('ms-art-masonry', msArt);
+        // MIDDLE SCHOOL - Jumble galleries
+        createJumbleGallery('outdoor-adventures-jumble', outdoorAdventures);
+        createJumbleGallery('taking-challenges-jumble', takingChallenges);
+        createJumbleGallery('becoming-champions-jumble', becomingChampions);
+        createJumbleGallery('market-week-jumble', marketWeek);
+        createJumbleGallery('ms-art-jumble', msArt);
 
-        // Senior College galleries
-        createMasonry('formal-masonry', formal);
-        createPolaroid('out-about-polaroid', outAbout);
-        createDiagonal('christian-focus-diagonal', christianFocus);
-        createDiagonal('y11-growth-diagonal', y11Growth);
-        createMasonry('sc-art-masonry', scArt);
+        // SENIOR COLLEGE - Jumble galleries
+        createJumbleGallery('formal-jumble', formal);
+        createJumbleGallery('out-about-jumble', outAbout);
+        createJumbleGallery('christian-focus-jumble', christianFocus);
+        createJumbleGallery('y11-growth-jumble', y11Growth);
+        createJumbleGallery('sc-art-jumble', scArt);
 
-        // ===== PERFORMANCE: UNSTICK DISTANT SECTIONS =====
-        let ticking = false;
-        
-        function optimizeStickyScroll() {
-            const sections = document.querySelectorAll('.section, .hero');
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            const viewportHeight = window.innerHeight;
-            
-            sections.forEach((section, index) => {
-                const rect = section.getBoundingClientRect();
-                const sectionTop = rect.top + scrollTop;
-                
-                if (scrollTop - sectionTop > viewportHeight * 2) {
-                    section.style.position = 'relative';
-                } else {
-                    section.style.position = 'sticky';
-                }
-            });
-            
-            ticking = false;
-        }
-        
-        window.addEventListener('scroll', () => {
-            if (!ticking) {
-                window.requestAnimationFrame(() => {
-                    optimizeStickyScroll();
-                });
-                ticking = true;
-            }
-        });
-        
-        optimizeStickyScroll();
+        // INTERNATIONAL COLLEGE - Jumble galleries
+        createJumbleGallery('intl-college-jumble', intlCollege);
+        createJumbleGallery('exploring-aotearoa-jumble', exploringAotearoa);
+        createJumbleGallery('celebrating-jumble', celebratingEachother);
+
+        // PERFORMING ARTS - Jumble galleries
+        createJumbleGallery('mary-poppins-jumble', maryPoppins);
+        createJumbleGallery('pa-awards-jumble', paAwards);
+        createJumbleGallery('southern-jam-jumble', southernJam);
+        createJumbleGallery('jazz-show-jumble', jazzShow);
+        createJumbleGallery('rock-night-jumble', rockNight);
+        createJumbleGallery('cafe-acoustique-jumble', cafeAcoustique);
+        createJumbleGallery('winter-extra-jumble', winterExtra);
+        createJumbleGallery('dance-show-jumble', danceShow);
+        createJumbleGallery('fia-fia-jumble', fiaFia);
+        createJumbleGallery('kapa-haka-senior-jumble', kapaHakaSenior);
+        createJumbleGallery('polyfest-jumble', polyfest);
+        createJumbleGallery('music-academy-jumble', musicAcademy);
+        createJumbleGallery('shakespeare-jumble', shakespeare);
+        createJumbleGallery('tu-kaha-jumble', tuKaha);
+        createJumbleGallery('fridge-radio-jumble', fridgeRadio);
+        createJumbleGallery('theatre-sports-jumble', theatreSports);
+
+        // SPORTS - Special grid
+        createSportsGrid('sports-grid', sportsData);
+
+        // OTHER SECTIONS - Jumble galleries  
+        createJumbleGallery('athletics-day-jumble', athleticsDay);
+        createJumbleGallery('staff-vs-students-jumble', staffVsStudents);
+        createJumbleGallery('book-week-jumble', bookWeek);
+        createJumbleGallery('cambodia-jumble', cambodia);
+        createJumbleGallery('can-drive-jumble', canDrive);
+        createJumbleGallery('learning-house-jumble', learningHouse);
+        createJumbleGallery('shave-cure-jumble', shaveCure);
+        createJumbleGallery('house-comp-jumble', houseComp);
+
+        console.log('All galleries populated successfully!');
     </script>
 
 </body>
