@@ -97,11 +97,13 @@
             }
         }
 
-        /* Section Styles */
+        /* Section Styles with 3D Layering Effect */
         .section {
             padding: 50px 40px;
-            position: relative;
+            position: sticky;
+            top: 0;
             overflow: hidden;
+            min-height: 100vh;
         }
 
         .section::before {
@@ -200,119 +202,94 @@
             animation: fadeInUp 1s ease-out 0.3s forwards;
         }
 
-        /* 1. SCROLL GALLERY (slower, no scrollbar) */
-        .scroll-gallery-container {
+        /* 1. AUTO SCROLL GALLERY (no interaction, infinite loop) */
+        .auto-scroll-container {
             position: relative;
             width: 100%;
-            padding: 0 60px;
+            overflow: hidden;
             margin-top: 80px;
         }
 
-        .scroll-gallery {
+        .auto-scroll-gallery {
             display: flex;
             gap: 30px;
-            overflow-x: auto;
-            scroll-behavior: smooth;
             padding: 40px 20px;
-            cursor: grab;
-            user-select: none;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
+            animation: infiniteScroll 60s linear infinite;
+            width: max-content;
         }
 
-        .scroll-gallery::-webkit-scrollbar {
-            display: none;
+        @keyframes infiniteScroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
         }
 
-        .scroll-gallery:active {
-            cursor: grabbing;
-        }
-
-        .scroll-gallery.opening-images {
+        .auto-scroll-gallery.opening-images {
             height: 400px;
         }
 
-        .scroll-item {
+        .auto-scroll-item {
             flex: 0 0 auto;
             opacity: 0;
             transform: translateY(30px);
             animation: fadeInItem 0.8s ease-out forwards;
         }
 
-        .scroll-item:nth-child(n+6) { animation-delay: 0.6s; }
+        .auto-scroll-item:nth-child(n+6) { animation-delay: 0.6s; }
 
-        @keyframes fadeInItem {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .scroll-item img {
+        .auto-scroll-item img {
             height: 100%;
             width: auto;
             object-fit: cover;
             border-radius: 15px;
             box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s;
             pointer-events: none;
             user-select: none;
             -webkit-user-drag: none;
         }
 
-        .scroll-item img:hover {
-            transform: scale(1.05) rotate(2deg);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+        /* 2. STAFF GALLERY (auto-scroll, no interaction) */
+        .staff-gallery-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
         }
 
-        .scroll-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            color: white;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s;
-            z-index: 10;
-        }
-
-        .scroll-arrow:hover {
-            background: rgba(255, 255, 255, 0.4);
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        .scroll-arrow.left { left: 10px; }
-        .scroll-arrow.right { right: 10px; }
-
-        /* 2. STAFF GALLERY */
         .staff-gallery {
             display: flex;
             gap: 30px;
-            overflow-x: auto;
-            scroll-behavior: smooth;
             padding: 40px 20px;
-            cursor: grab;
-            user-select: none;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
             height: 300px;
+            width: max-content;
         }
 
-        .staff-gallery::-webkit-scrollbar {
-            display: none;
+        .staff-gallery.scroll-right {
+            animation: infiniteScrollRight 80s linear infinite;
         }
 
-        .staff-gallery:active {
-            cursor: grabbing;
+        .staff-gallery.scroll-left {
+            animation: infiniteScrollLeft 80s linear infinite;
+        }
+
+        @keyframes infiniteScrollRight {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        @keyframes infiniteScrollLeft {
+            0% {
+                transform: translateX(-50%);
+            }
+            100% {
+                transform: translateX(0);
+            }
         }
 
         .staff-card {
@@ -357,10 +334,11 @@
 
         /* 3. CAROUSEL GALLERY */
         .carousel-container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 40px auto;
             position: relative;
             overflow: hidden;
+            padding: 0 20px;
         }
 
         .carousel-track {
@@ -372,14 +350,15 @@
             min-width: 100%;
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 30px;
             padding: 20px;
         }
 
         .carousel-slide img {
             height: 400px;
             width: auto;
-            object-fit: cover;
+            max-width: calc((100% - 60px) / 3);
+            object-fit: contain;
             border-radius: 15px;
             box-shadow: 0 15px 40px rgba(0,0,0,0.4);
         }
@@ -422,9 +401,19 @@
             animation: diagonalFloat 20s ease-in-out infinite;
         }
 
+        .diagonal-grid.reverse {
+            transform: rotate(5deg) scale(1.1);
+            animation: diagonalFloatReverse 20s ease-in-out infinite;
+        }
+
         @keyframes diagonalFloat {
             0%, 100% { transform: rotate(-5deg) scale(1.1) translateX(0); }
             50% { transform: rotate(-5deg) scale(1.1) translateX(-100px); }
+        }
+
+        @keyframes diagonalFloatReverse {
+            0%, 100% { transform: rotate(5deg) scale(1.1) translateX(0); }
+            50% { transform: rotate(5deg) scale(1.1) translateX(100px); }
         }
 
         .diagonal-item {
@@ -564,17 +553,17 @@
             object-fit: cover;
         }
 
-        /* 8. MASONRY GALLERY */
+        /* 8. MASONRY GALLERY - Random Sizes */
         .masonry-container {
             max-width: 1400px;
             margin: 40px auto;
-            column-count: 4;
-            column-gap: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-auto-rows: 50px;
+            gap: 15px;
         }
 
         .masonry-item {
-            break-inside: avoid;
-            margin-bottom: 20px;
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
@@ -589,23 +578,40 @@
 
         .masonry-item img {
             width: 100%;
+            height: 100%;
+            object-fit: cover;
             display: block;
         }
 
-        /* Size variations for masonry */
-        .masonry-item.small img {
-            height: 200px;
-            object-fit: cover;
+        /* Random grid spanning */
+        .masonry-item.size-1 {
+            grid-column: span 1;
+            grid-row: span 4;
         }
 
-        .masonry-item.medium img {
-            height: 300px;
-            object-fit: cover;
+        .masonry-item.size-2 {
+            grid-column: span 1;
+            grid-row: span 6;
         }
 
-        .masonry-item.large img {
-            height: 400px;
-            object-fit: cover;
+        .masonry-item.size-3 {
+            grid-column: span 2;
+            grid-row: span 5;
+        }
+
+        .masonry-item.size-4 {
+            grid-column: span 2;
+            grid-row: span 7;
+        }
+
+        .masonry-item.size-5 {
+            grid-column: span 1;
+            grid-row: span 5;
+        }
+
+        .masonry-item.size-6 {
+            grid-column: span 2;
+            grid-row: span 6;
         }
 
         /* Video Container */
@@ -731,13 +737,11 @@
             <h1 class="main-title">2025 LOOKBACK</h1>
         </div>
         
-        <!-- Opening Images Scroll Gallery -->
-        <div class="scroll-gallery-container">
-            <button class="scroll-arrow left" onclick="scrollGallery('opening-images', 'left')">‹</button>
-            <div class="scroll-gallery opening-images" id="opening-images">
+        <!-- Opening Images Auto-Scroll Gallery -->
+        <div class="auto-scroll-container">
+            <div class="auto-scroll-gallery opening-images" id="opening-images">
                 <!-- Images populated by JavaScript -->
             </div>
-            <button class="scroll-arrow right" onclick="scrollGallery('opening-images', 'right')">›</button>
         </div>
     </div>
 
@@ -772,24 +776,20 @@
     <!-- Warm Welcomes -->
     <div class="section red animate-on-scroll">
         <h2 class="section-title">Warm Welcomes</h2>
-        <div class="scroll-gallery-container">
-            <button class="scroll-arrow left" onclick="scrollGallery('warm-welcomes', 'left')">‹</button>
-            <div class="staff-gallery" id="warm-welcomes">
+        <div class="staff-gallery-container">
+            <div class="staff-gallery scroll-right" id="warm-welcomes">
                 <!-- Staff cards populated by JavaScript -->
             </div>
-            <button class="scroll-arrow right" onclick="scrollGallery('warm-welcomes', 'right')">›</button>
         </div>
     </div>
 
     <!-- Fond Farewells -->
     <div class="section red animate-on-scroll">
         <h2 class="section-title">Fond Farewells</h2>
-        <div class="scroll-gallery-container">
-            <button class="scroll-arrow left" onclick="scrollGallery('fond-farewells', 'left')">‹</button>
-            <div class="staff-gallery" id="fond-farewells">
+        <div class="staff-gallery-container">
+            <div class="staff-gallery scroll-left" id="fond-farewells">
                 <!-- Staff cards populated by JavaScript -->
             </div>
-            <button class="scroll-arrow right" onclick="scrollGallery('fond-farewells', 'right')">›</button>
         </div>
     </div>
 
@@ -806,12 +806,10 @@
     <!-- Primary School -->
     <div class="section blue animate-on-scroll">
         <h2 class="section-title">Primary School</h2>
-        <div class="scroll-gallery-container">
-            <button class="scroll-arrow left" onclick="scrollGallery('primary-opening', 'left')">‹</button>
-            <div class="scroll-gallery opening-images" id="primary-opening">
+        <div class="auto-scroll-container">
+            <div class="auto-scroll-gallery opening-images" id="primary-opening">
                 <!-- Images populated by JavaScript -->
             </div>
-            <button class="scroll-arrow right" onclick="scrollGallery('primary-opening', 'right')">›</button>
         </div>
     </div>
 
@@ -836,11 +834,13 @@
         </div>
     </div>
 
-    <!-- Book Character Day - PARALLAX SCROLL -->
+    <!-- Book Character Day - DIAGONAL SHOWCASE REVERSE -->
     <div class="section blue animate-on-scroll">
         <h3 class="section-subtitle">Book Character Day</h3>
-        <div class="parallax-container" id="book-character-parallax">
-            <!-- Layers populated by JavaScript -->
+        <div class="diagonal-container">
+            <div class="diagonal-grid reverse" id="book-character-diagonal">
+                <!-- Images populated by JavaScript -->
+            </div>
         </div>
     </div>
 
@@ -1467,63 +1467,44 @@
             return newArray;
         }
 
-        function scrollGallery(id, direction) {
-            const container = document.getElementById(id);
-            const scrollAmount = direction === 'left' ? -400 : 400;
-            container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-        }
-
-        // ===== 1. SCROLL GALLERIES =====
-        function populateScrollGallery(containerId, images, shuffle = false) {
+        // ===== 1. AUTO-SCROLL GALLERIES (infinite loop) =====
+        function populateAutoScrollGallery(containerId, images, shuffle = false) {
             const container = document.getElementById(containerId);
             const imagesToUse = shuffle ? shuffleArray(images) : images;
-            imagesToUse.forEach(url => {
+            
+            // Duplicate images for seamless loop
+            const duplicatedImages = [...imagesToUse, ...imagesToUse];
+            
+            duplicatedImages.forEach(url => {
                 const div = document.createElement('div');
-                div.className = 'scroll-item';
+                div.className = 'auto-scroll-item';
                 div.innerHTML = `<img src="${url}" alt="School Memory">`;
                 container.appendChild(div);
             });
         }
 
-        // Drag to scroll for scroll galleries
-        document.querySelectorAll('.scroll-gallery, .staff-gallery').forEach(track => {
-            let isDown = false;
-            let startX, scrollLeft;
+        // Populate auto-scroll galleries
+        populateAutoScrollGallery('opening-images', openingImages, true);
+        populateAutoScrollGallery('primary-opening', primaryOpening);
 
-            track.addEventListener('mousedown', (e) => {
-                isDown = true;
-                track.style.cursor = 'grabbing';
-                startX = e.pageX - track.offsetLeft;
-                scrollLeft = track.scrollLeft;
-            });
-            
-            track.addEventListener('mouseleave', () => { 
-                isDown = false;
-                track.style.cursor = 'grab';
-            });
-            
-            track.addEventListener('mouseup', () => { 
-                isDown = false;
-                track.style.cursor = 'grab';
-            });
-            
-            track.addEventListener('mousemove', (e) => {
-                if (!isDown) return;
-                e.preventDefault();
-                const x = e.pageX - track.offsetLeft;
-                const walk = (x - startX) * 2;
-                track.scrollLeft = scrollLeft - walk;
-            });
-        });
-
-        // Populate scroll galleries
-        populateScrollGallery('opening-images', openingImages, true);
-        populateScrollGallery('primary-opening', primaryOpening);
-
-        // ===== 2. STAFF GALLERIES =====
-        function populateStaffGallery(containerId, staff) {
+        // ===== 2. STAFF GALLERIES (auto-scroll, Gregg centered for warm welcomes) =====
+        function populateStaffGallery(containerId, staff, putFirstInCenter = false) {
             const container = document.getElementById(containerId);
-            staff.forEach(person => {
+            let orderedStaff = [...staff];
+            
+            // For warm welcomes, reorder to have Gregg Le Roux in center
+            if (putFirstInCenter && staff.length > 0) {
+                const halfPoint = Math.floor(staff.length / 2);
+                orderedStaff = [
+                    ...staff.slice(halfPoint + 1),
+                    ...staff.slice(0, halfPoint + 1)
+                ];
+            }
+            
+            // Duplicate for seamless loop
+            const duplicatedStaff = [...orderedStaff, ...orderedStaff];
+            
+            duplicatedStaff.forEach(person => {
                 const div = document.createElement('div');
                 div.className = 'staff-card';
                 div.innerHTML = `
@@ -1535,8 +1516,8 @@
             });
         }
 
-        populateStaffGallery('warm-welcomes', warmWelcomes);
-        populateStaffGallery('fond-farewells', fondFarewells);
+        populateStaffGallery('warm-welcomes', warmWelcomes, true);
+        populateStaffGallery('fond-farewells', fondFarewells, false);
 
         // ===== 3. CAROUSEL GALLERY =====
         function createCarousel(containerId, images, imagesPerSlide = 3) {
@@ -1582,9 +1563,9 @@
         createCarousel('teddy-bears-carousel', teddyBears, 3);
 
         // ===== 4. DIAGONAL SHOWCASE =====
-        function createDiagonal(containerId, images) {
+        function createDiagonal(containerId, images, limit = 8) {
             const container = document.getElementById(containerId);
-            images.slice(0, 8).forEach((url, i) => {
+            images.slice(0, limit).forEach((url, i) => {
                 const div = document.createElement('div');
                 div.className = 'diagonal-item';
                 div.style.animationDelay = `${i * 0.1}s`;
@@ -1593,32 +1574,8 @@
             });
         }
 
-        createDiagonal('trekabout-diagonal', trekabout);
-
-        // ===== 5. PARALLAX SCROLL =====
-        function createParallax(containerId, images) {
-            const container = document.getElementById(containerId);
-            
-            const layers = [
-                { class: 'back', images: images.slice(0, 2) },
-                { class: 'middle', images: images.slice(2, 4) },
-                { class: 'front', images: images.slice(4, 7) }
-            ];
-
-            layers.forEach(layer => {
-                const layerDiv = document.createElement('div');
-                layerDiv.className = `parallax-layer ${layer.class}`;
-                layer.images.forEach(url => {
-                    const item = document.createElement('div');
-                    item.className = 'parallax-item';
-                    item.innerHTML = `<img src="${url}" alt="Gallery">`;
-                    layerDiv.appendChild(item);
-                });
-                container.appendChild(layerDiv);
-            });
-        }
-
-        createParallax('book-character-parallax', bookCharacter);
+        createDiagonal('trekabout-diagonal', trekabout, 8);
+        createDiagonal('book-character-diagonal', bookCharacter, 7);
 
         // ===== 6. POLAROID GALLERY =====
         function createPolaroid(containerId, images) {
@@ -1640,13 +1597,15 @@
 
         createPolaroid('cultural-day-polaroid', culturalDay);
 
-        // ===== 7. FLIP BOOK =====
+        // ===== 7. FLIP BOOK (6 books, no blank slots) =====
         function createFlipBook(containerId, images) {
             const container = document.getElementById(containerId);
-            
-            // Create 6 flip books with 2 images each
             const booksCount = 6;
-            const imagesPerBook = Math.floor(images.length / booksCount);
+            
+            // Ensure we have at least 12 images by duplicating if needed
+            while (images.length < booksCount * 2) {
+                images = [...images, ...images];
+            }
             
             for (let i = 0; i < booksCount; i++) {
                 const bookItem = document.createElement('div');
@@ -1660,15 +1619,11 @@
                 
                 const front = document.createElement('div');
                 front.className = 'page-front';
-                if (images[frontIndex]) {
-                    front.innerHTML = `<img src="${images[frontIndex]}" alt="Page">`;
-                }
+                front.innerHTML = `<img src="${images[frontIndex]}" alt="Page">`;
                 
                 const back = document.createElement('div');
                 back.className = 'page-back';
-                if (images[backIndex]) {
-                    back.innerHTML = `<img src="${images[backIndex]}" alt="Page">`;
-                }
+                back.innerHTML = `<img src="${images[backIndex]}" alt="Page">`;
                 
                 page.appendChild(front);
                 page.appendChild(back);
@@ -1680,31 +1635,24 @@
                     if (Math.random() > 0.5) {
                         page.classList.toggle('flipped');
                     }
-                }, 2000 + (i * 500)); // Stagger the intervals
+                }, 2000 + (i * 500));
             }
         }
 
-        createFlipBook('athletics-flipbook', athleticsDay);
+        createFlipBook('athletics-flipbook', [...athleticsDay]);
 
-        // ===== 8. MASONRY GALLERY =====
+        // ===== 8. MASONRY GALLERY (truly random sizes) =====
         function createMasonry(containerId, images) {
             const container = document.getElementById(containerId);
-            const sizes = ['small', 'medium', 'large'];
+            const sizes = ['size-1', 'size-2', 'size-3', 'size-4', 'size-5', 'size-6'];
             
             images.forEach((url, i) => {
                 const item = document.createElement('div');
                 
-                // Assign sizes in a varied pattern
-                let sizeClass;
-                if (i % 5 === 0) {
-                    sizeClass = 'large';
-                } else if (i % 3 === 0) {
-                    sizeClass = 'medium';
-                } else {
-                    sizeClass = 'small';
-                }
+                // Randomly assign sizes for variety
+                const randomSize = sizes[Math.floor(Math.random() * sizes.length)];
                 
-                item.className = `masonry-item ${sizeClass}`;
+                item.className = `masonry-item ${randomSize}`;
                 item.style.animationDelay = `${i * 0.05}s`;
                 item.innerHTML = `<img src="${url}" alt="Gallery">`;
                 container.appendChild(item);
