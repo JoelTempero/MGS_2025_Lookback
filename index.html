@@ -651,7 +651,7 @@
     <div class="section blue animate-on-scroll">
         <h3 class="section-subtitle">Book Character Day</h3>
         <div class="diagonal-container">
-            <div class="diagonal-grid reverse" id="book-character-jumble"></div>
+            <div class="jumble-container" id="book-character-jumble"></div>
         </div>
     </div>
 
@@ -676,9 +676,7 @@
     <!-- Kaikoura Jack - DIAGONAL LEFT -->
     <div class="section blue animate-on-scroll">
         <h3 class="section-subtitle">Kaikoura Jack</h3>
-        <div class="diagonal-container">
-            <div class="jumble-container" id="kaikoura-jumble"></div>
-        </div>
+        <div class="jumble-container" id="kaikoura-jumble"></div>
     </div>
 
     <!-- Middle School -->
@@ -712,7 +710,7 @@
         <h3 class="section-subtitle">Becoming Champions</h3>
         <p class="detail-text">EPRO8, Y9 Readers Cup, Cantamaths,</p>
         <div class="diagonal-container">
-            <div class="diagonal-grid reverse" id="becoming-champions-jumble"></div>
+            <div class="jumble-container" id="becoming-champions-jumble"></div>
         </div>
     </div>
 
@@ -768,7 +766,7 @@
     <div class="section gold animate-on-scroll">
         <h3 class="section-subtitle">Y11 Growth Days</h3>
         <div class="diagonal-container">
-            <div class="diagonal-grid reverse" id="y11-growth-jumble"></div>
+            <div class="jumble-container" id="y11-growth-jumble"></div>
         </div>
     </div>
 
@@ -1825,16 +1823,27 @@
             
             const totalImages = images.length;
             
-            // Determine number of columns based on image count
+            // Smart column calculation to avoid orphans
             let numColumns;
             if (totalImages <= 4) {
                 numColumns = 2;
-            } else if (totalImages <= 9) {
+            } else if (totalImages <= 6) {
                 numColumns = 3;
-            } else if (totalImages <= 16) {
-                numColumns = 4;
+            } else if (totalImages <= 12) {
+                // For 7-12, use columns that divide evenly or leave max 1 orphan
+                if (totalImages % 4 === 0 || totalImages % 4 >= 3) numColumns = 4;
+                else if (totalImages % 3 === 0 || totalImages % 3 >= 2) numColumns = 3;
+                else numColumns = 4;
+            } else if (totalImages <= 20) {
+                // For 13-20, prefer 4 or 5 columns
+                if (totalImages % 5 === 0 || totalImages % 5 >= 4) numColumns = 5;
+                else if (totalImages % 4 === 0 || totalImages % 4 >= 3) numColumns = 4;
+                else numColumns = 5;
             } else {
-                numColumns = 5;
+                // For 20+, prefer 5 or 6 columns
+                if (totalImages % 6 === 0 || totalImages % 6 >= 5) numColumns = 6;
+                else if (totalImages % 5 === 0 || totalImages % 5 >= 4) numColumns = 5;
+                else numColumns = 6;
             }
             
             // Create column containers
