@@ -542,6 +542,16 @@
             .carousel-slide img {
                 height: 300px;
             }
+            #pa-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 15px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #pa-grid {
+                grid-template-columns: 1fr !important;
+            }
         }
     </style>
 </head>
@@ -837,80 +847,11 @@
         </div>
         <p class="detail-text">Southern Jam Success!</p>
         <div class="jumble-container" id="southern-jam-jumble"></div>
-        <p class="detail-text" style="margin-top: 40px;">Jazz Show</p>
-        <div class="jumble-container" id="jazz-show-jumble"></div>
     </div>
 
-    <!-- Dance Show -->
+    <!-- PA Grid (3x4 slideshow grid) -->
     <div class="section black animate-on-scroll">
-        <h3 class="section-subtitle">Dance Show</h3>
-        <div class="jumble-container" id="dance-show-jumble"></div>
-    </div>
-
-    <!-- Rock Night -->
-    <div class="section black animate-on-scroll">
-        <h3 class="section-subtitle">Rock Night</h3>
-        <div class="jumble-container" id="rock-night-jumble"></div>
-    </div>
-
-    <!-- Café Acoustique -->
-    <div class="section black animate-on-scroll">
-        <h3 class="section-subtitle">Café Acoustique</h3>
-        <div class="jumble-container" id="cafe-acoustique-jumble"></div>
-    </div>
-
-    <!-- Winter Extravaganza -->
-    <div class="section black animate-on-scroll">
-        <h3 class="section-subtitle">Winter Extravaganza</h3>
-        <div class="jumble-container" id="winter-extra-jumble"></div>
-    </div>
-
-    <!-- Middleton Music Competition -->
-    <div class="section black animate-on-scroll">
-        <h3 class="section-subtitle">Middleton Music Competition</h3>
-        <div class="jumble-container" id="music-academy-jumble"></div>
-    </div>
-
-    <!-- Theatre Sports -->
-    <div class="section black animate-on-scroll">
-        <h3 class="section-subtitle">Theatre Sports</h3>
-        <div class="jumble-container" id="theatre-sports-jumble"></div>
-    </div>
-
-    <!-- Shakespeare Festival -->
-    <div class="section black animate-on-scroll">
-        <h3 class="section-subtitle">Shakespeare Festival</h3>
-        <div class="jumble-container" id="shakespeare-jumble"></div>
-    </div>
-
-    <!-- Fia Fia Night -->
-    <div class="section black animate-on-scroll">
-        <h3 class="section-subtitle">Fia Fia Night</h3>
-        <div class="jumble-container" id="fia-fia-jumble"></div>
-    </div>
-
-    <!-- Polyfest -->
-    <div class="section black animate-on-scroll">
-        <h3 class="section-subtitle">Polyfest</h3>
-        <div class="jumble-container" id="polyfest-jumble"></div>
-    </div>
-
-    <!-- Kapa Haka -->
-    <div class="section black animate-on-scroll">
-        <h3 class="section-subtitle">Kapa Haka</h3>
-        <div class="jumble-container" id="kapa-haka-senior-jumble"></div>
-    </div>
-
-    <!-- Tu Kaha -->
-    <div class="section black animate-on-scroll">
-        <h3 class="section-subtitle">Tu Kaha</h3>
-        <div class="jumble-container" id="tu-kaha-jumble"></div>
-    </div>
-
-    <!-- The Fridge Radio -->
-    <div class="section black animate-on-scroll">
-        <h3 class="section-subtitle">The Fridge Radio</h3>
-        <div class="jumble-container" id="fridge-radio-jumble"></div>
+        <div id="pa-grid"></div>
     </div>
 
     <!-- Sports -->
@@ -968,6 +909,60 @@
     </div>
 
     <script>
+
+        // ===== 7. PA GRID (3x4 slideshow grid) =====
+        function createPAGrid(containerId, paData) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            container.style.cssText = `
+                max-width: 1600px;
+                margin: 60px auto;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 30px;
+                padding: 20px;
+            `;
+            
+            Object.keys(paData).forEach(paName => {
+                const images = paData[paName];
+                if (!images || images.length === 0) return;
+                
+                const paItem = document.createElement('div');
+                paItem.className = 'pa-item';
+                paItem.style.cssText = 'background: rgba(255,255,255,0.05); border-radius: 8px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);';
+                
+                const slideshow = document.createElement('div');
+                slideshow.style.cssText = 'position: relative; width: 100%; aspect-ratio: 16/9; overflow: hidden;';
+                
+                images.forEach((url, i) => {
+                    const slide = document.createElement('div');
+                    slide.style.cssText = `position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: ${i === 0 ? '1' : '0'}; transition: opacity 0.5s;`;
+                    slide.innerHTML = `<img src="${url}" loading="lazy" style="width: 100%; height: 100%; object-fit: cover;">`;
+                    slideshow.appendChild(slide);
+                });
+                
+                paItem.appendChild(slideshow);
+                
+                const label = document.createElement('div');
+                label.textContent = paName;
+                label.style.cssText = 'padding: 15px; text-align: center; font-size: 18px; font-weight: 600; color: white; background: rgba(0,0,0,0.3);';
+                paItem.appendChild(label);
+                
+                container.appendChild(paItem);
+                
+                if (images.length > 1) {
+                    let curr = 0;
+                    const slides = slideshow.querySelectorAll('div');
+                    setInterval(() => {
+                        slides[curr].style.opacity = '0';
+                        curr = (curr + 1) % images.length;
+                        slides[curr].style.opacity = '1';
+                    }, 3000);
+                }
+            });
+        }
+
         // ===== IMAGE DATA ARRAYS =====
         const openingImages = [
             "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764359848/MGS2025-934_uy31pq.jpg",
@@ -1437,6 +1432,14 @@
             "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391219/547215552_1679637296233787_615260449733581251_n_ac746e.jpg",
             "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391216/546620046_1679637286233788_7738486369126024174_n_fqy7zn.jpg",
             "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391214/534918575_1679637282900455_123637674487567902_n_aynhph.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391288/Tu_Kaha4_ds9vw4.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391285/Tu_Kaha13_aewrmr.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391283/Tu_Kaha15_axw6zq.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391280/Tu_Kaha2_q9n9cn.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391278/Tu_Kaha16_yghm7h.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391275/Tu_Kaha5_epva71.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391273/Tu_Kaha_imqtcj.jpg",
+            "https://res.cloudinary.com/dneb3rzqf/image/upload/v1764391270/Tu_Kaha8_pn4dj7.jpg"
         ];
 
         const polyfest = [
@@ -1959,6 +1962,7 @@
                 display: flex;
                 flex-direction: column;
                 gap: 30px;
+                padding: 0;
             `;
             
             // Create 3 rows
@@ -2069,7 +2073,24 @@
             });
         }
 
+        
+        // PA Grid data object
+        const paGridData = {
+            'Jazz Show': jazzShow,
+            'Dance Show': danceShow,
+            'Rock Night': rockNight,
+            'Café Acoustique': cafeAcoustique,
+            'Winter Extravaganza': winterExtra,
+            'Middleton Music Competition': musicAcademy,
+            'Shakespeare Festival': shakespeare,
+            'Fia Fia Night': fiaFia,
+            'Kapa Haka': kapaHakaSenior,
+            'Polyfest': polyfest,
+            'The Fridge Radio': fridgeRadio
+        };
+
         // ===== POPULATE ALL GALLERIES =====
+
         
         // Auto-scroll galleries
         populateAutoScrollGallery('opening-images', openingImages, true);
@@ -2110,23 +2131,14 @@
         createJumbleGallery('exploring-aotearoa-jumble', exploringAotearoa);
         createJumbleGallery('celebrating-jumble', celebratingEachother);
 
-        // PERFORMING ARTS - Jumble galleries
+        // PERFORMING ARTS
+        populateAutoScrollGallery('performing-arts-gallery', performingArts);
         createMultiScrollGallery('mary-poppins-jumble', maryPoppins);
         createJumbleGallery('pa-awards-jumble', paAwards);
-        createJumbleGallery('southern-jam-jumble', southernJam);
-        createJumbleGallery('jazz-show-jumble', jazzShow);
-        createJumbleGallery('rock-night-jumble', rockNight);
-        createJumbleGallery('cafe-acoustique-jumble', cafeAcoustique);
-        createJumbleGallery('winter-extra-jumble', winterExtra);
-        createJumbleGallery('dance-show-jumble', danceShow);
-        createJumbleGallery('fia-fia-jumble', fiaFia);
-        createJumbleGallery('kapa-haka-senior-jumble', kapaHakaSenior);
-        createJumbleGallery('polyfest-jumble', polyfest);
-        createJumbleGallery('music-academy-jumble', musicAcademy);
-        createJumbleGallery('shakespeare-jumble', shakespeare);
-        createJumbleGallery('tu-kaha-jumble', tuKaha);
-        createJumbleGallery('fridge-radio-jumble', fridgeRadio);
-        createSimpleMasonryGallery('theatre-sports-jumble', theatreSports);
+        createSimpleMasonryGallery('southern-jam-jumble', southernJam);
+        
+        // PA Grid (replaces individual galleries)
+        createPAGrid('pa-grid', paGridData);
 
         // SPORTS - Special grid
         createSportsGrid('sports-grid', sportsData);
