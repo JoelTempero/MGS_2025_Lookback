@@ -298,26 +298,26 @@
             margin-top: 5px;
         }
 
-        /* 3. JUMBLE GALLERY - Much more spaced out */
+        /* 3. JUMBLE GALLERY - Fit content, minimal padding */
         .jumble-container, .diagonal-container, .polaroid-container, .masonry-container {
             max-width: 1920px;
             width: 95%;
-            min-height: 1800px;
+            min-height: 800px;
             height: auto;
-            padding: 100px 0;
+            padding: 40px 0;
             margin: 40px auto;
             position: relative;
             overflow: hidden;
         }
 
         .jumble-container.large, .diagonal-container.large, .polaroid-container.large, .masonry-container.large {
-            min-height: 2600px;
-            padding: 120px 0;
+            min-height: 1200px;
+            padding: 50px 0;
         }
 
         .jumble-container.xlarge, .diagonal-container.xlarge, .polaroid-container.xlarge, .masonry-container.xlarge {
-            min-height: 3400px;
-            padding: 150px 0;
+            min-height: 1600px;
+            padding: 60px 0;
         }
 
         .jumble-item, .diagonal-item, .polaroid-item, .masonry-item {
@@ -1827,29 +1827,29 @@
             
             let cols, rows, baseSize;
             
-            if (totalImages <= 6) {
-                cols = 3;
+            if (totalImages <= 4) {
+                cols = 2;
                 rows = 2;
                 baseSize = 480;
-            } else if (totalImages <= 12) {
-                cols = 4;
+            } else if (totalImages <= 9) {
+                cols = 3;
                 rows = 3;
                 baseSize = 380;
-            } else if (totalImages <= 20) {
-                cols = 5;
+            } else if (totalImages <= 16) {
+                cols = 4;
                 rows = 4;
                 baseSize = 340;
             } else {
-                cols = 6;
-                rows = Math.ceil(totalImages / 6);
+                cols = 5;
+                rows = Math.ceil(totalImages / 5);
                 baseSize = 320;
             }
             
             const sizeVariation = 60;
             
             // Calculate row height to spread images evenly
-            const rowHeight = 100 / (rows + 0.5); // Divide container into rows with spacing
-            const colWidth = 100 / (cols + 0.5);   // Divide into columns with spacing
+            const rowHeight = 100 / (rows + 1);   // More spacing between rows
+            const colWidth = 100 / (cols + 1);     // More spacing between columns
             
             images.forEach((url, i) => {
                 const item = document.createElement('div');
