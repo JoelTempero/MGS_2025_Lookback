@@ -958,7 +958,7 @@
                         slides[curr].style.opacity = '0';
                         curr = (curr + 1) % images.length;
                         slides[curr].style.opacity = '1';
-                    }, 3000);
+                    }, 3000 + Math.random() * 1000); // 3-4 seconds random (like Sports)
                 }
             });
         }
@@ -1984,20 +1984,14 @@
             const row2Images = images.slice(imagesPerRow, imagesPerRow * 2);
             const row3Images = images.slice(imagesPerRow * 2);
             
-                        container.style.cssText = `
-                width: 100vw;
-                position: relative;
-                left: 50%;
-                right: 50%;
-                margin-left: -50vw;
-                margin-right: -50vw;
+            // Simple container styling (like auto-scroll - no complex breakout)
+            container.style.cssText = `
+                width: 100%;
                 overflow: hidden;
-                margin-top: 60px;
-                margin-bottom: 60px;
+                margin: 60px 0;
                 display: flex;
                 flex-direction: column;
                 gap: 30px;
-                padding: 0;
             `;
             
             // Create 3 rows
