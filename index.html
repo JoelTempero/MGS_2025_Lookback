@@ -186,6 +186,10 @@
             height: 400px;
         }
 
+        .auto-scroll-gallery#performing-arts-gallery {
+            height: 400px;
+        }
+
         .auto-scroll-item {
             flex: 0 0 auto;
             opacity: 0;
@@ -294,26 +298,26 @@
             margin-top: 5px;
         }
 
-        /* 3. JUMBLE GALLERY - Spread out based on image count */
+        /* 3. JUMBLE GALLERY - Much more spaced out */
         .jumble-container, .diagonal-container, .polaroid-container, .masonry-container {
             max-width: 1920px;
             width: 95%;
-            min-height: 1200px;
+            min-height: 1800px;
             height: auto;
-            padding: 80px 0;
+            padding: 100px 0;
             margin: 40px auto;
             position: relative;
             overflow: hidden;
         }
 
         .jumble-container.large, .diagonal-container.large, .polaroid-container.large, .masonry-container.large {
-            min-height: 1800px;
-            padding: 100px 0;
+            min-height: 2600px;
+            padding: 120px 0;
         }
 
         .jumble-container.xlarge, .diagonal-container.xlarge, .polaroid-container.xlarge, .masonry-container.xlarge {
-            min-height: 2400px;
-            padding: 120px 0;
+            min-height: 3400px;
+            padding: 150px 0;
         }
 
         .jumble-item, .diagonal-item, .polaroid-item, .masonry-item {
@@ -1855,16 +1859,17 @@
                 const width = size;
                 const height = size * aspectRatio;
                 
-                // Spread across full height (5% to 95% instead of 15% to 85%)
-                const gridX = 10 + (80 / (cols + 1)) * (col + 1);
-                const gridY = 5 + (90 / (rows + 1)) * (row + 1);
+                // Much more vertical space - images barely touching
+                // Use almost full height (3% to 97%)
+                const gridX = 8 + (84 / (cols + 1)) * (col + 1);
+                const gridY = 3 + (94 / (rows + 1)) * (row + 1);
                 
-                // Larger offset for more scattered look
-                const offsetX = Math.random() * 8 - 4;
-                const offsetY = Math.random() * 8 - 4;
+                // Smaller offset so images stay more organized
+                const offsetX = Math.random() * 5 - 2.5;
+                const offsetY = Math.random() * 5 - 2.5;
                 
-                const x = Math.max(8, Math.min(92, gridX + offsetX));
-                const y = Math.max(3, Math.min(97, gridY + offsetY));
+                const x = Math.max(7, Math.min(93, gridX + offsetX));
+                const y = Math.max(2, Math.min(98, gridY + offsetY));
                 
                 const rotation = Math.random() * 10 - 5;
                 const zIndex = row * 10 + Math.floor(Math.random() * 5);
