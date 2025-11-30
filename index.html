@@ -919,7 +919,7 @@
                 max-width: 1600px;
                 margin: 60px auto;
                 display: grid;
-                grid-template-columns: repeat(4, 1fr);
+                grid-template-columns: repeat(3, 1fr);
                 gap: 30px;
                 padding: 20px;
             `;
@@ -933,7 +933,7 @@
                 paItem.style.cssText = 'background: rgba(255,255,255,0.05); border-radius: 8px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);';
                 
                 const slideshow = document.createElement('div');
-                slideshow.style.cssText = 'position: relative; width: 100%; aspect-ratio: 16/9; overflow: hidden;';
+                slideshow.style.cssText = 'position: relative; width: 100%; aspect-ratio: 1/1; overflow: hidden;';
                 
                 images.forEach((url, i) => {
                     const slide = document.createElement('div');
@@ -2074,11 +2074,12 @@
         }
 
         
-        // PA Grid data object
+                // PA Grid data object (4×3 = 12 items)
         const paGridData = {
             'Jazz Show': jazzShow,
             'Dance Show': danceShow,
             'Rock Night': rockNight,
+            'Theatre Sports': theatreSports,
             'Café Acoustique': cafeAcoustique,
             'Winter Extravaganza': winterExtra,
             'Middleton Music Competition': musicAcademy,
