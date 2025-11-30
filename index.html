@@ -1847,6 +1847,9 @@
             
             const sizeVariation = 80;
             
+            // Calculate row height to spread images evenly
+            const rowHeight = 100 / (rows + 0.5); // Divide container into rows with spacing
+            
             images.forEach((url, i) => {
                 const item = document.createElement('div');
                 item.className = 'jumble-item';
@@ -1859,17 +1862,17 @@
                 const width = size;
                 const height = size * aspectRatio;
                 
-                // Much more vertical space - images barely touching
-                // Use almost full height (3% to 97%)
-                const gridX = 8 + (84 / (cols + 1)) * (col + 1);
-                const gridY = 3 + (94 / (rows + 1)) * (row + 1);
+                // Position based on row/col with even distribution
+                const colWidth = 100 / (cols + 0.5);
+                const gridX = colWidth * (col + 0.5);
+                const gridY = rowHeight * (row + 0.5);
                 
-                // Smaller offset so images stay more organized
-                const offsetX = Math.random() * 5 - 2.5;
-                const offsetY = Math.random() * 5 - 2.5;
+                // Small random offset for jumble effect
+                const offsetX = (Math.random() - 0.5) * (colWidth * 0.3);
+                const offsetY = (Math.random() - 0.5) * (rowHeight * 0.3);
                 
-                const x = Math.max(7, Math.min(93, gridX + offsetX));
-                const y = Math.max(2, Math.min(98, gridY + offsetY));
+                const x = Math.max(5, Math.min(95, gridX + offsetX));
+                const y = Math.max(3, Math.min(97, gridY + offsetY));
                 
                 const rotation = Math.random() * 10 - 5;
                 const zIndex = row * 10 + Math.floor(Math.random() * 5);
