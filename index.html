@@ -1830,25 +1830,26 @@
             if (totalImages <= 6) {
                 cols = 3;
                 rows = 2;
-                baseSize = 550;
+                baseSize = 480;
             } else if (totalImages <= 12) {
                 cols = 4;
                 rows = 3;
-                baseSize = 440;
+                baseSize = 380;
             } else if (totalImages <= 20) {
                 cols = 5;
                 rows = 4;
-                baseSize = 400;
+                baseSize = 340;
             } else {
                 cols = 6;
                 rows = Math.ceil(totalImages / 6);
-                baseSize = 380;
+                baseSize = 320;
             }
             
-            const sizeVariation = 80;
+            const sizeVariation = 60;
             
             // Calculate row height to spread images evenly
             const rowHeight = 100 / (rows + 0.5); // Divide container into rows with spacing
+            const colWidth = 100 / (cols + 0.5);   // Divide into columns with spacing
             
             images.forEach((url, i) => {
                 const item = document.createElement('div');
@@ -1863,13 +1864,12 @@
                 const height = size * aspectRatio;
                 
                 // Position based on row/col with even distribution
-                const colWidth = 100 / (cols + 0.5);
                 const gridX = colWidth * (col + 0.5);
                 const gridY = rowHeight * (row + 0.5);
                 
-                // Small random offset for jumble effect
-                const offsetX = (Math.random() - 0.5) * (colWidth * 0.3);
-                const offsetY = (Math.random() - 0.5) * (rowHeight * 0.3);
+                // Very small random offset for slight jumble effect (10% of cell size)
+                const offsetX = (Math.random() - 0.5) * (colWidth * 0.15);
+                const offsetY = (Math.random() - 0.5) * (rowHeight * 0.15);
                 
                 const x = Math.max(5, Math.min(95, gridX + offsetX));
                 const y = Math.max(3, Math.min(97, gridY + offsetY));
