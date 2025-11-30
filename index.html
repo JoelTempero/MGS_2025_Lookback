@@ -163,6 +163,7 @@
             width: 100%;
             overflow: hidden;
             margin-top: 80px;
+            contain: layout style paint;
         }
 
         .auto-scroll-gallery {
@@ -171,32 +172,35 @@
             padding: 40px 20px;
             animation: infiniteScroll 60s linear infinite;
             width: max-content;
+            will-change: transform;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
         }
 
         @keyframes infiniteScroll {
             0% {
-                transform: translateX(0);
+                transform: translate3d(0, 0, 0);
             }
             100% {
-                transform: translateX(-50%);
+                transform: translate3d(-50%, 0, 0);
             }
         }
 
         @keyframes scrollForward {
             0% {
-                transform: translateX(0);
+                transform: translate3d(0, 0, 0);
             }
             100% {
-                transform: translateX(-50%);
+                transform: translate3d(-50%, 0, 0);
             }
         }
 
         @keyframes scrollReverse {
             0% {
-                transform: translateX(-50%);
+                transform: translate3d(-50%, 0, 0);
             }
             100% {
-                transform: translateX(0);
+                transform: translate3d(0, 0, 0);
             }
         }
 
@@ -260,19 +264,19 @@
 
         @keyframes infiniteScrollRight {
             0% {
-                transform: translateX(0);
+                transform: translate3d(0, 0, 0);
             }
             100% {
-                transform: translateX(-50%);
+                transform: translate3d(-50%, 0, 0);
             }
         }
 
         @keyframes infiniteScrollLeft {
             0% {
-                transform: translateX(-50%);
+                transform: translate3d(-50%, 0, 0);
             }
             100% {
-                transform: translateX(0);
+                transform: translate3d(0, 0, 0);
             }
         }
 
@@ -938,7 +942,7 @@
                 images.forEach((url, i) => {
                     const slide = document.createElement('div');
                     slide.style.cssText = `position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: ${i === 0 ? '1' : '0'}; transition: opacity 0.5s;`;
-                    slide.innerHTML = `<img src="${url}" loading="lazy" style="width: 100%; height: 100%; object-fit: cover;">`;
+                    slide.innerHTML = `<img src="${url}" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover;">`;
                     slideshow.appendChild(slide);
                 });
                 
@@ -1818,7 +1822,7 @@
             duplicatedImages.forEach(url => {
                 const div = document.createElement('div');
                 div.className = 'auto-scroll-item';
-                div.innerHTML = `<img src="${url}" alt="School Memory" loading="lazy">`;
+                div.innerHTML = `<img src="${url}" alt="School Memory" loading="lazy" decoding="async">`;
                 container.appendChild(div);
             });
         }
@@ -1844,7 +1848,7 @@
                 const div = document.createElement('div');
                 div.className = 'staff-card';
                 div.innerHTML = `
-                    <img src="${person.url}" alt="${person.name}" loading="lazy">
+                    <img src="${person.url}" alt="${person.name}" loading="lazy" decoding="async">
                     <div class="name">${person.name}</div>
                     ${person.title ? `<div class="title">${person.title}</div>` : ''}
                 `;
@@ -1913,7 +1917,7 @@
                     overflow: hidden;
                 `;
                 
-                item.innerHTML = `<img src="${url}" alt="Gallery" loading="lazy" style="width: 100%; height: auto; display: block;">`;
+                item.innerHTML = `<img src="${url}" alt="Gallery" loading="lazy" decoding="async" style="width: 100%; height: auto; display: block;">`;
                 columns[columnIndex].appendChild(item);
             });
             
@@ -1963,7 +1967,7 @@
                     overflow: hidden;
                 `;
                 
-                item.innerHTML = `<img src="${url}" alt="Gallery" loading="lazy" style="width: 100%; height: auto; display: block;">`;
+                item.innerHTML = `<img src="${url}" alt="Gallery" loading="lazy" decoding="async" style="width: 100%; height: auto; display: block;">`;
                 container.appendChild(item);
                 
                 // Fade in
@@ -2013,6 +2017,9 @@
                     padding: 20px;
                     animation: ${rowIndex === 1 ? 'scrollReverse' : 'scrollForward'} 60s linear infinite;
                     width: max-content;
+                    will-change: transform;
+                    backface-visibility: hidden;
+                    -webkit-backface-visibility: hidden;
                 `;
                 
                 // Duplicate images for infinite scroll
@@ -2030,7 +2037,7 @@
                         border-radius: 4px;
                         overflow: hidden;
                     `;
-                    item.innerHTML = `<img src="${url}" alt="Gallery" loading="lazy" style="height: 100%; width: auto; object-fit: cover;">`;
+                    item.innerHTML = `<img src="${url}" alt="Gallery" loading="lazy" decoding="async" style="height: 100%; width: auto; object-fit: cover;">`;
                     gallery.appendChild(item);
                 });
                 
@@ -2078,7 +2085,7 @@
                     const slide = document.createElement('div');
                     slide.className = 'sport-slide';
                     if (i === 0) slide.classList.add('active');
-                    slide.innerHTML = `<img src="${url}" alt="${sportName}" loading="lazy">`;
+                    slide.innerHTML = `<img src="${url}" alt="${sportName}" loading="lazy" decoding="async">`;
                     slideshow.appendChild(slide);
                 });
                 
