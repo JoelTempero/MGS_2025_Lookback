@@ -294,21 +294,26 @@
             margin-top: 5px;
         }
 
-        /* 3. JUMBLE GALLERY - Contained, centered */
+        /* 3. JUMBLE GALLERY - Spread out based on image count */
         .jumble-container, .diagonal-container, .polaroid-container, .masonry-container {
             max-width: 1920px;
             width: 95%;
-            min-height: 900px;
+            min-height: 1200px;
             height: auto;
-            padding: 60px 0;
+            padding: 80px 0;
             margin: 40px auto;
             position: relative;
             overflow: hidden;
         }
 
         .jumble-container.large, .diagonal-container.large, .polaroid-container.large, .masonry-container.large {
-            min-height: 1200px;
-            padding: 80px 0;
+            min-height: 1800px;
+            padding: 100px 0;
+        }
+
+        .jumble-container.xlarge, .diagonal-container.xlarge, .polaroid-container.xlarge, .masonry-container.xlarge {
+            min-height: 2400px;
+            padding: 120px 0;
         }
 
         .jumble-item, .diagonal-item, .polaroid-item, .masonry-item {
@@ -783,7 +788,11 @@
     <!-- Performing Arts -->
     <div class="section black animate-on-scroll">
         <h2 class="section-title">Performing Arts</h2>
-        <div class="auto-scroll-container" id="performing-arts-gallery"></div>
+        <div class="auto-scroll-container">
+            <div class="auto-scroll-gallery" id="performing-arts-gallery">
+                <!-- Images populated by JavaScript -->
+            </div>
+        </div>
     </div>
 
     <!-- Mary Poppins 2025 -->
@@ -1798,14 +1807,17 @@
             });
         }
 
-        // ===== 3. JUMBLE GALLERY (Optimized for performance) =====
+        // ===== 3. JUMBLE GALLERY (Spread out for visibility) =====
         function createJumbleGallery(containerId, images) {
             const container = document.getElementById(containerId);
             if (!container || images.length === 0) return;
             
             const totalImages = images.length;
             
-            if (totalImages >= 9) {
+            // Add size classes for container height
+            if (totalImages >= 20) {
+                container.classList.add('xlarge');
+            } else if (totalImages >= 9) {
                 container.classList.add('large');
             }
             
@@ -1843,14 +1855,16 @@
                 const width = size;
                 const height = size * aspectRatio;
                 
-                // Keep within bounds (15% to 85%)
-                const gridX = 15 + (70 / (cols + 1)) * (col + 1);
-                const gridY = 15 + (70 / (rows + 1)) * (row + 1);
-                const offsetX = Math.random() * 4 - 2;
-                const offsetY = Math.random() * 4 - 2;
+                // Spread across full height (5% to 95% instead of 15% to 85%)
+                const gridX = 10 + (80 / (cols + 1)) * (col + 1);
+                const gridY = 5 + (90 / (rows + 1)) * (row + 1);
                 
-                const x = Math.max(10, Math.min(90, gridX + offsetX));
-                const y = Math.max(10, Math.min(90, gridY + offsetY));
+                // Larger offset for more scattered look
+                const offsetX = Math.random() * 8 - 4;
+                const offsetY = Math.random() * 8 - 4;
+                
+                const x = Math.max(8, Math.min(92, gridX + offsetX));
+                const y = Math.max(3, Math.min(97, gridY + offsetY));
                 
                 const rotation = Math.random() * 10 - 5;
                 const zIndex = row * 10 + Math.floor(Math.random() * 5);
