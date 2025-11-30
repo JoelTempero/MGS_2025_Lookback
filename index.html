@@ -294,24 +294,24 @@
             margin-top: 5px;
         }
 
-        /* 3. JUMBLE GALLERY - No borders, dynamic sizing */
-        .jumble-container {
+        /* 3. JUMBLE GALLERY - Contained, centered */
+        .jumble-container, .diagonal-container, .polaroid-container, .masonry-container {
             max-width: 1920px;
-            width: 100%;
+            width: 95%;
             min-height: 900px;
             height: auto;
             padding: 60px 0;
             margin: 40px auto;
             position: relative;
-            overflow: visible;
+            overflow: hidden;
         }
 
-        .jumble-container.large {
+        .jumble-container.large, .diagonal-container.large, .polaroid-container.large, .masonry-container.large {
             min-height: 1200px;
             padding: 80px 0;
         }
 
-        .jumble-item {
+        .jumble-item, .diagonal-item, .polaroid-item, .masonry-item {
             position: absolute;
             opacity: 0;
             transition: opacity 0.8s ease-out;
@@ -320,38 +320,45 @@
             overflow: hidden;
         }
 
-        .jumble-item.visible {
+        .jumble-item.visible, .diagonal-item.visible, .polaroid-item.visible, .masonry-item.visible {
             opacity: 1;
         }
 
-        .jumble-item img {
+        .jumble-item img, .diagonal-item img, .polaroid-item img, .masonry-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
         }
 
+        /* Diagonal and masonry grids */
+        .diagonal-grid, .masonry-grid {
+            position: relative;
+            width: 100%;
+            min-height: 900px;
+        }
+
         /* Responsive */
         @media (max-width: 1920px) {
-            .jumble-container {
+            .jumble-container, .diagonal-container, .polaroid-container, .masonry-container {
                 min-height: 50vw;
             }
-            .jumble-container.large {
+            .jumble-container.large, .diagonal-container.large, .polaroid-container.large, .masonry-container.large {
                 min-height: 65vw;
             }
         }
 
         @media (max-width: 768px) {
-            .jumble-container {
+            .jumble-container, .diagonal-container, .polaroid-container, .masonry-container {
                 min-height: 70vw;
                 padding: 40px 0;
             }
-            .jumble-container.large {
+            .jumble-container.large, .diagonal-container.large, .polaroid-container.large, .masonry-container.large {
                 min-height: 90vw;
             }
         }
 
-        /* 4. SPORTS GRID - 3x5 grid of slideshows */
+        /* 4. SPORTS GRID - 3x5 grid */
         .sports-grid {
             max-width: 1600px;
             margin: 60px auto;
@@ -613,39 +620,49 @@
     <!-- Teddy Bears Picnic - POLAROID -->
     <div class="section blue animate-on-scroll">
         <h3 class="section-subtitle">Teddy Bears Picnic</h3>
-        <div class="jumble-container" id="teddy-bears-jumble"></div>
+        <div class="polaroid-container" id="teddy-bears-jumble"></div>
+    </div>
 
     <!-- Trekabout Tuesday - DIAGONAL LEFT -->
     <div class="section blue animate-on-scroll">
         <h3 class="section-subtitle">Trekabout Tuesday</h3>
-        <div class="jumble-container" id="trekabout-jumble"></div>
+        <div class="diagonal-container">
+            <div class="diagonal-grid" id="trekabout-jumble"></div>
+        </div>
     </div>
 
     <!-- Book Character Day - DIAGONAL RIGHT -->
     <div class="section blue animate-on-scroll">
         <h3 class="section-subtitle">Book Character Day</h3>
-        <div class="jumble-container" id="book-character-jumble"></div>
+        <div class="diagonal-container">
+            <div class="diagonal-grid reverse" id="book-character-jumble"></div>
+        </div>
     </div>
 
     <!-- Cultural Day - POLAROID -->
     <div class="section blue animate-on-scroll">
         <h3 class="section-subtitle">Cultural Day</h3>
-        <div class="jumble-container" id="cultural-day-jumble"></div>
+        <div class="polaroid-container" id="cultural-day-jumble"></div>
+    </div>
 
     <!-- Kapa Haka - POLAROID -->
     <div class="section blue animate-on-scroll">
         <h3 class="section-subtitle">Kapa Haka</h3>
-        <div class="jumble-container" id="kapa-haka-jumble"></div>
+        <div class="polaroid-container" id="kapa-haka-jumble"></div>
+    </div>
 
     <!-- Athletics Day - MASONRY -->
     <div class="section blue animate-on-scroll">
         <h3 class="section-subtitle">Athletics Day</h3>
-        <div class="jumble-container" id="primary-athletics-jumble"></div>
+        <div class="masonry-container" id="primary-athletics-jumble"></div>
+    </div>
 
     <!-- Kaikoura Jack - DIAGONAL LEFT -->
     <div class="section blue animate-on-scroll">
         <h3 class="section-subtitle">Kaikoura Jack</h3>
-        <div class="jumble-container" id="kaikoura-jumble"></div>
+        <div class="diagonal-container">
+            <div class="diagonal-grid" id="kaikoura-jumble"></div>
+        </div>
     </div>
 
     <!-- Middle School -->
@@ -662,31 +679,38 @@
     <div class="section red animate-on-scroll">
         <h3 class="section-subtitle">Outdoor Adventures</h3>
         <p class="detail-text">Y9 Camp, Ski Trip, Willowbank,</p>
-        <div class="jumble-container" id="outdoor-adventures-jumble"></div>
+        <div class="polaroid-container" id="outdoor-adventures-jumble"></div>
+    </div>
 
     <!-- Taking On Challenges - DIAGONAL LEFT -->
     <div class="section red animate-on-scroll">
         <h3 class="section-subtitle">Taking On Challenges</h3>
         <p class="detail-text">Te Haerenga, Activity Days, Adrenaline Forest,</p>
-        <div class="jumble-container" id="taking-challenges-jumble"></div>
+        <div class="diagonal-container">
+            <div class="diagonal-grid" id="taking-challenges-jumble"></div>
+        </div>
     </div>
 
     <!-- Becoming Champions - DIAGONAL RIGHT -->
     <div class="section red animate-on-scroll">
         <h3 class="section-subtitle">Becoming Champions</h3>
         <p class="detail-text">EPRO8, Y9 Readers Cup, Cantamaths,</p>
-        <div class="jumble-container" id="becoming-champions-jumble"></div>
+        <div class="diagonal-container">
+            <div class="diagonal-grid reverse" id="becoming-champions-jumble"></div>
+        </div>
     </div>
 
     <!-- Market Week - POLAROID -->
     <div class="section red animate-on-scroll">
         <h3 class="section-subtitle">Market Week</h3>
-        <div class="jumble-container" id="market-week-jumble"></div>
+        <div class="polaroid-container" id="market-week-jumble"></div>
+    </div>
 
     <!-- Middle School Art - MASONRY -->
     <div class="section red animate-on-scroll">
         <h3 class="section-subtitle">Middle School Art</h3>
-        <div class="jumble-container" id="ms-art-jumble"></div>
+        <div class="masonry-container" id="ms-art-jumble"></div>
+    </div>
 
     <!-- Senior College -->
     <div class="section gold animate-on-scroll">
@@ -706,30 +730,37 @@
                 <iframe src="https://www.youtube.com/embed/y8U5uT1ktO8?start=2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
         </div>
-        <div class="jumble-container" id="formal-jumble"></div>
+        <div class="masonry-container" id="formal-jumble"></div>
+    </div>
 
     <!-- Out & About - POLAROID -->
     <div class="section gold animate-on-scroll">
         <h3 class="section-subtitle">Out & About</h3>
         <p class="detail-text">Y13 Camp, Y12 Big Day Out, Y11 Living Springs</p>
-        <div class="jumble-container" id="out-about-jumble"></div>
+        <div class="polaroid-container" id="out-about-jumble"></div>
+    </div>
 
     <!-- Christian Focus Days - DIAGONAL LEFT -->
     <div class="section gold animate-on-scroll">
         <h3 class="section-subtitle">Christian Focus Days</h3>
-        <div class="jumble-container" id="christian-focus-jumble"></div>
+        <div class="diagonal-container">
+            <div class="diagonal-grid" id="christian-focus-jumble"></div>
+        </div>
     </div>
 
     <!-- Y11 Growth Days - DIAGONAL RIGHT -->
     <div class="section gold animate-on-scroll">
         <h3 class="section-subtitle">Y11 Growth Days</h3>
-        <div class="jumble-container" id="y11-growth-jumble"></div>
+        <div class="diagonal-container">
+            <div class="diagonal-grid reverse" id="y11-growth-jumble"></div>
+        </div>
     </div>
 
     <!-- Senior College Art - MASONRY -->
     <div class="section gold animate-on-scroll">
         <h3 class="section-subtitle">Senior College Art</h3>
-        <div class="jumble-container" id="sc-art-jumble"></div>
+        <div class="masonry-container" id="sc-art-jumble"></div>
+    </div>
 
     <!-- International College -->
     <div class="section blue animate-on-scroll">
@@ -752,9 +783,7 @@
     <!-- Performing Arts -->
     <div class="section black animate-on-scroll">
         <h2 class="section-title">Performing Arts</h2>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
+        <div class="auto-scroll-container" id="performing-arts-gallery"></div>
     </div>
 
     <!-- Mary Poppins 2025 -->
@@ -890,48 +919,16 @@
         <div class="jumble-container" id="can-drive-jumble"></div>
     </div>
 
-    <!-- Kairos Food Rescue -->
-    <div class="section black animate-on-scroll">
-        <h2 class="section-title">Kairos Food Rescue</h2>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
-    </div>
-
     <!-- Book Week -->
     <div class="section red animate-on-scroll">
         <h2 class="section-title">Book Week</h2>
         <div class="jumble-container" id="book-week-jumble"></div>
     </div>
 
-    <!-- Peer Support -->
-    <div class="section gold animate-on-scroll">
-        <h2 class="section-title">Peer Support</h2>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
-    </div>
-
-    <!-- Senior Learning Centre -->
-    <div class="section blue animate-on-scroll">
-        <h2 class="section-title">Senior Learning Centre</h2>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
-    </div>
-
     <!-- Cambodia Trip -->
     <div class="section black animate-on-scroll">
         <h2 class="section-title">Cambodia Trip</h2>
         <div class="jumble-container" id="cambodia-jumble"></div>
-    </div>
-
-    <!-- Tongan Language Week -->
-    <div class="section red animate-on-scroll">
-        <h2 class="section-title">Tongan Language Week</h2>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
     </div>
 
     <!-- Learning House -->
@@ -950,38 +947,6 @@
     <div class="section black animate-on-scroll">
         <h2 class="section-title">House Competition</h2>
         <div class="jumble-container" id="house-comp-jumble"></div>
-    </div>
-
-    <!-- Lipsync -->
-    <div class="section black animate-on-scroll">
-        <h3 class="section-subtitle">Lipsync</h3>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
-    </div>
-
-    <!-- House Singing -->
-    <div class="section black animate-on-scroll">
-        <h3 class="section-subtitle">House Singing</h3>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
-    </div>
-
-    <!-- House Haka -->
-    <div class="section black animate-on-scroll">
-        <h3 class="section-subtitle">House Haka</h3>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
-    </div>
-
-    <!-- Tug of War -->
-    <div class="section black animate-on-scroll">
-        <h3 class="section-subtitle">Tug of War</h3>
-        <div class="placeholder-container">
-            <p class="placeholder-text">Content Coming Soon</p>
-        </div>
     </div>
 
     <script>
@@ -1840,37 +1805,31 @@
             
             const totalImages = images.length;
             
-            // Add size class
             if (totalImages >= 9) {
                 container.classList.add('large');
             }
             
-            // Grid and sizing
-            let cols, rows, baseSize, spacingFactor;
+            let cols, rows, baseSize;
             
             if (totalImages <= 6) {
                 cols = 3;
                 rows = 2;
-                baseSize = 600;
-                spacingFactor = 1.8; // More space between images
+                baseSize = 550;
             } else if (totalImages <= 12) {
                 cols = 4;
                 rows = 3;
-                baseSize = 480;
-                spacingFactor = 1.6;
+                baseSize = 440;
             } else if (totalImages <= 20) {
                 cols = 5;
                 rows = 4;
-                baseSize = 450;
-                spacingFactor = 1.4;
+                baseSize = 400;
             } else {
                 cols = 6;
                 rows = Math.ceil(totalImages / 6);
-                baseSize = 420;
-                spacingFactor = 1.3;
+                baseSize = 380;
             }
             
-            const sizeVariation = 90;
+            const sizeVariation = 80;
             
             images.forEach((url, i) => {
                 const item = document.createElement('div');
@@ -1880,20 +1839,20 @@
                 const row = Math.floor(i / cols);
                 
                 const size = baseSize + (Math.random() * sizeVariation - sizeVariation / 2);
-                const aspectRatio = 0.7 + Math.random() * 0.6;
+                const aspectRatio = 0.75 + Math.random() * 0.5;
                 const width = size;
                 const height = size * aspectRatio;
                 
-                // Grid with MORE spacing to reduce overlap
-                const gridX = (100 / (cols / spacingFactor)) * (col + 0.5);
-                const gridY = (100 / (rows / spacingFactor)) * (row + 0.5);
-                const offsetX = Math.random() * 6 - 3; // Reduced offset
-                const offsetY = Math.random() * 6 - 3;
+                // Keep within bounds (15% to 85%)
+                const gridX = 15 + (70 / (cols + 1)) * (col + 1);
+                const gridY = 15 + (70 / (rows + 1)) * (row + 1);
+                const offsetX = Math.random() * 4 - 2;
+                const offsetY = Math.random() * 4 - 2;
                 
-                const x = gridX + offsetX;
-                const y = gridY + offsetY;
+                const x = Math.max(10, Math.min(90, gridX + offsetX));
+                const y = Math.max(10, Math.min(90, gridY + offsetY));
                 
-                const rotation = Math.random() * 12 - 6;
+                const rotation = Math.random() * 10 - 5;
                 const zIndex = row * 10 + Math.floor(Math.random() * 5);
                 
                 item.style.width = `${width}px`;
@@ -1907,7 +1866,6 @@
                 container.appendChild(item);
             });
             
-            // Intersection Observer
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
