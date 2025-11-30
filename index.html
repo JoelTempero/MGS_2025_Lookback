@@ -182,6 +182,24 @@
             }
         }
 
+        @keyframes scrollForward {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        @keyframes scrollReverse {
+            0% {
+                transform: translateX(-50%);
+            }
+            100% {
+                transform: translateX(0);
+            }
+        }
+
         .auto-scroll-gallery.opening-images {
             height: 400px;
         }
@@ -298,26 +316,15 @@
             margin-top: 5px;
         }
 
-        /* 3. JUMBLE GALLERY - Fit scattered large images */
+        /* 3. JUMBLE GALLERY (Masonry columns) */
         .jumble-container, .diagonal-container, .polaroid-container, .masonry-container {
             max-width: 1920px;
             width: 95%;
-            min-height: 1000px;
-            height: auto;
-            padding: 20px 0;
             margin: 40px auto;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .jumble-container.large, .diagonal-container.large, .polaroid-container.large, .masonry-container.large {
-            min-height: 1600px;
-            padding: 25px 0;
-        }
-
-        .jumble-container.xlarge, .diagonal-container.xlarge, .polaroid-container.xlarge, .masonry-container.xlarge {
-            min-height: 2200px;
-            padding: 30px 0;
+            padding: 20px 0;
+            display: flex;
+            gap: 0;
+            align-items: flex-start;
         }
 
         .jumble-item, .diagonal-item, .polaroid-item, .masonry-item {
@@ -543,11 +550,15 @@
     </style>
 </head>
 <body>
-    <!-- Hero Section with Opening Gallery -->
-    <div class="hero">
+    <!-- Opening Section with Background and Logo -->
+    <div class="hero" style="background-image: url('https://res.cloudinary.com/dneb3rzqf/image/upload/v1764479773/MGSlookback25Header_o5zvbn.jpg'); background-size: cover; background-position: center; background-blend-mode: multiply; background-color: #DC143C; position: relative; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 20px;">
+        
+        <!-- Logo -->
+        <img src="https://res.cloudinary.com/dneb3rzqf/image/upload/v1764479075/MGSLogo_Inverted_cgurgv.jpg" alt="MGS Logo" style="width: 300px; height: auto; margin-bottom: 40px; mix-blend-mode: screen;">
+        
         <div class="hero-content">
-            <div class="school-name">Middleton Grange School</div>
-            <h1 class="main-title">2025 LOOKBACK</h1>
+            <div class="school-name" style="font-size: 3rem; margin-bottom: 20px;">Middleton Grange School</div>
+            <h1 class="main-title" style="font-size: 5rem; margin: 0;">2025 LOOKBACK</h1>
         </div>
         
         <!-- Opening Images Auto-Scroll Gallery -->
@@ -1811,135 +1822,69 @@
             });
         }
 
-        // ===== 3. JUMBLE GALLERY (Magazine-style layout) =====
+        // ===== 3. JUMBLE GALLERY (Masonry/Pinterest layout) =====
         function createJumbleGallery(containerId, images) {
             const container = document.getElementById(containerId);
             if (!container || images.length === 0) return;
             
             const totalImages = images.length;
             
-            // Add size classes for container height
-            if (totalImages >= 20) {
-                container.classList.add('xlarge');
-            } else if (totalImages >= 9) {
-                container.classList.add('large');
+            // Determine number of columns based on image count
+            let numColumns;
+            if (totalImages <= 4) {
+                numColumns = 2;
+            } else if (totalImages <= 9) {
+                numColumns = 3;
+            } else if (totalImages <= 16) {
+                numColumns = 4;
+            } else {
+                numColumns = 5;
             }
             
-            // Magazine layout: Define size categories
-            // Hero: Large feature images (30-40% get this)
-            // Medium: Standard images (40-50% get this)
-            // Small: Accent images (20-30% get this)
-            
-            const heroSize = { width: 600, height: 400 };
-            const mediumSize = { width: 450, height: 350 };
-            const smallSize = { width: 320, height: 280 };
-            
-            // Assign sizes based on position (strategic placement)
-            const layouts = [];
-            
-            for (let i = 0; i < totalImages; i++) {
-                let size, category;
-                const rand = Math.random();
-                
-                // First image often a hero
-                if (i === 0 && totalImages > 3) {
-                    size = heroSize;
-                    category = 'hero';
-                }
-                // Every 4-5 images, add a hero for visual interest
-                else if (i % 5 === 0 && rand > 0.4) {
-                    size = heroSize;
-                    category = 'hero';
-                }
-                // Small accent images sprinkled throughout
-                else if (rand < 0.25) {
-                    size = smallSize;
-                    category = 'small';
-                }
-                // Most images are medium
-                else {
-                    size = mediumSize;
-                    category = 'medium';
-                }
-                
-                layouts.push({ url: images[i], size, category, index: i });
+            // Create column containers
+            const columns = [];
+            for (let i = 0; i < numColumns; i++) {
+                const col = document.createElement('div');
+                col.className = 'masonry-column';
+                col.style.cssText = `
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 20px;
+                    padding: 0 10px;
+                `;
+                container.appendChild(col);
+                columns.push(col);
             }
             
-            // Magazine-style positioning: flowing grid with smart placement
-            let currentX = 5;  // Start 5% from left
-            let currentY = 5;  // Start 5% from top
-            let rowHeight = 0;
-            let rowMaxWidth = 90; // Use 90% of container width
-            
-            layouts.forEach((item, i) => {
-                const div = document.createElement('div');
-                div.className = 'jumble-item';
+            // Distribute images across columns
+            images.forEach((url, i) => {
+                const columnIndex = i % numColumns;
                 
-                // Add slight size variation (±10%)
-                const variation = 0.9 + Math.random() * 0.2;
-                const width = item.size.width * variation;
-                const height = item.size.height * variation;
+                const item = document.createElement('div');
+                item.className = 'masonry-item';
+                item.style.cssText = `
+                    width: 100%;
+                    opacity: 0;
+                    transition: opacity 0.6s ease-out;
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+                    border-radius: 4px;
+                    overflow: hidden;
+                `;
                 
-                // Calculate width percentage (roughly)
-                const widthPercent = (width / 1920) * 100;
-                
-                // Check if this image fits in current row
-                if (currentX + widthPercent > rowMaxWidth && i > 0) {
-                    // Move to next row
-                    currentX = 5;
-                    currentY += rowHeight + 3; // Add row height + 3% gap
-                    rowHeight = 0;
-                }
-                
-                // Position this image
-                const x = currentX + widthPercent / 2; // Center of image
-                const y = currentY + (height / 1920 * 100) / 2; // Center of image
-                
-                // Small random offset for organic feel (±2%)
-                const offsetX = (Math.random() - 0.5) * 4;
-                const offsetY = (Math.random() - 0.5) * 4;
-                
-                // Subtle rotation based on size
-                let rotation = 0;
-                if (item.category === 'small') {
-                    rotation = Math.random() * 8 - 4; // Small images get more tilt
-                } else if (item.category === 'medium') {
-                    rotation = Math.random() * 4 - 2; // Medium slight tilt
-                }
-                // Heroes stay straight (0 rotation)
-                
-                // Z-index: heroes on top, then medium, then small
-                const zIndex = item.category === 'hero' ? 100 + i : 
-                              item.category === 'medium' ? 50 + i : i;
-                
-                div.style.width = `${width}px`;
-                div.style.height = `${height}px`;
-                div.style.left = `${x + offsetX}%`;
-                div.style.top = `${y + offsetY}%`;
-                div.style.transform = `translate(-50%, -50%) rotate(${rotation}deg)`;
-                div.style.zIndex = zIndex;
-                
-                div.innerHTML = `<img src="${item.url}" alt="Gallery" loading="lazy">`;
-                container.appendChild(div);
-                
-                // Update position for next image
-                currentX += widthPercent + 2; // Add image width + 2% gap
-                
-                // Track row height (use tallest image in row)
-                const heightPercent = (height / 1920) * 100;
-                if (heightPercent > rowHeight) {
-                    rowHeight = heightPercent;
-                }
+                item.innerHTML = `<img src="${url}" alt="Gallery" loading="lazy" style="width: 100%; height: auto; display: block;">`;
+                columns[columnIndex].appendChild(item);
             });
             
+            // Fade in on scroll
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        const items = entry.target.querySelectorAll('.jumble-item');
+                        const items = entry.target.querySelectorAll('.masonry-item');
                         items.forEach((item, i) => {
                             setTimeout(() => {
-                                item.classList.add('visible');
-                            }, i * 100); // Staggered appearance
+                                item.style.opacity = '1';
+                            }, i * 80);
                         });
                         observer.unobserve(entry.target);
                     }
@@ -1949,7 +1894,126 @@
             observer.observe(container);
         }
 
-        // ===== 4. SPORTS GRID (3x5 slideshow grid) =====
+        // ===== 4. SIMPLE MASONRY GALLERY (1-2 neat rows) =====
+        function createSimpleMasonryGallery(containerId, images) {
+            const container = document.getElementById(containerId);
+            if (!container || images.length === 0) return;
+            
+            container.style.cssText = `
+                display: flex;
+                flex-wrap: wrap;
+                gap: 20px;
+                justify-content: center;
+                max-width: 1920px;
+                margin: 40px auto;
+                padding: 20px;
+            `;
+            
+            images.forEach((url, i) => {
+                const item = document.createElement('div');
+                item.className = 'simple-masonry-item';
+                item.style.cssText = `
+                    flex: 0 0 auto;
+                    max-width: 350px;
+                    opacity: 0;
+                    transition: opacity 0.6s ease-out;
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+                    border-radius: 4px;
+                    overflow: hidden;
+                `;
+                
+                item.innerHTML = `<img src="${url}" alt="Gallery" loading="lazy" style="width: 100%; height: auto; display: block;">`;
+                container.appendChild(item);
+                
+                // Fade in
+                setTimeout(() => {
+                    item.style.opacity = '1';
+                }, i * 100);
+            });
+        }
+
+        // ===== 5. MULTI-SCROLL GALLERY (3 rows, middle opposite) =====
+        function createMultiScrollGallery(containerId, images) {
+            const container = document.getElementById(containerId);
+            if (!container || images.length === 0) return;
+            
+            // Divide images into 3 rows
+            const imagesPerRow = Math.ceil(images.length / 3);
+            const row1Images = images.slice(0, imagesPerRow);
+            const row2Images = images.slice(imagesPerRow, imagesPerRow * 2);
+            const row3Images = images.slice(imagesPerRow * 2);
+            
+            container.style.cssText = `
+                width: 100%;
+                overflow: hidden;
+                margin: 60px 0;
+                display: flex;
+                flex-direction: column;
+                gap: 30px;
+            `;
+            
+            // Create 3 rows
+            [row1Images, row2Images, row3Images].forEach((rowImages, rowIndex) => {
+                const rowContainer = document.createElement('div');
+                rowContainer.className = 'multi-scroll-row';
+                rowContainer.style.cssText = `
+                    position: relative;
+                    width: 100%;
+                    overflow: hidden;
+                `;
+                
+                const gallery = document.createElement('div');
+                gallery.className = `multi-scroll-gallery ${rowIndex === 1 ? 'reverse' : ''}`;
+                gallery.style.cssText = `
+                    display: flex;
+                    gap: 30px;
+                    padding: 20px;
+                    animation: ${rowIndex === 1 ? 'scrollReverse' : 'scrollForward'} 60s linear infinite;
+                    width: max-content;
+                `;
+                
+                // Duplicate images for infinite scroll
+                const duplicatedImages = [...rowImages, ...rowImages];
+                
+                duplicatedImages.forEach(url => {
+                    const item = document.createElement('div');
+                    item.className = 'multi-scroll-item';
+                    item.style.cssText = `
+                        flex: 0 0 auto;
+                        height: 300px;
+                        opacity: 0;
+                        transition: opacity 0.8s ease-out;
+                        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+                        border-radius: 4px;
+                        overflow: hidden;
+                    `;
+                    item.innerHTML = `<img src="${url}" alt="Gallery" loading="lazy" style="height: 100%; width: auto; object-fit: cover;">`;
+                    gallery.appendChild(item);
+                });
+                
+                rowContainer.appendChild(gallery);
+                container.appendChild(rowContainer);
+            });
+            
+            // Fade in on scroll
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const items = entry.target.querySelectorAll('.multi-scroll-item');
+                        items.forEach((item, i) => {
+                            setTimeout(() => {
+                                item.style.opacity = '1';
+                            }, Math.random() * 800);
+                        });
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            observer.observe(container);
+        }
+
+        // ===== 6. SPORTS GRID (3x5 slideshow grid) =====
         function createSportsGrid(containerId, sportsData) {
             const container = document.getElementById(containerId);
             if (!container) return;
@@ -2014,23 +2078,23 @@
         createJumbleGallery('trekabout-jumble', trekabout);
         createJumbleGallery('book-character-jumble', bookCharacter);
         createJumbleGallery('cultural-day-jumble', culturalDay);
-        createJumbleGallery('kapa-haka-jumble', kapaHaka);
+        createSimpleMasonryGallery('kapa-haka-jumble', kapaHaka);
         createJumbleGallery('primary-athletics-jumble', primaryAthletics);
-        createJumbleGallery('kaikoura-jumble', kaikouraJack);
+        createMultiScrollGallery('kaikoura-jumble', kaikouraJack);
 
         // MIDDLE SCHOOL - Jumble galleries
         createJumbleGallery('outdoor-adventures-jumble', outdoorAdventures);
         createJumbleGallery('taking-challenges-jumble', takingChallenges);
         createJumbleGallery('becoming-champions-jumble', becomingChampions);
         createJumbleGallery('market-week-jumble', marketWeek);
-        createJumbleGallery('ms-art-jumble', msArt);
+        createMultiScrollGallery('ms-art-jumble', msArt);
 
         // SENIOR COLLEGE - Jumble galleries
         createJumbleGallery('formal-jumble', formal);
         createJumbleGallery('out-about-jumble', outAbout);
         createJumbleGallery('christian-focus-jumble', christianFocus);
         createJumbleGallery('y11-growth-jumble', y11Growth);
-        createJumbleGallery('sc-art-jumble', scArt);
+        createMultiScrollGallery('sc-art-jumble', scArt);
 
         // INTERNATIONAL COLLEGE - Jumble galleries
         createJumbleGallery('intl-college-jumble', intlCollege);
@@ -2038,7 +2102,7 @@
         createJumbleGallery('celebrating-jumble', celebratingEachother);
 
         // PERFORMING ARTS - Jumble galleries
-        createJumbleGallery('mary-poppins-jumble', maryPoppins);
+        createMultiScrollGallery('mary-poppins-jumble', maryPoppins);
         createJumbleGallery('pa-awards-jumble', paAwards);
         createJumbleGallery('southern-jam-jumble', southernJam);
         createJumbleGallery('jazz-show-jumble', jazzShow);
@@ -2053,7 +2117,7 @@
         createJumbleGallery('shakespeare-jumble', shakespeare);
         createJumbleGallery('tu-kaha-jumble', tuKaha);
         createJumbleGallery('fridge-radio-jumble', fridgeRadio);
-        createJumbleGallery('theatre-sports-jumble', theatreSports);
+        createSimpleMasonryGallery('theatre-sports-jumble', theatreSports);
 
         // SPORTS - Special grid
         createSportsGrid('sports-grid', sportsData);
@@ -2066,10 +2130,25 @@
         createJumbleGallery('can-drive-jumble', canDrive);
         createJumbleGallery('learning-house-jumble', learningHouse);
         createJumbleGallery('shave-cure-jumble', shaveCure);
-        createJumbleGallery('house-comp-jumble', houseComp);
+        createMultiScrollGallery('house-comp-jumble', houseComp);
 
         console.log('All galleries populated successfully!');
     </script>
+
+    <!-- Footer Section with Background -->
+    <div style="background-image: url('https://res.cloudinary.com/dneb3rzqf/image/upload/v1764479769/MGSlookback25Footer_qghkui.jpg'); background-size: cover; background-position: center; background-blend-mode: multiply; background-color: #2E5278; position: relative; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 20px; text-align: center;">
+        
+        <h1 style="font-size: 5rem; color: white; margin-bottom: 80px; text-shadow: 0 4px 20px rgba(0,0,0,0.5);">See you next year!</h1>
+        
+        <div style="margin-top: 60px;"></div>
+        
+        <!-- Lookback Logo -->
+        <img src="https://res.cloudinary.com/dneb3rzqf/image/upload/v1764480369/Lookback01_g5tosk.png" alt="Lookback Logo" style="width: 200px; height: auto; margin-bottom: 20px;">
+        
+        <div style="color: white; font-size: 1.5rem; margin-bottom: 10px; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">Made with lookback.nz</div>
+        <div style="color: rgba(255,255,255,0.9); font-size: 1.2rem; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">Get yours today!</div>
+        
+    </div>
 
 </body>
 </html>
