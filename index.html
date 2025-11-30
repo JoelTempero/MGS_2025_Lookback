@@ -1825,30 +1825,40 @@
                 container.classList.add('large');
             }
             
-            // Double all base sizes
+            // Slightly smaller sizes (80% of previous)
             let baseSizeMin, baseSizeMax;
             if (totalImages <= 6) {
-                baseSizeMin = 700;
-                baseSizeMax = 900;
+                baseSizeMin = 560;
+                baseSizeMax = 720;
             } else if (totalImages <= 12) {
-                baseSizeMin = 600;
-                baseSizeMax = 750;
-            } else if (totalImages <= 20) {
-                baseSizeMin = 500;
-                baseSizeMax = 650;
-            } else {
-                baseSizeMin = 450;
+                baseSizeMin = 480;
                 baseSizeMax = 600;
+            } else if (totalImages <= 20) {
+                baseSizeMin = 400;
+                baseSizeMax = 520;
+            } else {
+                baseSizeMin = 360;
+                baseSizeMax = 480;
             }
             
             // Track placed images to avoid overlap
             const placedImages = [];
             
             // Helper function to check if position overlaps with existing images
-            function hasOverlap(x, y, width, height, margin = 3) {
+            function hasOverlap(x, y, widthPx, heightPx, containerWidth, margin = 2) {
+                // Convert pixel dimensions to percentage of container
+                const widthPct = (widthPx / containerWidth) * 100;
+                const heightPct = (heightPx / containerWidth) * 100; // Use width for aspect ratio consistency
+                
                 for (const placed of placedImages) {
-                    const xOverlap = Math.abs(x - placed.x) < (width + placed.width) / 2 + margin;
-                    const yOverlap = Math.abs(y - placed.y) < (height + placed.height) / 2 + margin;
+                    // Calculate distance between centers
+                    const xDist = Math.abs(x - placed.x);
+                    const yDist = Math.abs(y - placed.y);
+                    
+                    // Check if bounding boxes overlap (with margin)
+                    const xOverlap = xDist < (widthPct + placed.widthPct) / 2 + margin;
+                    const yOverlap = yDist < (heightPct + placed.heightPct) / 2 + margin;
+                    
                     if (xOverlap && yOverlap) {
                         return true;
                     }
@@ -1856,26 +1866,33 @@
                 return false;
             }
             
+            // Get container width for percentage calculations
+            const containerWidth = container.offsetWidth || 1920;
+            
             images.forEach((url, i) => {
                 const item = document.createElement('div');
                 item.className = 'jumble-item';
                 
                 // Random size
                 const size = baseSizeMin + Math.random() * (baseSizeMax - baseSizeMin);
-                const aspectRatio = 0.65 + Math.random() * 0.6; // More variety in aspect ratios
+                const aspectRatio = 0.65 + Math.random() * 0.6;
                 const width = size;
                 const height = size * aspectRatio;
                 
-                // Try to find a non-overlapping position (max 50 attempts)
+                // Convert to percentages for storage
+                const widthPct = (width / containerWidth) * 100;
+                const heightPct = (height / containerWidth) * 100;
+                
+                // Try to find a non-overlapping position (max 100 attempts)
                 let x, y, attempts = 0;
                 do {
                     x = 10 + Math.random() * 80;  // 10-90% range
                     y = 5 + Math.random() * 90;   // 5-95% range
                     attempts++;
-                } while (hasOverlap(x, y, width / 10, height / 10) && attempts < 50);
+                } while (hasOverlap(x, y, width, height, containerWidth) && attempts < 100);
                 
-                // Store this placement
-                placedImages.push({ x, y, width: width / 10, height: height / 10 });
+                // Store this placement in percentage units
+                placedImages.push({ x, y, widthPct, heightPct });
                 
                 // Random rotation
                 const rotation = Math.random() * 16 - 8; // ±8 degrees
