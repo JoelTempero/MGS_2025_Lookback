@@ -298,13 +298,13 @@
             margin-top: 5px;
         }
 
-        /* 3. JUMBLE GALLERY - Fit content, minimal padding */
+        /* 3. JUMBLE GALLERY - Minimal padding, fits content */
         .jumble-container, .diagonal-container, .polaroid-container, .masonry-container {
             max-width: 1920px;
             width: 95%;
             min-height: 800px;
             height: auto;
-            padding: 40px 0;
+            padding: 20px 0;
             margin: 40px auto;
             position: relative;
             overflow: hidden;
@@ -312,12 +312,12 @@
 
         .jumble-container.large, .diagonal-container.large, .polaroid-container.large, .masonry-container.large {
             min-height: 1200px;
-            padding: 50px 0;
+            padding: 25px 0;
         }
 
         .jumble-container.xlarge, .diagonal-container.xlarge, .polaroid-container.xlarge, .masonry-container.xlarge {
             min-height: 1600px;
-            padding: 60px 0;
+            padding: 30px 0;
         }
 
         .jumble-item, .diagonal-item, .polaroid-item, .masonry-item {
@@ -336,7 +336,7 @@
         .jumble-item img, .diagonal-item img, .polaroid-item img, .masonry-item img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
             display: block;
         }
 
@@ -1830,26 +1830,26 @@
             if (totalImages <= 4) {
                 cols = 2;
                 rows = 2;
-                baseSize = 480;
+                baseSize = 420;
             } else if (totalImages <= 9) {
                 cols = 3;
                 rows = 3;
-                baseSize = 380;
+                baseSize = 340;
             } else if (totalImages <= 16) {
                 cols = 4;
                 rows = 4;
-                baseSize = 340;
+                baseSize = 300;
             } else {
                 cols = 5;
                 rows = Math.ceil(totalImages / 5);
-                baseSize = 320;
+                baseSize = 280;
             }
             
-            const sizeVariation = 60;
+            const sizeVariation = 50;
             
-            // Calculate row height to spread images evenly
-            const rowHeight = 100 / (rows + 1);   // More spacing between rows
-            const colWidth = 100 / (cols + 1);     // More spacing between columns
+            // Calculate spacing with LOTS of gaps between cells
+            const rowHeight = 100 / (rows + 1.5);   // Extra spacing between rows
+            const colWidth = 100 / (cols + 1.5);    // Extra spacing between columns
             
             images.forEach((url, i) => {
                 const item = document.createElement('div');
@@ -1863,13 +1863,13 @@
                 const width = size;
                 const height = size * aspectRatio;
                 
-                // Position based on row/col with even distribution
-                const gridX = colWidth * (col + 0.5);
-                const gridY = rowHeight * (row + 0.5);
+                // Center properly: start from 1 cell width/height in, then space evenly
+                const gridX = colWidth * (col + 1.25);  // Start at 1.25 cells in for centering
+                const gridY = rowHeight * (row + 1.25); // Start at 1.25 cells in for centering
                 
-                // Very small random offset for slight jumble effect (10% of cell size)
-                const offsetX = (Math.random() - 0.5) * (colWidth * 0.15);
-                const offsetY = (Math.random() - 0.5) * (rowHeight * 0.15);
+                // Tiny random offset for slight jumble effect
+                const offsetX = (Math.random() - 0.5) * (colWidth * 0.1);
+                const offsetY = (Math.random() - 0.5) * (rowHeight * 0.1);
                 
                 const x = Math.max(5, Math.min(95, gridX + offsetX));
                 const y = Math.max(3, Math.min(97, gridY + offsetY));
