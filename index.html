@@ -1811,7 +1811,7 @@
             });
         }
 
-        // ===== 3. JUMBLE GALLERY (Scattered with smart spacing) =====
+        // ===== 3. JUMBLE GALLERY (Grid-based with guaranteed spacing) =====
         function createJumbleGallery(containerId, images) {
             const container = document.getElementById(containerId);
             if (!container || images.length === 0) return;
@@ -1825,77 +1825,74 @@
                 container.classList.add('large');
             }
             
-            // Slightly smaller sizes (80% of previous)
-            let baseSizeMin, baseSizeMax;
-            if (totalImages <= 6) {
-                baseSizeMin = 560;
-                baseSizeMax = 720;
+            // Determine grid dimensions based on image count
+            let cols, rows;
+            if (totalImages <= 4) {
+                cols = 2; rows = 2;
+            } else if (totalImages <= 6) {
+                cols = 3; rows = 2;
+            } else if (totalImages <= 9) {
+                cols = 3; rows = 3;
             } else if (totalImages <= 12) {
-                baseSizeMin = 480;
-                baseSizeMax = 600;
+                cols = 4; rows = 3;
+            } else if (totalImages <= 16) {
+                cols = 4; rows = 4;
             } else if (totalImages <= 20) {
-                baseSizeMin = 400;
-                baseSizeMax = 520;
+                cols = 5; rows = 4;
             } else {
-                baseSizeMin = 360;
-                baseSizeMax = 480;
+                cols = 5; rows = Math.ceil(totalImages / 5);
             }
             
-            // Track placed images to avoid overlap
-            const placedImages = [];
-            
-            // Helper function to check if position overlaps with existing images
-            function hasOverlap(x, y, widthPx, heightPx, containerWidth, margin = 2) {
-                // Convert pixel dimensions to percentage of container
-                const widthPct = (widthPx / containerWidth) * 100;
-                const heightPct = (heightPx / containerWidth) * 100; // Use width for aspect ratio consistency
-                
-                for (const placed of placedImages) {
-                    // Calculate distance between centers
-                    const xDist = Math.abs(x - placed.x);
-                    const yDist = Math.abs(y - placed.y);
-                    
-                    // Check if bounding boxes overlap (with margin)
-                    const xOverlap = xDist < (widthPct + placed.widthPct) / 2 + margin;
-                    const yOverlap = yDist < (heightPct + placed.heightPct) / 2 + margin;
-                    
-                    if (xOverlap && yOverlap) {
-                        return true;
-                    }
-                }
-                return false;
+            // Image sizes - smaller to fit in cells
+            let baseSize;
+            if (totalImages <= 6) {
+                baseSize = 450;
+            } else if (totalImages <= 12) {
+                baseSize = 380;
+            } else if (totalImages <= 20) {
+                baseSize = 320;
+            } else {
+                baseSize = 280;
             }
             
-            // Get container width for percentage calculations
-            const containerWidth = container.offsetWidth || 1920;
+            // Calculate cell dimensions with generous spacing
+            const cellWidth = 100 / cols;
+            const cellHeight = 100 / rows;
             
-            images.forEach((url, i) => {
+            // Shuffle images array for random distribution
+            const shuffledImages = [...images].sort(() => Math.random() - 0.5);
+            
+            shuffledImages.forEach((url, i) => {
                 const item = document.createElement('div');
                 item.className = 'jumble-item';
                 
-                // Random size
-                const size = baseSizeMin + Math.random() * (baseSizeMax - baseSizeMin);
+                // Calculate which cell this image belongs to
+                const col = i % cols;
+                const row = Math.floor(i / cols);
+                
+                // Random size within reasonable bounds (80-120% of base)
+                const sizeMultiplier = 0.8 + Math.random() * 0.4;
+                const size = baseSize * sizeMultiplier;
                 const aspectRatio = 0.65 + Math.random() * 0.6;
                 const width = size;
                 const height = size * aspectRatio;
                 
-                // Convert to percentages for storage
-                const widthPct = (width / containerWidth) * 100;
-                const heightPct = (height / containerWidth) * 100;
+                // Cell boundaries
+                const cellLeft = col * cellWidth;
+                const cellTop = row * cellHeight;
                 
-                // Try to find a non-overlapping position (max 100 attempts)
-                let x, y, attempts = 0;
-                do {
-                    x = 10 + Math.random() * 80;  // 10-90% range
-                    y = 5 + Math.random() * 90;   // 5-95% range
-                    attempts++;
-                } while (hasOverlap(x, y, width, height, containerWidth) && attempts < 100);
+                // Position randomly WITHIN the cell (leaving margins)
+                // Use 20-80% of cell space to ensure images don't touch edges
+                const xInCell = 20 + Math.random() * 60; // 20-80% within cell
+                const yInCell = 20 + Math.random() * 60;
                 
-                // Store this placement in percentage units
-                placedImages.push({ x, y, widthPct, heightPct });
+                const x = cellLeft + (cellWidth * xInCell / 100);
+                const y = cellTop + (cellHeight * yInCell / 100);
                 
                 // Random rotation
-                const rotation = Math.random() * 16 - 8; // ±8 degrees
+                const rotation = Math.random() * 16 - 8;
+                
+                // Z-index for layering effect
                 const zIndex = Math.floor(Math.random() * totalImages);
                 
                 item.style.width = `${width}px`;
