@@ -1811,7 +1811,7 @@
             });
         }
 
-        // ===== 3. JUMBLE GALLERY (Grid-based with guaranteed spacing) =====
+        // ===== 3. JUMBLE GALLERY (Magazine-style layout) =====
         function createJumbleGallery(containerId, images) {
             const container = document.getElementById(containerId);
             if (!container || images.length === 0) return;
@@ -1825,85 +1825,111 @@
                 container.classList.add('large');
             }
             
-            // Determine grid dimensions based on image count
-            let cols, rows;
-            if (totalImages <= 4) {
-                cols = 2; rows = 2;
-            } else if (totalImages <= 6) {
-                cols = 3; rows = 2;
-            } else if (totalImages <= 9) {
-                cols = 3; rows = 3;
-            } else if (totalImages <= 12) {
-                cols = 4; rows = 3;
-            } else if (totalImages <= 16) {
-                cols = 4; rows = 4;
-            } else if (totalImages <= 20) {
-                cols = 5; rows = 4;
-            } else {
-                cols = 5; rows = Math.ceil(totalImages / 5);
+            // Magazine layout: Define size categories
+            // Hero: Large feature images (30-40% get this)
+            // Medium: Standard images (40-50% get this)
+            // Small: Accent images (20-30% get this)
+            
+            const heroSize = { width: 600, height: 400 };
+            const mediumSize = { width: 450, height: 350 };
+            const smallSize = { width: 320, height: 280 };
+            
+            // Assign sizes based on position (strategic placement)
+            const layouts = [];
+            
+            for (let i = 0; i < totalImages; i++) {
+                let size, category;
+                const rand = Math.random();
+                
+                // First image often a hero
+                if (i === 0 && totalImages > 3) {
+                    size = heroSize;
+                    category = 'hero';
+                }
+                // Every 4-5 images, add a hero for visual interest
+                else if (i % 5 === 0 && rand > 0.4) {
+                    size = heroSize;
+                    category = 'hero';
+                }
+                // Small accent images sprinkled throughout
+                else if (rand < 0.25) {
+                    size = smallSize;
+                    category = 'small';
+                }
+                // Most images are medium
+                else {
+                    size = mediumSize;
+                    category = 'medium';
+                }
+                
+                layouts.push({ url: images[i], size, category, index: i });
             }
             
-            // Image sizes - smaller to fit in cells
-            let baseSize;
-            if (totalImages <= 6) {
-                baseSize = 450;
-            } else if (totalImages <= 12) {
-                baseSize = 380;
-            } else if (totalImages <= 20) {
-                baseSize = 320;
-            } else {
-                baseSize = 280;
-            }
+            // Magazine-style positioning: flowing grid with smart placement
+            let currentX = 5;  // Start 5% from left
+            let currentY = 5;  // Start 5% from top
+            let rowHeight = 0;
+            let rowMaxWidth = 90; // Use 90% of container width
             
-            // Calculate cell dimensions with generous spacing
-            const cellWidth = 100 / cols;
-            const cellHeight = 100 / rows;
-            
-            // Shuffle images array for random distribution
-            const shuffledImages = [...images].sort(() => Math.random() - 0.5);
-            
-            shuffledImages.forEach((url, i) => {
-                const item = document.createElement('div');
-                item.className = 'jumble-item';
+            layouts.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'jumble-item';
                 
-                // Calculate which cell this image belongs to
-                const col = i % cols;
-                const row = Math.floor(i / cols);
+                // Add slight size variation (±10%)
+                const variation = 0.9 + Math.random() * 0.2;
+                const width = item.size.width * variation;
+                const height = item.size.height * variation;
                 
-                // Random size within reasonable bounds (80-120% of base)
-                const sizeMultiplier = 0.8 + Math.random() * 0.4;
-                const size = baseSize * sizeMultiplier;
-                const aspectRatio = 0.65 + Math.random() * 0.6;
-                const width = size;
-                const height = size * aspectRatio;
+                // Calculate width percentage (roughly)
+                const widthPercent = (width / 1920) * 100;
                 
-                // Cell boundaries
-                const cellLeft = col * cellWidth;
-                const cellTop = row * cellHeight;
+                // Check if this image fits in current row
+                if (currentX + widthPercent > rowMaxWidth && i > 0) {
+                    // Move to next row
+                    currentX = 5;
+                    currentY += rowHeight + 3; // Add row height + 3% gap
+                    rowHeight = 0;
+                }
                 
-                // Position randomly WITHIN the cell (leaving margins)
-                // Use 20-80% of cell space to ensure images don't touch edges
-                const xInCell = 20 + Math.random() * 60; // 20-80% within cell
-                const yInCell = 20 + Math.random() * 60;
+                // Position this image
+                const x = currentX + widthPercent / 2; // Center of image
+                const y = currentY + (height / 1920 * 100) / 2; // Center of image
                 
-                const x = cellLeft + (cellWidth * xInCell / 100);
-                const y = cellTop + (cellHeight * yInCell / 100);
+                // Small random offset for organic feel (±2%)
+                const offsetX = (Math.random() - 0.5) * 4;
+                const offsetY = (Math.random() - 0.5) * 4;
                 
-                // Random rotation
-                const rotation = Math.random() * 16 - 8;
+                // Subtle rotation based on size
+                let rotation = 0;
+                if (item.category === 'small') {
+                    rotation = Math.random() * 8 - 4; // Small images get more tilt
+                } else if (item.category === 'medium') {
+                    rotation = Math.random() * 4 - 2; // Medium slight tilt
+                }
+                // Heroes stay straight (0 rotation)
                 
-                // Z-index for layering effect
-                const zIndex = Math.floor(Math.random() * totalImages);
+                // Z-index: heroes on top, then medium, then small
+                const zIndex = item.category === 'hero' ? 100 + i : 
+                              item.category === 'medium' ? 50 + i : i;
                 
-                item.style.width = `${width}px`;
-                item.style.height = `${height}px`;
-                item.style.left = `${x}%`;
-                item.style.top = `${y}%`;
-                item.style.transform = `translate(-50%, -50%) rotate(${rotation}deg)`;
-                item.style.zIndex = zIndex;
+                div.style.width = `${width}px`;
+                div.style.height = `${height}px`;
+                div.style.left = `${x + offsetX}%`;
+                div.style.top = `${y + offsetY}%`;
+                div.style.transform = `translate(-50%, -50%) rotate(${rotation}deg)`;
+                div.style.zIndex = zIndex;
                 
-                item.innerHTML = `<img src="${url}" alt="Gallery" loading="lazy">`;
-                container.appendChild(item);
+                div.innerHTML = `<img src="${item.url}" alt="Gallery" loading="lazy">`;
+                container.appendChild(div);
+                
+                // Update position for next image
+                currentX += widthPercent + 2; // Add image width + 2% gap
+                
+                // Track row height (use tallest image in row)
+                const heightPercent = (height / 1920) * 100;
+                if (heightPercent > rowHeight) {
+                    rowHeight = heightPercent;
+                }
             });
             
             const observer = new IntersectionObserver((entries) => {
@@ -1913,7 +1939,7 @@
                         items.forEach((item, i) => {
                             setTimeout(() => {
                                 item.classList.add('visible');
-                            }, Math.random() * 1200);
+                            }, i * 100); // Staggered appearance
                         });
                         observer.unobserve(entry.target);
                     }
