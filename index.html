@@ -298,11 +298,11 @@
             margin-top: 5px;
         }
 
-        /* 3. JUMBLE GALLERY - Minimal padding, fits content */
+        /* 3. JUMBLE GALLERY - Fit scattered large images */
         .jumble-container, .diagonal-container, .polaroid-container, .masonry-container {
             max-width: 1920px;
             width: 95%;
-            min-height: 800px;
+            min-height: 1000px;
             height: auto;
             padding: 20px 0;
             margin: 40px auto;
@@ -311,12 +311,12 @@
         }
 
         .jumble-container.large, .diagonal-container.large, .polaroid-container.large, .masonry-container.large {
-            min-height: 1200px;
+            min-height: 1600px;
             padding: 25px 0;
         }
 
         .jumble-container.xlarge, .diagonal-container.xlarge, .polaroid-container.xlarge, .masonry-container.xlarge {
-            min-height: 1600px;
+            min-height: 2200px;
             padding: 30px 0;
         }
 
@@ -336,7 +336,7 @@
         .jumble-item img, .diagonal-item img, .polaroid-item img, .masonry-item img {
             width: 100%;
             height: 100%;
-            object-fit: contain;
+            object-fit: cover;
             display: block;
         }
 
@@ -1811,7 +1811,7 @@
             });
         }
 
-        // ===== 3. JUMBLE GALLERY (Spread out for visibility) =====
+        // ===== 3. JUMBLE GALLERY (Scattered with smart spacing) =====
         function createJumbleGallery(containerId, images) {
             const container = document.getElementById(containerId);
             if (!container || images.length === 0) return;
@@ -1825,57 +1825,61 @@
                 container.classList.add('large');
             }
             
-            let cols, rows, baseSize;
-            
-            if (totalImages <= 4) {
-                cols = 2;
-                rows = 2;
-                baseSize = 420;
-            } else if (totalImages <= 9) {
-                cols = 3;
-                rows = 3;
-                baseSize = 340;
-            } else if (totalImages <= 16) {
-                cols = 4;
-                rows = 4;
-                baseSize = 300;
+            // Double all base sizes
+            let baseSizeMin, baseSizeMax;
+            if (totalImages <= 6) {
+                baseSizeMin = 700;
+                baseSizeMax = 900;
+            } else if (totalImages <= 12) {
+                baseSizeMin = 600;
+                baseSizeMax = 750;
+            } else if (totalImages <= 20) {
+                baseSizeMin = 500;
+                baseSizeMax = 650;
             } else {
-                cols = 5;
-                rows = Math.ceil(totalImages / 5);
-                baseSize = 280;
+                baseSizeMin = 450;
+                baseSizeMax = 600;
             }
             
-            const sizeVariation = 50;
+            // Track placed images to avoid overlap
+            const placedImages = [];
             
-            // Calculate spacing with LOTS of gaps between cells
-            const rowHeight = 100 / (rows + 1.5);   // Extra spacing between rows
-            const colWidth = 100 / (cols + 1.5);    // Extra spacing between columns
+            // Helper function to check if position overlaps with existing images
+            function hasOverlap(x, y, width, height, margin = 3) {
+                for (const placed of placedImages) {
+                    const xOverlap = Math.abs(x - placed.x) < (width + placed.width) / 2 + margin;
+                    const yOverlap = Math.abs(y - placed.y) < (height + placed.height) / 2 + margin;
+                    if (xOverlap && yOverlap) {
+                        return true;
+                    }
+                }
+                return false;
+            }
             
             images.forEach((url, i) => {
                 const item = document.createElement('div');
                 item.className = 'jumble-item';
                 
-                const col = i % cols;
-                const row = Math.floor(i / cols);
-                
-                const size = baseSize + (Math.random() * sizeVariation - sizeVariation / 2);
-                const aspectRatio = 0.75 + Math.random() * 0.5;
+                // Random size
+                const size = baseSizeMin + Math.random() * (baseSizeMax - baseSizeMin);
+                const aspectRatio = 0.65 + Math.random() * 0.6; // More variety in aspect ratios
                 const width = size;
                 const height = size * aspectRatio;
                 
-                // Center properly: start from 1 cell width/height in, then space evenly
-                const gridX = colWidth * (col + 1.25);  // Start at 1.25 cells in for centering
-                const gridY = rowHeight * (row + 1.25); // Start at 1.25 cells in for centering
+                // Try to find a non-overlapping position (max 50 attempts)
+                let x, y, attempts = 0;
+                do {
+                    x = 10 + Math.random() * 80;  // 10-90% range
+                    y = 5 + Math.random() * 90;   // 5-95% range
+                    attempts++;
+                } while (hasOverlap(x, y, width / 10, height / 10) && attempts < 50);
                 
-                // Tiny random offset for slight jumble effect
-                const offsetX = (Math.random() - 0.5) * (colWidth * 0.1);
-                const offsetY = (Math.random() - 0.5) * (rowHeight * 0.1);
+                // Store this placement
+                placedImages.push({ x, y, width: width / 10, height: height / 10 });
                 
-                const x = Math.max(5, Math.min(95, gridX + offsetX));
-                const y = Math.max(3, Math.min(97, gridY + offsetY));
-                
-                const rotation = Math.random() * 10 - 5;
-                const zIndex = row * 10 + Math.floor(Math.random() * 5);
+                // Random rotation
+                const rotation = Math.random() * 16 - 8; // ±8 degrees
+                const zIndex = Math.floor(Math.random() * totalImages);
                 
                 item.style.width = `${width}px`;
                 item.style.height = `${height}px`;
