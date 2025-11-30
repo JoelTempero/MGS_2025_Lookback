@@ -580,7 +580,7 @@
         <h2 class="section-title">2025 Highlights Video</h2>
         <div class="video-container">
             <div class="video-wrapper">
-                <iframe src="https://www.youtube.com/embed/oNtjr8KhHj8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/ClVpPRLfPTc" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
         </div>
     </div>
@@ -628,7 +628,7 @@
         <h2 class="section-title">Farewell to Mike Vannoort</h2>
         <div class="video-container">
             <div class="video-wrapper">
-                <iframe src="https://www.youtube.com/embed/oNtjr8KhHj8?start=30" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/EwuGg1IswxU?start=30" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
         </div>
     </div>
@@ -1973,103 +1973,88 @@
             });
         }
 
-       // ===== CLEAN MULTI-SCROLL GALLERY (3 rows, centered, infinite) =====
-function createMultiScrollGallery(containerId, images) {
-    const container = document.getElementById(containerId);
-    if (!container || images.length === 0) return;
-
-    // Split images into 3 rows
-    const imagesPerRow = Math.ceil(images.length / 3);
-    const rows = [
-        images.slice(0, imagesPerRow),
-        images.slice(imagesPerRow, imagesPerRow * 2),
-        images.slice(imagesPerRow * 2)
-    ];
-
-    // Container styling
-    container.style.cssText = `
-        width: 100%;
-        overflow: hidden;
-        margin: 60px 0;
-        display: flex;
-        flex-direction: column;
-        gap: 30px;
-        position: relative;
-    `;
-
-    rows.forEach((rowImages, rowIndex) => {
-        const rowContainer = document.createElement("div");
-        rowContainer.className = "multi-scroll-row";
-        rowContainer.style.cssText = `
-            position: relative;
-            width: 100%;
-            overflow: hidden;
-        `;
-
-        const track = document.createElement("div");
-        track.className = `multi-scroll-track`;
-        track.style.cssText = `
-            display: flex;
-            gap: 30px;
-            padding: 20px;
-            margin: 0 auto;
-            width: fit-content;
-            animation: ${rowIndex === 1 ? "scrollReverse" : "scrollForward"} 60s linear infinite;
-        `;
-
-        // Duplicate row for seamless loop
-        const duplicated = [...rowImages, ...rowImages];
-
-        duplicated.forEach(url => {
-            const item = document.createElement("div");
-            item.className = "multi-scroll-item";
-            item.style.cssText = `
-                flex: 0 0 auto;
-                height: 260px;
-                border-radius: 6px;
+        // ===== 5. MULTI-SCROLL GALLERY (3 rows, middle opposite) =====
+        function createMultiScrollGallery(containerId, images) {
+            const container = document.getElementById(containerId);
+            if (!container || images.length === 0) return;
+            
+            // Divide images into 3 rows
+            const imagesPerRow = Math.ceil(images.length / 3);
+            const row1Images = images.slice(0, imagesPerRow);
+            const row2Images = images.slice(imagesPerRow, imagesPerRow * 2);
+            const row3Images = images.slice(imagesPerRow * 2);
+            
+            // Simple container styling (like auto-scroll - with max-width for widescreen)
+            container.style.cssText = `
+                width: 100%;
+                max-width: 1920px;
+                margin: 60px auto;
                 overflow: hidden;
-                opacity: 0;
-                transition: opacity 0.8s ease-out;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+                display: flex;
+                flex-direction: column;
+                gap: 30px;
             `;
-
-            const img = document.createElement("img");
-            img.src = url;
-            img.alt = "Gallery";
-            img.loading = "lazy";
-            img.style.cssText = `
-                height: 100%;
-                width: auto;
-                display: block;
-                object-fit: cover;
-            `;
-
-            item.appendChild(img);
-            track.appendChild(item);
-        });
-
-        rowContainer.appendChild(track);
-        container.appendChild(rowContainer);
-    });
-
-    // Fade-in animation
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (!entry.isIntersecting) return;
-
-            const items = entry.target.querySelectorAll(".multi-scroll-item");
-            items.forEach(item => {
-                setTimeout(() => {
-                    item.style.opacity = "1";
-                }, Math.random() * 800);
+            
+            // Create 3 rows
+            [row1Images, row2Images, row3Images].forEach((rowImages, rowIndex) => {
+                const rowContainer = document.createElement('div');
+                rowContainer.className = 'multi-scroll-row';
+                rowContainer.style.cssText = `
+                    position: relative;
+                    width: 100%;
+                    overflow: hidden;
+                `;
+                
+                const gallery = document.createElement('div');
+                gallery.className = `multi-scroll-gallery ${rowIndex === 1 ? 'reverse' : ''}`;
+                gallery.style.cssText = `
+                    display: flex;
+                    gap: 30px;
+                    padding: 20px;
+                    animation: ${rowIndex === 1 ? 'scrollReverse' : 'scrollForward'} 60s linear infinite;
+                    width: max-content;
+                `;
+                
+                // Duplicate images for infinite scroll
+                const duplicatedImages = [...rowImages, ...rowImages];
+                
+                duplicatedImages.forEach(url => {
+                    const item = document.createElement('div');
+                    item.className = 'multi-scroll-item';
+                    item.style.cssText = `
+                        flex: 0 0 auto;
+                        height: 300px;
+                        opacity: 0;
+                        transition: opacity 0.8s ease-out;
+                        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+                        border-radius: 4px;
+                        overflow: hidden;
+                    `;
+                    item.innerHTML = `<img src="${url}" alt="Gallery" loading="lazy" style="height: 100%; width: auto; object-fit: cover;">`;
+                    gallery.appendChild(item);
+                });
+                
+                rowContainer.appendChild(gallery);
+                container.appendChild(rowContainer);
             });
-
-            observer.unobserve(entry.target);
-        });
-    }, { threshold: 0.15 });
-
-    observer.observe(container);
-}
+            
+            // Fade in on scroll
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const items = entry.target.querySelectorAll('.multi-scroll-item');
+                        items.forEach((item, i) => {
+                            setTimeout(() => {
+                                item.style.opacity = '1';
+                            }, Math.random() * 800);
+                        });
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            observer.observe(container);
+        }
 
         // ===== 6. SPORTS GRID (3x5 slideshow grid) =====
         function createSportsGrid(containerId, sportsData) {
