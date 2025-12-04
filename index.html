@@ -175,6 +175,8 @@
             will-change: transform;
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
+            content-visibility: auto;
+            contain-intrinsic-size: auto 300px;
         }
 
         @keyframes infiniteScroll {
@@ -217,6 +219,9 @@
             opacity: 0;
             transform: translateY(30px);
             animation: fadeInItem 0.8s ease-out forwards;
+            background: rgba(255, 255, 255, 0.05);
+            min-width: 200px;
+            min-height: 300px;
         }
 
         .auto-scroll-item:nth-child(n+6) { animation-delay: 0.6s; }
@@ -2064,10 +2069,52 @@
             const imagesToUse = shuffle ? shuffleArray(images) : images;
             const duplicatedImages = [...imagesToUse, ...imagesToUse];
             
-            duplicatedImages.forEach(url => {
+            duplicatedImages.forEach((url, index) => {
                 const div = document.createElement('div');
                 div.className = 'auto-scroll-item';
-                div.innerHTML = `<img src="${url}" alt="School Memory" loading="lazy" decoding="async">`;
+                
+                // Add smaller thumbnail for faster loading in scroll galleries
+                // Use Cloudinary transformations to resize for scroll view
+                const scrollOptimizedUrl = url.replace(
+                    '/upload/', 
+                    '/upload/w_400,h_300,c_fill,f_auto,q_auto/'
+                );
+                
+                // Create placeholder with blur effect
+                const img = document.createElement('img');
+                img.setAttribute('data-src', scrollOptimizedUrl); // Lazy load
+                img.alt = 'School Memory';
+                img.loading = 'lazy';
+                img.decoding = 'async';
+                img.style.opacity = '0';
+                img.style.transition = 'opacity 0.3s';
+                
+                // Use tiny placeholder (10x10 blur) until real image loads
+                const placeholderUrl = url.replace(
+                    '/upload/',
+                    '/upload/w_10,h_10,e_blur:1000,f_auto,q_auto/'
+                );
+                img.src = placeholderUrl;
+                
+                // Load real image when in viewport
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const realUrl = img.getAttribute('data-src');
+                            img.src = realUrl;
+                            img.onload = () => {
+                                img.style.opacity = '1';
+                            };
+                            observer.unobserve(img);
+                        }
+                    });
+                }, {
+                    rootMargin: '200px' // Start loading 200px before entering viewport
+                });
+                
+                observer.observe(img);
+                
+                div.appendChild(img);
                 container.appendChild(div);
             });
         }
@@ -2285,7 +2332,47 @@
                         border-radius: 4px;
                         overflow: hidden;
                     `;
-                    item.innerHTML = `<img src="${url}" alt="Gallery" loading="lazy" decoding="async" style="height: 100%; width: auto; object-fit: cover;">`;
+                    
+                    // Optimize for multi-scroll: smaller, faster loading images
+                    const scrollOptimizedUrl = url.replace(
+                        '/upload/', 
+                        '/upload/w_400,h_300,c_fill,f_auto,q_auto/'
+                    );
+                    
+                    // Create image with placeholder
+                    const img = document.createElement('img');
+                    img.setAttribute('data-src', scrollOptimizedUrl);
+                    img.alt = 'Gallery';
+                    img.loading = 'lazy';
+                    img.decoding = 'async';
+                    img.style.cssText = 'height: 100%; width: auto; object-fit: cover; opacity: 0; transition: opacity 0.3s;';
+                    
+                    // Tiny placeholder
+                    const placeholderUrl = url.replace(
+                        '/upload/',
+                        '/upload/w_10,h_10,e_blur:1000,f_auto,q_auto/'
+                    );
+                    img.src = placeholderUrl;
+                    
+                    // Load real image when nearby
+                    const imgObserver = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                const realUrl = img.getAttribute('data-src');
+                                img.src = realUrl;
+                                img.onload = () => {
+                                    img.style.opacity = '1';
+                                };
+                                imgObserver.unobserve(img);
+                            }
+                        });
+                    }, {
+                        rootMargin: '300px' // Load earlier for smooth scrolling
+                    });
+                    
+                    imgObserver.observe(img);
+                    
+                    item.appendChild(img);
                     gallery.appendChild(item);
                 });
                 
@@ -2503,7 +2590,7 @@
         <!-- Lookback Logo -->
         <a href="https://lookback.nz" target="_blank" style="display: inline-block;"><img src="https://res.cloudinary.com/dneb3rzqf/image/upload/f_auto,q_auto/v1764480369/Lookback01_g5tosk.png" alt="Lookback Logo" style="width: 200px; height: auto; margin-bottom: 20px;"></a>
         
-        <div style="color: white; font-size: 1.5rem; margin-bottom: 10px; text-shadow: 0 2px 10px rgba(0,0,0,0.3);"><a href="https://lookback.nz" target="_blank" style="color: white; text-decoration: none;">Made with lookback.nz</a></div>
+        <div style="color: white; font-size: 1.5rem; margin-bottom: 10px; text-shadow: 0 2px 10px rgba(0,0,0,0.3);"><a href="https://lookback.nz" target="_blank" style="color: white; text-decoration: none;">Designed by lookback.nz</a></div>
         <div style="color: rgba(255,255,255,0.9); font-size: 1.2rem; text-shadow: 0 2px 10px rgba(0,0,0,0.3);"><a href="https://lookback.nz" target="_blank" style="color: rgba(255,255,255,0.9); text-decoration: none;">Get yours today!</a></div>
         
     </div>
