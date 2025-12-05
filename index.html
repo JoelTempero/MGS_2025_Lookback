@@ -219,9 +219,9 @@
             opacity: 0;
             transform: translateY(30px);
             animation: fadeInItem 0.8s ease-out forwards;
-            background: rgba(255, 255, 255, 0.05);
-            min-width: 200px;
-            min-height: 300px;
+            
+            
+            
         }
 
         .auto-scroll-item:nth-child(n+6) { animation-delay: 0.6s; }
@@ -2062,49 +2062,27 @@
         }
 
         // ===== 1. AUTO-SCROLL GALLERIES =====
-        function populateAutoScrollGallery(containerId, images, shuffle = false) {
+                function populateAutoScrollGallery(containerId, images, shuffle = false) {
             const container = document.getElementById(containerId);
             if (!container) return;
             
             const imagesToUse = shuffle ? shuffleArray(images) : images;
             const duplicatedImages = [...imagesToUse, ...imagesToUse];
             
-            duplicatedImages.forEach((url, index) => {
+            duplicatedImages.forEach((url) => {
                 const div = document.createElement('div');
                 div.className = 'auto-scroll-item';
                 
-                // Add smaller thumbnail for faster loading in scroll galleries
-                // Use Cloudinary transformations to resize for scroll view
+                // Optimized URL for faster loading
                 const scrollOptimizedUrl = url.replace(
                     '/upload/', 
-                    '/upload/w_400,h_300,c_fill,f_auto,q_auto/'
+                    '/upload/w_600,c_limit,f_auto,q_auto/'
                 );
                 
-                // Create placeholder with blur effect
-                const img = document.createElement('img');
-                img.setAttribute('data-src', scrollOptimizedUrl); // Lazy load
-                img.alt = 'School Memory';
-                img.loading = 'lazy';
-                img.decoding = 'async';
-                img.style.opacity = '0';
-                img.style.transition = 'opacity 0.3s';
-                
-                // Use tiny placeholder (10x10 blur) until real image loads
-                const placeholderUrl = url.replace(
-                    '/upload/',
-                    '/upload/w_10,h_10,e_blur:1000,f_auto,q_auto/'
-                );
-                img.src = placeholderUrl;
-                
-                // Load real image when in viewport
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            const realUrl = img.getAttribute('data-src');
-                            img.src = realUrl;
-                            img.onload = () => {
-                                img.style.opacity = '1';
-                            };
+                div.innerHTML = `<img src="${scrollOptimizedUrl}" alt="School Memory" decoding="async" style="display: block;">`;
+                container.appendChild(div);
+            });
+        };
                             observer.unobserve(img);
                         }
                     });
