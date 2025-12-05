@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>MGS 2025 Lookback</title>
     <style>
         * {
@@ -2469,56 +2472,8 @@
             'The Fridge Radio': fridgeRadio
         };
 
-        // ===== LOADING SCREEN CONTROLLER =====
-        
-        let loadProgress = 0;
-        const progressBar = document.getElementById('progress-bar');
-        const progressPercentage = document.getElementById('progress-percentage');
-        const loadingScreen = null; // document.getElementById('loading-screen');
-        
-        // Simulate loading progress
-        function updateProgress(percent) {
-            loadProgress = Math.min(percent, 100);
-            progressBar.style.width = loadProgress + '%';
-            progressPercentage.textContent = Math.round(loadProgress) + '%';
-        }
-        
-        // Start with initial progress
-        updateProgress(10);
-        
-        // Increment progress as page loads
-        let progressInterval = setInterval(() => {
-            if (loadProgress < 90) {
-                updateProgress(loadProgress + Math.random() * 15);
-            }
-        }, 200);
-        
-        // When page is fully loaded
-        window.addEventListener('load', () => {
-            clearInterval(progressInterval);
-            updateProgress(100);
-            
-            // Wait a moment at 100% then fade out
-            setTimeout(() => {
-                loadingScreen.classList.add('fade-out');
-                
-                // Remove from DOM after fade
-                setTimeout(() => {
-                    loadingScreen.style.display = 'none';
-                }, 500);
-            }, 300);
-        });
-        
-        // Fallback: Remove loading screen after 10 seconds no matter what
-        setTimeout(() => {
-            if (loadingScreen.style.display !== 'none') {
-                updateProgress(100);
-                loadingScreen.classList.add('fade-out');
-                setTimeout(() => {
-                    loadingScreen.style.display = 'none';
-                }, 500);
-            }
-        }, 10000);
+        // ===== LOADING SCREEN CONTROLLER ===== (DISABLED)
+        // Loading screen disabled - no JavaScript needed
         
         // ===== POPULATE ALL GALLERIES =====
 
