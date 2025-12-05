@@ -2465,7 +2465,8 @@
         }, 100);  // Faster progress
         
         // When page is fully loaded
-        window.addEventListener('load', () => {
+        // Use DOMContentLoaded instead of window.load for faster dismissal
+        document.addEventListener('DOMContentLoaded', () => {
             clearInterval(progressInterval);
             updateProgress(100);
             
@@ -2480,16 +2481,17 @@
             }, 300);
         });
         
-        // Fallback: Remove loading screen after 2 seconds no matter what
+        // Fallback: Remove loading screen after 1.5 seconds no matter what
         setTimeout(() => {
             if (loadingScreen.style.display !== 'none') {
+                clearInterval(progressInterval);
                 updateProgress(100);
                 loadingScreen.classList.add('fade-out');
                 setTimeout(() => {
                     loadingScreen.style.display = 'none';
                 }, 500);
             }
-        }, 2000);
+        }, 1500);
         
         // ===== POPULATE ALL GALLERIES =====
 
