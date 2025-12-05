@@ -219,9 +219,9 @@
             opacity: 0;
             transform: translateY(30px);
             animation: fadeInItem 0.8s ease-out forwards;
-            
-            
-            
+            background: rgba(255, 255, 255, 0.05);
+            min-width: 200px;
+            min-height: 300px;
         }
 
         .auto-scroll-item:nth-child(n+6) { animation-delay: 0.6s; }
@@ -649,10 +649,150 @@
                 padding: 0 3px !important;
             }
         }
+    
+    /* Hide loading screen */
+    #loading-screen {
+        display: none !important;
+    }
+    
     </style>
     
     <style>
+        /* ===== LOADING SCREEN ===== */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out;
+        }
         
+        #loading-screen.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .loading-logo {
+            width: 200px;
+            height: auto;
+            margin-bottom: 40px;
+            animation: logoPulse 2s ease-in-out infinite;
+            filter: drop-shadow(0 10px 30px rgba(255, 255, 255, 0.2));
+        }
+        
+        @keyframes logoPulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.9;
+            }
+        }
+        
+        .loading-text {
+            font-size: 2rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 30px;
+            text-align: center;
+            letter-spacing: 2px;
+            animation: textFade 2s ease-in-out infinite;
+        }
+        
+        @keyframes textFade {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.6;
+            }
+        }
+        
+        .loading-subtext {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        .progress-container {
+            width: 80%;
+            max-width: 500px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #DC143C 0%, #FF6B6B 50%, #DC143C 100%);
+            background-size: 200% 100%;
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.3s ease-out;
+            animation: shimmer 2s linear infinite;
+            box-shadow: 0 0 20px rgba(220, 20, 60, 0.5);
+        }
+        
+        @keyframes shimmer {
+            0% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
+        }
+        
+        .progress-percentage {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 15px;
+            text-align: center;
+        }
+        
+        .loading-dots {
+            display: inline-block;
+            width: 30px;
+            text-align: left;
+        }
+        
+        .loading-dots::after {
+            content: '';
+            animation: dots 1.5s steps(4, end) infinite;
+        }
+        
+        @keyframes dots {
+            0%, 20% {
+                content: '';
+            }
+            40% {
+                content: '.';
+            }
+            60% {
+                content: '..';
+            }
+            80%, 100% {
+                content: '...';
+            }
+        }
+        
+        /* Mobile adjustments */
+        @media (max-width: 768px) {
+            .loading-logo {
+                width: 150px;
+            }
             .loading-text {
                 font-size: 1.5rem;
             }
@@ -663,6 +803,20 @@
     </style>
 </head>
 <body>
+    <!-- Loading Screen DISABLED
+    <div id="loading-screen">
+        <img src="https://res.cloudinary.com/dneb3rzqf/image/upload/f_auto,q_auto/v1764480369/Lookback01_g5tosk.png" alt="Lookback Logo" class="loading-logo">
+        <div class="loading-text">
+            Memories Loading<span class="loading-dots"></span>
+        </div>
+        <div class="loading-subtext">Preparing your 2025 year in review</div>
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <div class="progress-percentage" id="progress-percentage">0%</div>
+    </div>
+    END Loading Screen DISABLED -->
+    
     <!-- Opening Section with Background and Logo -->
     <div class="hero" style="background-image: url('https://res.cloudinary.com/dneb3rzqf/image/upload/f_auto,q_auto/v1764479773/MGSlookback25Header_o5zvbn.jpg'); background-size: cover; background-position: center; background-blend-mode: multiply; background-color: #DC143C; position: relative; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 20px;">
         
@@ -1915,27 +2069,49 @@
         }
 
         // ===== 1. AUTO-SCROLL GALLERIES =====
-                function populateAutoScrollGallery(containerId, images, shuffle = false) {
+        function populateAutoScrollGallery(containerId, images, shuffle = false) {
             const container = document.getElementById(containerId);
             if (!container) return;
             
             const imagesToUse = shuffle ? shuffleArray(images) : images;
             const duplicatedImages = [...imagesToUse, ...imagesToUse];
             
-            duplicatedImages.forEach((url) => {
+            duplicatedImages.forEach((url, index) => {
                 const div = document.createElement('div');
                 div.className = 'auto-scroll-item';
                 
-                // Optimized URL for faster loading
+                // Add smaller thumbnail for faster loading in scroll galleries
+                // Use Cloudinary transformations to resize for scroll view
                 const scrollOptimizedUrl = url.replace(
                     '/upload/', 
-                    '/upload/w_600,c_limit,f_auto,q_auto/'
+                    '/upload/w_400,h_300,c_fill,f_auto,q_auto/'
                 );
                 
-                div.innerHTML = `<img src="${scrollOptimizedUrl}" alt="School Memory" decoding="async" style="display: block;">`;
-                container.appendChild(div);
-            });
-        };
+                // Create placeholder with blur effect
+                const img = document.createElement('img');
+                img.setAttribute('data-src', scrollOptimizedUrl); // Lazy load
+                img.alt = 'School Memory';
+                img.loading = 'lazy';
+                img.decoding = 'async';
+                img.style.opacity = '0';
+                img.style.transition = 'opacity 0.3s';
+                
+                // Use tiny placeholder (10x10 blur) until real image loads
+                const placeholderUrl = url.replace(
+                    '/upload/',
+                    '/upload/w_10,h_10,e_blur:1000,f_auto,q_auto/'
+                );
+                img.src = placeholderUrl;
+                
+                // Load real image when in viewport
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const realUrl = img.getAttribute('data-src');
+                            img.src = realUrl;
+                            img.onload = () => {
+                                img.style.opacity = '1';
+                            };
                             observer.unobserve(img);
                         }
                     });
@@ -2293,6 +2469,57 @@
             'The Fridge Radio': fridgeRadio
         };
 
+        // ===== LOADING SCREEN CONTROLLER =====
+        
+        let loadProgress = 0;
+        const progressBar = document.getElementById('progress-bar');
+        const progressPercentage = document.getElementById('progress-percentage');
+        const loadingScreen = null; // document.getElementById('loading-screen');
+        
+        // Simulate loading progress
+        function updateProgress(percent) {
+            loadProgress = Math.min(percent, 100);
+            progressBar.style.width = loadProgress + '%';
+            progressPercentage.textContent = Math.round(loadProgress) + '%';
+        }
+        
+        // Start with initial progress
+        updateProgress(10);
+        
+        // Increment progress as page loads
+        let progressInterval = setInterval(() => {
+            if (loadProgress < 90) {
+                updateProgress(loadProgress + Math.random() * 15);
+            }
+        }, 200);
+        
+        // When page is fully loaded
+        window.addEventListener('load', () => {
+            clearInterval(progressInterval);
+            updateProgress(100);
+            
+            // Wait a moment at 100% then fade out
+            setTimeout(() => {
+                loadingScreen.classList.add('fade-out');
+                
+                // Remove from DOM after fade
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                }, 500);
+            }, 300);
+        });
+        
+        // Fallback: Remove loading screen after 10 seconds no matter what
+        setTimeout(() => {
+            if (loadingScreen.style.display !== 'none') {
+                updateProgress(100);
+                loadingScreen.classList.add('fade-out');
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                }, 500);
+            }
+        }, 10000);
+        
         // ===== POPULATE ALL GALLERIES =====
 
         
