@@ -2459,10 +2459,10 @@
         
         // Increment progress as page loads
         let progressInterval = setInterval(() => {
-            if (loadProgress < 90) {
+            if (loadProgress < 95) {  // Increased to 95%
                 updateProgress(loadProgress + Math.random() * 15);
             }
-        }, 200);
+        }, 100);  // Faster progress
         
         // When page is fully loaded
         window.addEventListener('load', () => {
@@ -2480,7 +2480,7 @@
             }, 300);
         });
         
-        // Fallback: Remove loading screen after 10 seconds no matter what
+        // Fallback: Remove loading screen after 2 seconds no matter what
         setTimeout(() => {
             if (loadingScreen.style.display !== 'none') {
                 updateProgress(100);
@@ -2489,7 +2489,7 @@
                     loadingScreen.style.display = 'none';
                 }, 500);
             }
-        }, 10000);
+        }, 2000);
         
         // ===== POPULATE ALL GALLERIES =====
 
