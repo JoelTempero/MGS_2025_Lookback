@@ -170,7 +170,7 @@
             display: flex;
             gap: 30px;
             padding: 40px 20px;
-            animation: infiniteScroll 60s linear infinite;
+            animation: infiniteScroll 120s linear infinite;
             width: max-content;
             will-change: transform;
             backface-visibility: hidden;
@@ -649,6 +649,12 @@
                 padding: 0 3px !important;
             }
         }
+    
+        /* Fix for SC Art rotated images */
+        #sc-art-jumble img {
+            transform: rotate(-90deg);
+        }
+
     </style>
     
     <style>
@@ -1942,10 +1948,6 @@
         ];
 
         const sportsData = {
-            "Make the slideshows cropped to be 1x1": [
-            ],
-            "Each slideshow has a header below them": [
-            ],
             "Triathlon": [
                 "images/8. Sport/All Sports/Triathlon_1_lptf1i.jpg",
                 "images/8. Sport/All Sports/Triathlon_2_oilmek.jpg"
@@ -1972,10 +1974,10 @@
             ],
             "Football": [
                 "images/8. Sport/All Sports/Football_1_ytnbnx.jpg",
-                "images/8. Sport/All Sports/FootballBoys_1_qrtijj.jpg",
-                "images/8. Sport/All Sports/FootballBoys_2_iq8yxk.jpg",
-                "images/8. Sport/All Sports/FootballBoys_3_oxuggo.jpg",
-                "images/8. Sport/All Sports/FootballBoys_4_qetiaj.jpg"
+                "images/8. Sport/All Sports/FootballBoys_1_hb2ov7.jpg",
+                "images/8. Sport/All Sports/FootballBoys_2_ijlhog.jpg",
+                "images/8. Sport/All Sports/FootballBoys_3_eydqic.jpg",
+                "images/8. Sport/All Sports/FootballBoys_4_xzocxx.jpg"
             ]
         };
 
