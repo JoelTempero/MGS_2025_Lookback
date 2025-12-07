@@ -652,7 +652,84 @@
     
         /* Fix for SC Art rotated images */
         #sc-art-jumble img {
-            transform: rotate(-90deg);
+            transform: rotate(180deg);
+        }
+
+    
+        #sc-art-jumble .jumble-item {
+            box-shadow: none !important;
+        }
+    
+        /* Mobile Viewing Suggestion Overlay */
+        #mobile-suggestion-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease-in;
+        }
+        
+        .mobile-suggestion-content {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 40px 30px;
+            border-radius: 20px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(220, 20, 60, 0.3);
+        }
+        
+        .mobile-suggestion-content h2 {
+            color: #DC143C;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .mobile-suggestion-content p {
+            color: #fff;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        #close-mobile-suggestion {
+            background: #DC143C;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(220, 20, 60, 0.3);
+        }
+        
+        #close-mobile-suggestion:hover {
+            background: #b01030;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(220, 20, 60, 0.4);
+        }
+        
+        #close-mobile-suggestion:active {
+            transform: translateY(0);
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
 
     </style>
@@ -803,6 +880,15 @@
     </style>
 </head>
 <body>
+    <!-- Mobile Viewing Suggestion Overlay -->
+    <div id="mobile-suggestion-overlay" style="display: none;">
+        <div class="mobile-suggestion-content">
+            <h2>📱 Viewing Tip</h2>
+            <p>For the best viewing experience, check this lookback out on your computer or tablet!</p>
+            <button id="close-mobile-suggestion">Okay, Got It!</button>
+        </div>
+    </div>
+    
     <!-- Loading Screen -->
     <div id="loading-screen">
         <img src="images/Lookback01.png" alt="Lookback Logo" class="loading-logo">
@@ -1952,12 +2038,35 @@
                 "images/8. Sport/All Sports/Triathlon_1_lptf1i.jpg",
                 "images/8. Sport/All Sports/Triathlon_2_oilmek.jpg"
             ],
+            "Volleyball": [
+                "images/8. Sport/All Sports/Volleyball_kdxyn0.jpg",
+                "images/8. Sport/All Sports/volleyball2_kdexup.jpg"
+            ],
+            "Canoe Polo": [
+                "images/8. Sport/All Sports/CanoePolo_1_azsvri.jpg",
+                "images/8. Sport/All Sports/CanoePolo_2_p6nlkh.jpg",
+                "images/8. Sport/All Sports/CanoePolo_3_at5cte.jpg",
+                "images/8. Sport/All Sports/CanoePolo_4_jra2mk.jpg",
+                "images/8. Sport/All Sports/CanoePolo_5_aaiafx.jpg",
+                "images/8. Sport/All Sports/CanoePolo_6_rjtl81.jpg"
+            ],
             "Netball": [
                 "images/8. Sport/All Sports/Netball_1_xquyze.jpg",
                 "images/8. Sport/All Sports/Netball_1049_kjo5zh.jpg",
                 "images/8. Sport/All Sports/Netball_1050_xhhyjc.jpg",
                 "images/8. Sport/All Sports/Netball_1051_x5ruo2.jpg",
                 "images/8. Sport/All Sports/Netball_1053_vr50xx.jpg"
+            ],
+            "Orienteering": [
+                "images/8. Sport/All Sports/Orienteering_1_lwarlj.jpg",
+                "images/8. Sport/All Sports/Orienteering_3_nm2rpq.jpg",
+                "images/8. Sport/All Sports/Orienteering_4_jdvhtu.jpg",
+                "images/8. Sport/All Sports/Orienteering_5_qw1siy.jpg"
+            ],
+            "Rugby": [
+                "images/8. Sport/All Sports/Girls_Rugby_lwvstg.jpg",
+                "images/8. Sport/All Sports/Girls_Rugby1_a2bcj9.jpg",
+                "images/8. Sport/All Sports/Girls_Rugby2_nchwdr.jpg"
             ],
             "Slopestyle": [
                 "images/8. Sport/All Sports/Slopestyle_1_u5pahn.jpg",
@@ -1966,18 +2075,72 @@
                 "images/8. Sport/All Sports/Slopestyle_4_ta2vgt.jpg",
                 "images/8. Sport/All Sports/Slopestyle_5_snd44v.jpg"
             ],
+            "Adventure Racing": [
+                "images/8. Sport/All Sports/Adventure_pjqbei.jpg",
+                "images/8. Sport/All Sports/AdventureRace_2_hmhtkx.jpg",
+                "images/8. Sport/All Sports/AdventureRace_2_lamwh9.jpg",
+                "images/8. Sport/All Sports/AdventureRace_3_edgg6k.jpg",
+                "images/8. Sport/All Sports/AdventureRace_3_htpwy5.jpg",
+                "images/8. Sport/All Sports/AdventureRace_4_lehcps.jpg",
+                "images/8. Sport/All Sports/AdventureRace_5_dy1dpl.jpg",
+                "images/8. Sport/All Sports/AdventureRace_5_pkx2v5.jpg"
+            ],
+            "Basketball": [
+                "images/8. Sport/All Sports/BasketballBoys_1_qu2rhu.jpg",
+                "images/8. Sport/All Sports/BasketballBoys_2_qz8dgi.jpg",
+                "images/8. Sport/All Sports/BasketballBoys_3_mcnutp.jpg",
+                "images/8. Sport/All Sports/BasketballGirls_1_xbuxnl.jpg",
+                "images/8. Sport/All Sports/BasketballGirls_2_y5meyk.jpg",
+                "images/8. Sport/All Sports/BasketballGirls_3_qq1lzw.jpg",
+                "images/8. Sport/All Sports/BasketballGirls_4_yj12qa.jpg",
+                "images/8. Sport/All Sports/BasketballGirls_5_mnpuub.jpg"
+            ],
             "Climbing": [
                 "images/8. Sport/All Sports/Climbing_1_gxoju1.jpg",
                 "images/8. Sport/All Sports/Climbing_2_tneplj.jpg",
                 "images/8. Sport/All Sports/Climbing_3_rr2g95.jpg",
                 "images/8. Sport/All Sports/Climbing_4_seijgf.jpg"
             ],
+            "Cross Country": [
+                "images/8. Sport/All Sports/CrossCountry_1_ozx7xz.jpg",
+                "images/8. Sport/All Sports/CrossCountry_2_a5urlu.jpg",
+                "images/8. Sport/All Sports/CrossCountry_3_wrjzb4.jpg",
+                "images/8. Sport/All Sports/CrossCountry_4_nxf4qt.jpg",
+                "images/8. Sport/All Sports/CrossCountry_5_wxcpgm.jpg",
+                "images/8. Sport/All Sports/CrossCountry_6_dh5asc.jpg",
+                "images/8. Sport/All Sports/CrossCountry_7_r5l73l.jpg"
+            ],
+            "Equestrian": [
+                "images/8. Sport/All Sports/Equestrian_1_hsy73r.jpg",
+                "images/8. Sport/All Sports/Equestrian_6_za4ssm.jpg",
+                "images/8. Sport/All Sports/Equestrian_Award_npj9xj.jpg"
+            ],
             "Football": [
                 "images/8. Sport/All Sports/Football_1_ytnbnx.jpg",
-                "images/8. Sport/All Sports/FootballBoys_1_hb2ov7.jpg",
-                "images/8. Sport/All Sports/FootballBoys_2_ijlhog.jpg",
-                "images/8. Sport/All Sports/FootballBoys_3_eydqic.jpg",
-                "images/8. Sport/All Sports/FootballBoys_4_xzocxx.jpg"
+                "images/8. Sport/All Sports/FootballBoys_1_qrtijj.jpg",
+                "images/8. Sport/All Sports/FootballBoys_2_iq8yxk.jpg",
+                "images/8. Sport/All Sports/FootballBoys_3_oxuggo.jpg",
+                "images/8. Sport/All Sports/FootballBoys_4_qetiaj.jpg"
+            ],
+            "Athletics": [
+                "images/8. Sport/All Sports/Athletics_1_ed52xr.jpg",
+                "images/8. Sport/All Sports/Athletics_2_ju8kpe.jpg",
+                "images/8. Sport/All Sports/Athletics_3_evhjxj.jpg",
+                "images/8. Sport/All Sports/Athletics_5_pulucy.jpg",
+                "images/8. Sport/All Sports/Athletics_8_x0ghmb.jpg",
+                "images/8. Sport/All Sports/Athletics_14_ympmw4.jpg",
+                "images/8. Sport/All Sports/Athletics_16_qg3v7h.jpg",
+                "images/8. Sport/All Sports/Athletics_18_w65xae.jpg",
+                "images/8. Sport/All Sports/AthleticsB_4_gyqgfq.jpg",
+                "images/8. Sport/All Sports/AthleticsB_7_wbghfs.jpg",
+                "images/8. Sport/All Sports/AthleticsB_9_jtgyex.jpg"
+            ],
+            "Badminton": [
+                "images/8. Sport/All Sports/Badminton_1_quokzc.jpg",
+                "images/8. Sport/All Sports/Badminton_2_rwtbkm.jpg",
+                "images/8. Sport/All Sports/Badminton_3_j1hwsa.jpg",
+                "images/8. Sport/All Sports/Badminton_4_dehc5w.jpg",
+                "images/8. Sport/All Sports/Badminton_5_v8cfua.jpg"
             ]
         };
 
@@ -2509,6 +2672,43 @@
         createMultiScrollGallery('house-comp-jumble', houseComp);
 
         console.log('All galleries populated successfully!');
+    
+        // Mobile Viewing Suggestion Overlay
+        const mobileOverlay = document.getElementById('mobile-suggestion-overlay');
+        const closeBtn = document.getElementById('close-mobile-suggestion');
+        
+        // Check if device is mobile (screen width <= 768px)
+        function isMobileDevice() {
+            return window.innerWidth <= 768;
+        }
+        
+        // Show overlay only on mobile devices
+        if (isMobileDevice()) {
+            // Show overlay after a short delay to let page settle
+            setTimeout(() => {
+                mobileOverlay.style.display = 'flex';
+            }, 500);
+        }
+        
+        // Close overlay when button clicked
+        closeBtn.addEventListener('click', () => {
+            mobileOverlay.style.animation = 'fadeOut 0.3s ease-out';
+            setTimeout(() => {
+                mobileOverlay.style.display = 'none';
+            }, 300);
+        });
+        
+        // Add fadeOut animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeOut {
+                from { opacity: 1; }
+                to { opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+        
+
     </script>
 
     <!-- Footer Section with Background -->
